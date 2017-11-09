@@ -1,0 +1,125 @@
+Schema
+Foreign keys will be represented by this reddish color.
+
+Company(domain, name, email, address, type, vision, specialization)
+
+CompanyPhone(domain, phone)
+    COMPANYPHONE.domain references COMPANY.domain
+
+Department(code , domain name)
+    DEPARTMENT.domain references COMPANY.domain
+
+Job(jobID, code, domain, , HRusername title, shortDescription, detailedDescription, workingHours, minYearsOfExperience, salary, vacancies, deadline)
+ JOB.(code,domain) references DEPARTMENT,
+JOB.HRusername references HREMPLOYEE.username
+
+Interview(question, jobID answer)
+    INTERVIEW. jobID references JOB.jobID
+
+USER(username,  password, email, birthdate, age, firstName, middleName, lastName, yearsOfExperience)
+    Where USER.age = current date - USER.birthdate
+
+USERPrevouisJobTitle(username, title)
+    USERPREVOUISJOBTITLE.username references USER.username
+
+Applicant(username)
+    APPLICANT.username references USER.username
+
+Application(ID, jobID, Appusername,  Hrusername,score, HRStatus)
+    APPLICATION.jobID references JOB.jobid,
+  APPLICATION.Appusername references APPLICANT.username
+APPLICATION.Hrusername references HREMPLOYEE.username
+
+
+Accepted(ID, jobID, Appsername ,Manusername,managerstatus)
+    ACCEPTED.Manusername references MANAGER.username
+   ACCEPTED.(ID,jobID,Appusername) references Application
+  Constraint :Accepted is an attribute defined relation:APPLICATION.HRStatus
+
+Rejected(ID, jobID, Appsername)
+Rejected.(ID,jobID,Appusername) references Application
+ Constraint :Rejected is an attribute defined relation:APPLICATION.HRStatus
+
+
+StaffMember(username, code,domain companyEmail, salary, dayOff, annualLeaves)
+    STAFFMEMBER.username references USER.username,
+ STAFFMEMBER.(code,domain) references DEPARTMENT
+
+Attendance(username, date, timeOfStart, timeOfLeave)
+    ATTENDANCE.username references STAFFMEMBER.username
+
+
+
+Email(ID, subject, body, timeStamp)
+
+Send(ID, usernameReceiver , usernameSender)
+ SEND.usernamesender references STAFFMEMBER.username,
+SEND.ID references EMAIL.ID,
+SEND.usernamereceiver references STAFFMEMBER.username
+
+Request(ReqNum, username, HRusername requestDate, startDate, endDate, leaveDays,Hrstatus, ManStatus)
+    REQUEST.username references STAFFMEMBER.username,
+    REQUEST.HRusername references HREMPLOYEE.username,
+      Where REQUEST.leaveDays = REQUEST.startDate - REQUEST.endDate
+
+ManagerRequestReview(ReqNum, username, usernameMang,reason)
+    MANAGERREQUESTREVIEW.( ReqNum,username) references REQUEST,
+ MANAGERREQUESTREVIEW.usernameMang references MANAGER.username
+
+BusinessTrip(ReqNum, username, destination, purpose)
+    BUSINESSTRIP.( ReqNum, username,) references REQUEST
+
+LEAVE(ReqNum, username, type)
+    LEAVE.( ReqNum,username) references REQUEST
+
+HREmployee(username)
+    HREMPLOYEE.username references STAFFMEMBER.username
+
+RequestHRReplace(ReqNum, username, usernameReplacing)
+    REQUESTHRREPLACE.(ReqNum,username) references REQUEST,
+    REQUESTHRREPLACE.usernameReplacing references HREMPLOYEE.username
+
+Announcement(ID, title, date, type, description, username)
+    ANNOUNCEMENT.username references HREMPLOYEE.username
+
+Manager(username, type)
+    MANAGER.username references STAFFMEMBER.username
+
+RequestMangReplace(ReqNum, username, usernameReplacing)
+    REQUESTMANGREPLACE.(ReqNum,username) references REQUEST,
+REQUESTMANGREPLACE.usernameReplacing references MANAGER.username
+
+
+
+
+
+
+
+
+
+
+
+RegularEmployee(username)
+RegularEmployee.username references STAFFMEMBER.username
+
+RequestRegEReplace(ReqNum, username, usernameReplacing)
+    REQUESTREGEREPLACE.(ReqNum,username) references REQUEST
+ REQUESTREGEREPLACE.usernameReplacing references REGULAREMPLOYEE.username
+
+Project(name, Mandefineusername, startDate, endDate)
+    PROJECT. Mandefineusername references MANAGER.username
+
+ProjectAssignment(projName, usernameRegE, usernameMang)
+ProjectAssignment.projName references PROJECT.name,
+ProjectAssignmen.usernameRegE references REGULAREMPLOYEE.username,
+ProjectAssignmen.usernameMang references MANAGER.username
+
+Task(name, ProjectName, description, status, comments, deadline, usernameMang, usernameRegE)
+ TASK.projectName references PROJECT.name,
+TASK.usernameMang references MANAGER.username,
+TASK.usernameRegE references REGULAREMPLOYEE.username
+
+COMMENT(id,name, ProjectName ,username,content)
+COMMENT.(name,ProjectName) references Task
+COMMENT.username references STAFFMEMBER.USERNAME
+
