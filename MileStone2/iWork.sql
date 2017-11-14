@@ -20,7 +20,7 @@ CREATE TABLE Company_Phones (
 
 -- Department (weak entity)
 CREATE TABLE Departments (
-  code INT, -- INT ?
+  code VARCHAR(50),
   company VARCHAR(50) REFERENCES Companies(domain) ON DELETE CASCADE ON UPDATE CASCADE,
   name VARCHAR(50),
   PRIMARY KEY(code, company)
@@ -48,7 +48,7 @@ CREATE TABLE User_Previous_Job_Titles (
 
 CREATE TABLE Jobs (
   title VARCHAR(50),
-  department INT,
+  department VARCHAR(50),
   company VARCHAR(50),
   short_description VARCHAR(100),
   detailed_description VARCHAR(max),
@@ -69,7 +69,7 @@ CREATE TABLE Questions (
 
 CREATE TABLE Job_has_Questions (
   title VARCHAR(50),
-  department INT,
+  department VARCHAR(50),
   company VARCHAR(50),
   question INT REFERENCES Questions(id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY(title, department, company, question),
@@ -84,7 +84,7 @@ CREATE TABLE Staff_Members (
   day_off VARCHAR(9) CHECK(day_off in ('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')),
   annual_leaves INT,
   job_title VARCHAR(50),
-  department INT,
+  department VARCHAR(50),
   company VARCHAR(50),
   FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ----->>>>--- FOREIGN KEY(department, company) REFERENCES Departments(code, company) ON UPDATE CASCADE
@@ -105,7 +105,7 @@ CREATE TABLE Regular_Employees (
 
 CREATE TABLE Hr_Employee_creates_Job (
   job_title VARCHAR(50),
-  department INT,
+  department VARCHAR(50),
   company VARCHAR(50),
   hr_username VARCHAR(50) NOT NULL REFERENCES Hr_Employees(username) ON DELETE NO ACTION ON UPDATE CASCADE,
   PRIMARY KEY(job_title, department, company),
@@ -123,7 +123,7 @@ CREATE TABLE Applications (
   hr_status VARCHAR(50),
   manager_status VARCHAR(50),
   job_title VARCHAR(50),
-  department INT,
+  department VARCHAR(50),
   company VARCHAR(50),
   app_username VARCHAR(50) NOT NULL REFERENCES Applicants(username) ON DELETE CASCADE ON UPDATE CASCADE,
   hr_username VARCHAR(50) REFERENCES Hr_Employees(username) ON DELETE NO ACTION ON UPDATE NO ACTION, --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TODOOO
