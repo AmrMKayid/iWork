@@ -4,10 +4,10 @@ CREATE DATABASE iWork
 CREATE TABLE Companies (
    domain VARCHAR(50) PRIMARY KEY,
    name VARCHAR(50) NOT NULL,
-   email VARCHAR(50), 
+   email VARCHAR(50),
    address VARCHAR(100),
    type VARCHAR(50),
-   vision VARCHAR(50), 
+   vision VARCHAR(50),
    specialization VARCHAR(50)
 )
 
@@ -21,7 +21,7 @@ CREATE TABLE Company_Phones (
 -- Department (weak entity)
 CREATE TABLE Departments (
   code INT, -- INT ?
-  company VARCHAR(50) REFERENCES Companies(domain) ON UPDATE CASCADE,
+  company VARCHAR(50) REFERENCES Companies(domain) ON DELETE CASCADE ON UPDATE CASCADE,
   name VARCHAR(50),
   PRIMARY KEY(code, company)
 )
@@ -34,7 +34,6 @@ CREATE TABLE Users (
   first_name VARCHAR(50) NOT NULL,
   middle_name VARCHAR(50),
   last_name VARCHAR(50) NOT NULL,
---  birth_date DATETIME,
   birth_date DATE NOT NULL,
   age AS (YEAR(CURRENT_TIMESTAMP) - YEAR(birth_date)),
   years_of_experience INT
@@ -53,15 +52,14 @@ CREATE TABLE Jobs (
   company VARCHAR(50),
   short_description VARCHAR(100),
   detailed_description VARCHAR(max),
-  working_hours INT, 
+  working_hours INT,
   min_years_of_experience INT,
   salary DECIMAL,
   vacancy INT,
   deadline DATETIME,
-  ------- >>>>>> hr_username varchar(50) REFERENCES Hr_Employees(username),
   PRIMARY KEY(title, department, company),
   FOREIGN KEY(department, company) REFERENCES Departments(code, company) ON DELETE CASCADE ON UPDATE CASCADE
-) 
+)
 
 CREATE TABLE Questions (
   id INT PRIMARY KEY,
@@ -73,7 +71,7 @@ CREATE TABLE Job_has_Questions (
   title VARCHAR(50),
   department INT,
   company VARCHAR(50),
-  question INT REFERENCES Questions(id) ON DELETE CASCADE,
+  question INT REFERENCES Questions(id) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY(title, department, company, question),
   FOREIGN KEY(title, department, company) REFERENCES Jobs(title, department, company) ON DELETE CASCADE ON UPDATE CASCADE
 )
@@ -88,7 +86,7 @@ CREATE TABLE Staff_Members (
   job_title VARCHAR(50),
   department INT,
   company VARCHAR(50),
-  FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON UPDATE CASCADE,
+  FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ----->>>>--- FOREIGN KEY(department, company) REFERENCES Departments(code, company) ON UPDATE CASCADE
 )
 
@@ -105,11 +103,11 @@ CREATE TABLE Regular_Employees (
   username VARCHAR(50) PRIMARY KEY REFERENCES Staff_Members(username) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
-CREATE TABLE Hr_Employee_creates_Job(
+CREATE TABLE Hr_Employee_creates_Job (
   job_title VARCHAR(50),
   department INT,
   company VARCHAR(50),
-  hr_username VARCHAR(50) NOT NULL REFERENCES Hr_Employees(username) ON UPDATE CASCADE -- ON DELETE CASCADE?,
+  hr_username VARCHAR(50) NOT NULL REFERENCES Hr_Employees(username) ON DELETE NO ACTION ON UPDATE CASCADE,
   PRIMARY KEY(job_title, department, company),
   FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON DELETE CASCADE ON UPDATE CASCADE
 )
@@ -128,18 +126,19 @@ CREATE TABLE Applications (
   department INT,
   company VARCHAR(50),
   app_username VARCHAR(50) NOT NULL REFERENCES Applicants(username) ON DELETE CASCADE ON UPDATE CASCADE,
-  hr_username VARCHAR(50) REFERENCES Hr_Employees(username) ON UPDATE CASCADE ON DELETE SET NULL,
-  manager_username VARCHAR(50) REFERENCES Managers(username) ON UPDATE CASCADE ON DELETE SET NULL,
-  FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON UPDATE CASCADE -- ON DELETE?
+  hr_username VARCHAR(50) REFERENCES Hr_Employees(username) ON DELETE NO ACTION ON UPDATE NO ACTION, --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TODOOO
+  manager_username VARCHAR(50) REFERENCES Managers(username)ON DELETE NO ACTION ON UPDATE NO ACTION, --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TODOOO
+  FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
-CREATE TABLE Attendances ( -- can we just call it "Attendance" or other plural than "AttendanceS"?
+CREATE TABLE Attendance_Records ( -- can we just call it "Attendance" or other plural than "AttendanceS"?
   attendance_date DATETIME,
   time_of_start TIME, --<<<<--- Amr: NOT SURE .. Shadi: 3adi, bass momken nekhalli "attendance_date" DATE not DATETIME (mesh moskela)
   time_of_leave TIME,
   username VARCHAR(50) REFERENCES Staff_Members(username),
   PRIMARY KEY(attendance_date, username)
 )
+
 CREATE TABLE Emails (
   id INT PRIMARY KEY,
   subject VARCHAR(50),
@@ -149,11 +148,11 @@ CREATE TABLE Emails (
 CREATE TABLE Staff_Send_Email_Staff (
   id INT,
   receiver_username VARCHAR(50)  REFERENCES Staff_Members(username),
-  sender_username VARCHAR(50)  REFERENCES Staff_Members(username)
+  sender_username VARCHAR(50)  REFERENCES Staff_Members(username),
   PRIMARY KEY(id, receiver_username)
 )
- 
-CREATE TABLE Announcements ( 
+
+CREATE TABLE Announcements (
   id INT PRIMARY KEY,
   title VARCHAR(50),
   date DATETIME,
@@ -173,7 +172,7 @@ CREATE TABLE Requests (
   hr_username VARCHAR(50) REFERENCES Hr_Employees(username),
   PRIMARY KEY(start_date, username)
 )
- 
+
 CREATE TABLE Business_Trips (
   destination VARCHAR(50),
   purpose VARCHAR(50),
@@ -243,7 +242,7 @@ CREATE TABLE Project_Assignments (
   mananger_username VARCHAR(50) REFERENCES Managers(username),
   PRIMARY KEY(project_name, company, regular_employee_username),
   FOREIGN KEY(project_name, company) REFERENCES Projects(name, company)
-) 
+)
 CREATE TABLE Tasks (
   name varchar(50),
   description varchar(max),
@@ -262,8 +261,8 @@ CREATE TABLE Comments (
   content varchar(50),
   task varchar(50),
   project_name varchar(50),
-  company VARCHAR(50), 
+  company VARCHAR(50),
   username VARCHAR(50) REFERENCES Staff_Members(username),
   PRIMARY KEY(id, task, project_name, company),
   FOREIGN KEY(task, project_name, company) REFERENCES Tasks(name, project_name, company)
-) 
+)
