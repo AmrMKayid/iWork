@@ -1,4 +1,9 @@
+DROP DATABASE iWork
 CREATE DATABASE iWork
+
+GO
+USE iWork
+GO
 
 CREATE TABLE Companies (
    domain VARCHAR(50) PRIMARY KEY,
@@ -18,7 +23,7 @@ CREATE TABLE Company_Phones (
 
 CREATE TABLE Departments (
   code VARCHAR(50),
-  company VARCHAR(50) REFERENCES Companies(domain) ON DELETE CASCADE ON UPDATE CASCADE,
+  company VARCHAR(50) REFERENCES Companies(domain) ON UPDATE CASCADE, -- ON DELETE NO ACTION
   name VARCHAR(50),
   PRIMARY KEY(code, company)
 )
@@ -32,7 +37,7 @@ CREATE TABLE Users (
   last_name VARCHAR(50) NOT NULL,
   birth_date DATE NOT NULL,
   age AS (YEAR(CURRENT_TIMESTAMP) - YEAR(birth_date)),
-  years_of_experience INT
+  years_of_experience INT -- CHECK (years_of_experience >= 0)
 )
 
 CREATE TABLE User_Previous_Job_Titles (
@@ -53,7 +58,7 @@ CREATE TABLE Jobs (
   vacancy INT,
   deadline DATETIME,
   PRIMARY KEY(title, department, company),
-  FOREIGN KEY(department, company) REFERENCES Departments(code, company) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY(department, company) REFERENCES Departments(code, company) ON UPDATE CASCADE
 )
 
 CREATE TABLE Questions (
@@ -75,13 +80,12 @@ CREATE TABLE Staff_Members (
   username VARCHAR(50) PRIMARY KEY REFERENCES Users(username) ON DELETE CASCADE ON UPDATE CASCADE,
   company_email VARCHAR(100), -- can we use a function (in table creation file) to derive the company_email?
   salary DECIMAL,
-  --day_off DATETIME, -- day off, i.e. youm el agaza -- is not DATETIME
   day_off VARCHAR(9) CHECK(day_off in ('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')),
   annual_leaves INT,
   job_title VARCHAR(50),
   department VARCHAR(50),
   company VARCHAR(50),
-  FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON UPDATE CASCADE
   ----->>>>--- FOREIGN KEY(department, company) REFERENCES Departments(code, company) ON UPDATE CASCADE
 )
 
@@ -102,9 +106,9 @@ CREATE TABLE Hr_Employee_creates_Job (
   job_title VARCHAR(50),
   department VARCHAR(50),
   company VARCHAR(50),
-  hr_username VARCHAR(50) NOT NULL REFERENCES Hr_Employees(username) ON DELETE NO ACTION ON UPDATE CASCADE,
+  hr_username VARCHAR(50) NOT NULL REFERENCES Hr_Employees(username) ON UPDATE CASCADE,
   PRIMARY KEY(job_title, department, company),
-  FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON DELETE CASCADE ON UPDATE CASCADE
+  FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON DELETE CASCADE
 )
 
 -- JOB SEEKERS :'D
@@ -122,15 +126,18 @@ CREATE TABLE Applications (
   company VARCHAR(50),
   app_username VARCHAR(50) NOT NULL REFERENCES Applicants(username) ON DELETE CASCADE ON UPDATE CASCADE,
   hr_username VARCHAR(50) REFERENCES Hr_Employees(username) ON DELETE NO ACTION ON UPDATE NO ACTION, --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TODOOO
-  manager_username VARCHAR(50) REFERENCES Managers(username)ON DELETE NO ACTION ON UPDATE NO ACTION, --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TODOOO
-  FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON DELETE CASCADE ON UPDATE CASCADE
+  manager_username VARCHAR(50) REFERENCES Managers(username) ON DELETE NO ACTION ON UPDATE NO ACTION, --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TODOOO
+  FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company)
 )
+
+-- TODO: ^^ HR_reviews_Application (hr_status, hr_username) -- putting status here is to ensure that no one just changes the Application status; instead you have to put that review record in the review table and a username OF AN HR IS NOT NULL
+-- TODO: ^^ Manager_reviews_Application (manager_status, manager_username) -- same ^^
 
 CREATE TABLE Attendance_Records (
   attendance_date DATETIME,
   time_of_start TIME, --<<<<--- Amr: NOT SURE .. Shadi: 3adi, bass momken nekhalli "attendance_date" DATE not DATETIME (mesh moskela)
   time_of_leave TIME,
-  username VARCHAR(50) REFERENCES Staff_Members(username),
+  username VARCHAR(50) REFERENCES Staff_Members(username) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY(attendance_date, username)
 )
 
@@ -138,126 +145,149 @@ CREATE TABLE Emails (
   id INT PRIMARY KEY,
   subject VARCHAR(50),
   body VARCHAR(max),
-  time_stamp TIMESTAMP
+  time_stamp TIMESTAMP NOT NULL -- CURRENT_TIMESTAMP?
 )
+
 CREATE TABLE Staff_Send_Email_Staff (
-  id INT,
-  receiver_username VARCHAR(50)  REFERENCES Staff_Members(username),
-  sender_username VARCHAR(50)  REFERENCES Staff_Members(username),
+  id INT, -- meen el id da? el Emails.id walla eh?  *el emtion elli feeh wa7ed beyfakker we bases le foo2 3al yemeen keda*
+  receiver_username VARCHAR(50) REFERENCES Staff_Members(username),
+  sender_username VARCHAR(50) REFERENCES Staff_Members(username),
   PRIMARY KEY(id, receiver_username)
 )
+
+-- vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv PLEASE CONSIDER this :D vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
+
+--CREATE TABLE Staff_send_email (
+--  id INT FOREIGN KEY REFERENCES Emails(id) ON DELETE CASCADE,
+--  receiver_username VARCHAR(50) REFERENCES Staff_Members(username),
+--  sender_username VARCHAR(50) NOT NULL REFERENCES Staff_Members(username),
+--  PRIMARY KEY(id, receiver_username)
+--)
 
 CREATE TABLE Announcements (
   id INT PRIMARY KEY,
   title VARCHAR(50),
-  date DATETIME,
+  date DATETIME NOT NULL, -- just to make sure we know when an announcement was made
   type VARCHAR(50),
   description VARCHAR(max),
-  hr_username VARCHAR(50) REFERENCES Hr_Employees(username)
+  hr_username VARCHAR(50) NOT NULL REFERENCES Hr_Employees(username) ON UPDATE CASCADE
 )
 
 CREATE TABLE Requests (
-  start_date DATETIME,
+  start_date DATETIME, -- DATE kefaya
   request_date DATETIME,
-  end_date DATETIME,
-  leave_days AS (start_date - end_date),
+  end_date DATETIME, -- DATE kefaya
+  leave_days AS (end_date - start_date), -- Will this output **number of days**?
   hr_status VARCHAR(50),
   manager_status VARCHAR(50),
-  username  VARCHAR(50)  REFERENCES Staff_Members(username),
+  username  VARCHAR(50) REFERENCES Staff_Members(username) ON DELETE CASCADE ON UPDATE CASCADE,
   hr_username VARCHAR(50) REFERENCES Hr_Employees(username),
   PRIMARY KEY(start_date, username)
 )
 
+--CREATE TABLE Requests (
+--  start_date DATETIME, -- DATE kefaya
+--  username VARCHAR(50) REFERENCES Staff_Members(username) ON DELETE CASCADE ON UPDATE CASCADE,
+--  end_date DATETIME, -- DATE kefaya
+--  leave_days AS (end_date - start_date), -- Will this output **number of days**?
+--  request_date DATETIME,
+--  manager_status VARCHAR(50),
+--  hr_status VARCHAR(50),
+--  hr_username VARCHAR(50) REFERENCES Hr_Employees(username), -- ON UPDATE CASCADE will cause a problem, we can also move to another table
+--  PRIMARY KEY(start_date, username)
+--)
+
 CREATE TABLE Business_Trips (
+  start_date DATETIME,
+  username VARCHAR(50),
   destination VARCHAR(50),
   purpose VARCHAR(50),
-  start_date DATETIME,
-  username  VARCHAR(50),
   PRIMARY KEY(start_date, username),
-  FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username)
+  FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username) ON DELETE CASCADE
 )
 
-CREATE TABLE Leaves (
-  type VARCHAR(50),
+CREATE TABLE Leaves ( -- Kindly consider "Leave_Requests"
   start_date DATETIME,
   username  VARCHAR(50),
+  type VARCHAR(50),
+  PRIMARY KEY(start_date, username),
+  FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username) ON DELETE CASCADE
+)
+
+CREATE TABLE Manager_Request_Reviews (
+  start_date DATETIME,
+  username VARCHAR(50),
+  --reason VARCHAR(50),
+  --manager_status VARCHAR(50),
+  manager_status VARCHAR(50) NOT NULL,
+  reason VARCHAR(50),
+  mang_username VARCHAR(50) NOT NULL REFERENCES Managers(username),
   PRIMARY KEY(start_date, username),
   FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username)
 )
 
 CREATE TABLE Request_Hr_Replace (
   start_date DATETIME,
-  username  VARCHAR(50),
-  username_replacing VARCHAR(50) REFERENCES Hr_Employees(username)
+  username VARCHAR(50),
+  username_replacing VARCHAR(50) REFERENCES Hr_Employees(username) ON UPDATE CASCADE
   PRIMARY KEY(start_date, username),
-  FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username)
+  FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username) ON DELETE CASCADE
 )
 
-CREATE TABLE Request_Manganger_Replace (
+CREATE TABLE Request_Manager_Replace (
   start_date DATETIME,
-  username  VARCHAR(50),
-  username_replacing VARCHAR(50) REFERENCES Managers(username)
+  username VARCHAR(50),
+  username_replacing VARCHAR(50) REFERENCES Managers(username) ON UPDATE CASCADE
   PRIMARY KEY(start_date, username),
-  FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username)
+  FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username) ON DELETE CASCADE
 )
 
 CREATE TABLE Request_Regular_Employee_Replace (
   start_date DATETIME,
-  username  VARCHAR(50),
-  username_replacing VARCHAR(50) REFERENCES Regular_Employees(username)
+  username VARCHAR(50),
+  username_replacing VARCHAR(50) REFERENCES Regular_Employees(username) ON UPDATE CASCADE
   PRIMARY KEY(start_date, username),
-  FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username)
+  FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username) ON DELETE CASCADE
 )
-
-
-CREATE TABLE Manager_Request_Reviews (
-  reason VARCHAR(50),
-  manager_status VARCHAR(50),
-  start_date DATETIME,
-  username  VARCHAR(50),
-  mang_username VARCHAR(50) REFERENCES Managers(username),
-  PRIMARY KEY(start_date, username),
-  FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username)
-)
-
 
 CREATE TABLE Projects (
   name varchar(50),
   company VARCHAR(50) REFERENCES Companies(domain),
   start_date DATETIME,
   end_date DATETIME,
-  mananger_define_username VARCHAR(50) REFERENCES Managers(username),
+  mananger_define_username VARCHAR(50) NOT NULL REFERENCES Managers(username) ON UPDATE CASCADE,
   PRIMARY KEY(name, company)
 )
 
 CREATE TABLE Project_Assignments (
   project_name varchar(50),
   company VARCHAR(50),
-  regular_employee_username VARCHAR(50) REFERENCES Regular_Employees(username),
-  mananger_username VARCHAR(50) REFERENCES Managers(username),
+  regular_employee_username VARCHAR(50) NOT NULL REFERENCES Regular_Employees(username),
+  mananger_username VARCHAR(50) NOT NULL REFERENCES Managers(username),
   PRIMARY KEY(project_name, company, regular_employee_username),
   FOREIGN KEY(project_name, company) REFERENCES Projects(name, company)
 )
+
 CREATE TABLE Tasks (
   name varchar(50),
   description varchar(max),
   status varchar(50),
   deadline DATETIME,
-  project_name varchar(50),
+  project varchar(50),
   company VARCHAR(50),
-  regular_employee_username VARCHAR(50) REFERENCES Regular_Employees(username),
-  mananger_username VARCHAR(50) REFERENCES Managers(username),
-  PRIMARY KEY(name, project_name, company),
-  FOREIGN KEY(project_name, company) REFERENCES Projects(name, company)
+  regular_employee_username VARCHAR(50) NOT NULL REFERENCES Regular_Employees(username),
+  mananger_username VARCHAR(50) NOT NULL REFERENCES Managers(username),
+  PRIMARY KEY(name, project, company),
+  FOREIGN KEY(project, company) REFERENCES Projects(name, company) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
 CREATE TABLE Comments (
   id INT,
-  content varchar(50),
-  task varchar(50),
-  project_name varchar(50),
+  task VARCHAR(50),
+  project VARCHAR(50),
   company VARCHAR(50),
-  username VARCHAR(50) REFERENCES Staff_Members(username),
-  PRIMARY KEY(id, task, project_name, company),
-  FOREIGN KEY(task, project_name, company) REFERENCES Tasks(name, project_name, company)
+  content VARCHAR(150),
+  username VARCHAR(50) NOT NULL REFERENCES Staff_Members(username) ON DELETE CASCADE,
+  PRIMARY KEY(id, task, project, company),
+  FOREIGN KEY(task, project, company) REFERENCES Tasks(name, project, company) ON UPDATE CASCADE
 )
