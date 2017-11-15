@@ -167,9 +167,10 @@ CREATE TABLE Requests (
   start_date DATE, 
   request_date DATETIME,
   end_date DATE,
-  leave_days AS DATEDIFF(d, 'start_date', 'end_date'),
-  hr_status VARCHAR(50),
-  manager_status VARCHAR(50),
+--  leave_days AS DATEDIFF(d, 'start_date', 'end_date'),
+  leave_days AS DATEDIFF(d, start_date, end_date),
+  hr_status VARCHAR(50) DEFAULT 'PENDING',
+  manager_status VARCHAR(50) DEFAULT 'PENDING',
   username  VARCHAR(50) REFERENCES Staff_Members(username) ON DELETE CASCADE ON UPDATE CASCADE,
   hr_username VARCHAR(50) REFERENCES Hr_Employees(username),
   PRIMARY KEY(start_date, username)
@@ -188,6 +189,7 @@ CREATE TABLE Leave_Requests (
   start_date DATE,
   username  VARCHAR(50),
   type VARCHAR(50),
+  CONSTRAINT leave_type_options CHECK (type in ('sick', 'accidental', 'annual')),
   PRIMARY KEY(start_date, username),
   FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username) ON DELETE CASCADE
 )
