@@ -37,7 +37,7 @@ CREATE TABLE Users (
   last_name VARCHAR(50) NOT NULL,
   birth_date DATE NOT NULL,
   age AS (YEAR(CURRENT_TIMESTAMP) - YEAR(birth_date)),
-  years_of_experience INT -- CHECK (years_of_experience >= 0)
+  years_of_experience INT CHECK (years_of_experience >= 0)
 )
 
 CREATE TABLE User_Previous_Job_Titles (
@@ -86,7 +86,6 @@ CREATE TABLE Staff_Members (
   department VARCHAR(50),
   company VARCHAR(50),
   FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON UPDATE CASCADE
-  ----->>>>--- FOREIGN KEY(department, company) REFERENCES Departments(code, company) ON UPDATE CASCADE
 )
 
 CREATE TABLE Hr_Employees (
@@ -145,24 +144,15 @@ CREATE TABLE Emails (
   id INT PRIMARY KEY,
   subject VARCHAR(50),
   body VARCHAR(max),
-  time_stamp TIMESTAMP NOT NULL -- CURRENT_TIMESTAMP?
+  time_stamp AS CURRENT_TIMESTAMP --TIMESTAMP NOT NULL -- CURRENT_TIMESTAMP?
 )
 
-CREATE TABLE Staff_Send_Email_Staff (
-  id INT, -- meen el id da? el Emails.id walla eh?  *el emtion elli feeh wa7ed beyfakker we bases le foo2 3al yemeen keda*
-  receiver_username VARCHAR(50) REFERENCES Staff_Members(username),
-  sender_username VARCHAR(50) REFERENCES Staff_Members(username),
-  PRIMARY KEY(id, receiver_username)
+CREATE TABLE Staff_send_Email (
+ id INT FOREIGN KEY REFERENCES Emails(id) ON DELETE CASCADE,
+ receiver_username VARCHAR(50) REFERENCES Staff_Members(username),
+ sender_username VARCHAR(50) NOT NULL REFERENCES Staff_Members(username),
+ PRIMARY KEY(id, receiver_username)
 )
-
--- vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv PLEASE CONSIDER this :D vvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-
---CREATE TABLE Staff_send_email (
---  id INT FOREIGN KEY REFERENCES Emails(id) ON DELETE CASCADE,
---  receiver_username VARCHAR(50) REFERENCES Staff_Members(username),
---  sender_username VARCHAR(50) NOT NULL REFERENCES Staff_Members(username),
---  PRIMARY KEY(id, receiver_username)
---)
 
 CREATE TABLE Announcements (
   id INT PRIMARY KEY,
@@ -174,10 +164,10 @@ CREATE TABLE Announcements (
 )
 
 CREATE TABLE Requests (
-  start_date DATETIME, -- DATE kefaya
+  start_date DATE, 
   request_date DATETIME,
-  end_date DATETIME, -- DATE kefaya
-  leave_days AS (end_date - start_date), -- Will this output **number of days**?
+  end_date DATE,
+  leave_days AS DATEDIFF(d, 'start_date', 'end_date'),
   hr_status VARCHAR(50),
   manager_status VARCHAR(50),
   username  VARCHAR(50) REFERENCES Staff_Members(username) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -185,20 +175,8 @@ CREATE TABLE Requests (
   PRIMARY KEY(start_date, username)
 )
 
---CREATE TABLE Requests (
---  start_date DATETIME, -- DATE kefaya
---  username VARCHAR(50) REFERENCES Staff_Members(username) ON DELETE CASCADE ON UPDATE CASCADE,
---  end_date DATETIME, -- DATE kefaya
---  leave_days AS (end_date - start_date), -- Will this output **number of days**?
---  request_date DATETIME,
---  manager_status VARCHAR(50),
---  hr_status VARCHAR(50),
---  hr_username VARCHAR(50) REFERENCES Hr_Employees(username), -- ON UPDATE CASCADE will cause a problem, we can also move to another table
---  PRIMARY KEY(start_date, username)
---)
-
 CREATE TABLE Business_Trips (
-  start_date DATETIME,
+  start_date DATE,
   username VARCHAR(50),
   destination VARCHAR(50),
   purpose VARCHAR(50),
@@ -206,8 +184,8 @@ CREATE TABLE Business_Trips (
   FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username) ON DELETE CASCADE
 )
 
-CREATE TABLE Leaves ( -- Kindly consider "Leave_Requests"
-  start_date DATETIME,
+CREATE TABLE Leave_Requests (
+  start_date DATE,
   username  VARCHAR(50),
   type VARCHAR(50),
   PRIMARY KEY(start_date, username),
@@ -215,10 +193,8 @@ CREATE TABLE Leaves ( -- Kindly consider "Leave_Requests"
 )
 
 CREATE TABLE Manager_Request_Reviews (
-  start_date DATETIME,
+  start_date DATE,
   username VARCHAR(50),
-  --reason VARCHAR(50),
-  --manager_status VARCHAR(50),
   manager_status VARCHAR(50) NOT NULL,
   reason VARCHAR(50),
   mang_username VARCHAR(50) NOT NULL REFERENCES Managers(username),
@@ -227,7 +203,7 @@ CREATE TABLE Manager_Request_Reviews (
 )
 
 CREATE TABLE Request_Hr_Replace (
-  start_date DATETIME,
+   start_date DATE,
   username VARCHAR(50),
   username_replacing VARCHAR(50) REFERENCES Hr_Employees(username) ON UPDATE CASCADE
   PRIMARY KEY(start_date, username),
@@ -235,7 +211,7 @@ CREATE TABLE Request_Hr_Replace (
 )
 
 CREATE TABLE Request_Manager_Replace (
-  start_date DATETIME,
+   start_date DATE,
   username VARCHAR(50),
   username_replacing VARCHAR(50) REFERENCES Managers(username) ON UPDATE CASCADE
   PRIMARY KEY(start_date, username),
@@ -243,7 +219,7 @@ CREATE TABLE Request_Manager_Replace (
 )
 
 CREATE TABLE Request_Regular_Employee_Replace (
-  start_date DATETIME,
+  start_date DATE,
   username VARCHAR(50),
   username_replacing VARCHAR(50) REFERENCES Regular_Employees(username) ON UPDATE CASCADE
   PRIMARY KEY(start_date, username),
