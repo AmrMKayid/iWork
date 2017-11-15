@@ -5,10 +5,10 @@ CREATE TABLE Companies (
    domain VARCHAR(50) PRIMARY KEY,
    name VARCHAR(50) NOT NULL,
    email VARCHAR(50),
-   address VARCHAR(100),
+   address VARCHAR(max),
    type VARCHAR(50),
-   vision VARCHAR(50),
-   specialization VARCHAR(50)
+   vision VARCHAR(max),
+   specialization VARCHAR(max)
 )
 
 -- Company's phone_number(s)
