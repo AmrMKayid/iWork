@@ -1,6 +1,5 @@
 CREATE DATABASE iWork
 
--- Company
 CREATE TABLE Companies (
    domain VARCHAR(50) PRIMARY KEY,
    name VARCHAR(50) NOT NULL,
@@ -11,14 +10,12 @@ CREATE TABLE Companies (
    specialization VARCHAR(max)
 )
 
--- Company's phone_number(s)
 CREATE TABLE Company_Phones (
   phone VARCHAR(50),
   company VARCHAR(50) REFERENCES Companies(domain) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY(company, phone)
 )
 
--- Department (weak entity)
 CREATE TABLE Departments (
   code VARCHAR(50),
   company VARCHAR(50) REFERENCES Companies(domain) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -26,7 +23,6 @@ CREATE TABLE Departments (
   PRIMARY KEY(code, company)
 )
 
--- User
 CREATE TABLE Users (
   username VARCHAR(50) PRIMARY KEY,
   password VARCHAR(50) NOT NULL,
@@ -39,7 +35,6 @@ CREATE TABLE Users (
   years_of_experience INT
 )
 
--- User's previous job title(s)
 CREATE TABLE User_Previous_Job_Titles (
   title VARCHAR(50),
   username VARCHAR(50) REFERENCES Users(username) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -131,7 +126,7 @@ CREATE TABLE Applications (
   FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
-CREATE TABLE Attendance_Records ( -- can we just call it "Attendance" or other plural than "AttendanceS"?
+CREATE TABLE Attendance_Records (
   attendance_date DATETIME,
   time_of_start TIME, --<<<<--- Amr: NOT SURE .. Shadi: 3adi, bass momken nekhalli "attendance_date" DATE not DATETIME (mesh moskela)
   time_of_leave TIME,
