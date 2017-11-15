@@ -190,3 +190,50 @@ GO
 --EXEC Show_my_Requests 'YasmeenKhaled'
 --EXEC Show_my_Requests 'AmrMKayid'
 
+GO
+
+-- [6]
+-- Delete any request I applied for as long as it is still in the review process.
+CREATE PROC Delete_my_Pending_Requests
+@username VARCHAR(50)
+AS BEGIN
+
+-- TODO: Get the start_dates of the requests by this username, where hr_status or manager_status is 'PENDING'
+SELECT start_date
+FROM Requests
+WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
+
+DELETE FROM Manager_Request_Reviews
+WHERE username = @username AND manager_status = 'PENDING'
+
+DELETE FROM Request_Hr_Replace
+WHERE username = @username AND start_date IN (
+	SELECT start_date FROM Requests
+	WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING'))
+
+DELETE FROM Request_Manager_Replace
+WHERE username = @username AND start_date IN (
+	SELECT start_date FROM Requests
+	WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING'))
+
+DELETE FROM Request_Regular_Employee_Replace
+WHERE username = @username AND start_date IN (
+	SELECT start_date FROM Requests
+	WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING'))
+
+DELETE FROM Leave_Requests
+WHERE username = @username AND start_date IN (
+	SELECT start_date FROM Requests
+	WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING'))
+
+DELETE FROM Business_Trips
+WHERE username = @username AND start_date IN (
+	SELECT start_date FROM Requests
+	WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING'))
+
+DELETE FROM Requests
+WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
+
+END
+
+GO
