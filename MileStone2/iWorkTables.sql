@@ -1,4 +1,4 @@
---DROP DATABASE iWork
+﻿--DROP DATABASE iWork
 CREATE DATABASE iWork
 
 GO
