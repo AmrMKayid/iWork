@@ -74,6 +74,15 @@ CREATE TABLE Job_has_Questions (
   FOREIGN KEY(title, department, company) REFERENCES Jobs(title, department, company) ON DELETE CASCADE ON UPDATE CASCADE
 )
 
+GO
+CREATE FUNCTION form_staff_company_email(@username VARCHAR(50), @company_domain VARCHAR(50)) RETURNS VARCHAR(100)
+AS BEGIN
+	DECLARE @email VARCHAR(100)
+	SET @email = @username + '@' + @company_domain
+	RETURN @email
+END
+GO
+
 CREATE TABLE Staff_Members (
   username VARCHAR(50) PRIMARY KEY REFERENCES Users(username) ON DELETE CASCADE ON UPDATE CASCADE,
   company_email VARCHAR(100), -- can we use a function (in table creation file) to derive the company_email?
