@@ -73,6 +73,11 @@ AS BEGIN
 END
 GO
 
+CREATE FUNCTION Get_my_Pending_Requests (@username VARCHAR(50)) RETURNS TABLE
+AS RETURN
+	SELECT * FROM Requests WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
+GO
+
 -------- END OF EXTRA PROCEDURES --------
 
 -- As a staff member, I should be able to ..
@@ -188,42 +193,31 @@ CREATE PROC Delete_my_Pending_Requests
 @username VARCHAR(50)
 AS BEGIN
 
--- TODO: Get the start_dates of the requests by this username, where hr_status or manager_status is 'PENDING'
-SELECT start_date
-FROM Requests
-WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
-
 -- If a Manager review was added, remove it
 DELETE FROM Manager_Request_Reviews
 WHERE username = @username
 
+-- Remove the staff replace entry
 DELETE FROM Request_Hr_Replace
-WHERE username = @username AND start_date IN (
-	SELECT start_date FROM Requests
-	WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING'))
+WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests)
 
 DELETE FROM Request_Manager_Replace
-WHERE username = @username AND start_date IN (
-	SELECT start_date FROM Requests
-	WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING'))
+WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests)
 
 DELETE FROM Request_Regular_Employee_Replace
-WHERE username = @username AND start_date IN (
-	SELECT start_date FROM Requests
-	WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING'))
+WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests)
 
+-- Delete from Leave requests and from Business Trips (it should be in one of them only)
 DELETE FROM Leave_Requests
-WHERE username = @username AND start_date IN (
-	SELECT start_date FROM Requests
-	WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING'))
+WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests)
 
 DELETE FROM Business_Trips
-WHERE username = @username AND start_date IN (
-	SELECT start_date FROM Requests
-	WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING'))
+WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests)
 
+-- Finally, delete the request entirely
 DELETE FROM Requests
 WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
 
 END
 GO
+
