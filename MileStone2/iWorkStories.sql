@@ -29,7 +29,7 @@ AS BEGIN
 		SET @valid = 0
 		PRINT 'The staff member replacing you in your leave has to be someone else. You will find someone.'
 	END
-	ELSE BEGIN
+	ELSE BEGIN -- TODO: Add HERE a check that thay are in the same company/department
 
 		-- Check that they are both Regular Employees, both Managers or both HR Employees,
 		-- Type of A is T -> Type of B is T
@@ -73,6 +73,7 @@ AS BEGIN
 END
 GO
 
+-- GET the request I have created that are in the review process. Used for deletion.
 CREATE FUNCTION Get_my_Pending_Requests (@username VARCHAR(50)) RETURNS TABLE
 AS RETURN
 	SELECT * FROM Requests WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
@@ -181,11 +182,12 @@ AS
 	FROM Requests R LEFT OUTER JOIN Manager_Request_Reviews MR
 	ON R.start_date = MR.start_date AND R.username = MR.username
 	WHERE R.username = @username
-GO
 
 --EXEC Show_my_Requests 'ShadiBarghash'
 --EXEC Show_my_Requests 'YasmeenKhaled'
 --EXEC Show_my_Requests 'AmrMKayid'
+
+GO
 
 
 -- [6] Delete any request I applied for as long as it is still in the review process.
@@ -199,25 +201,68 @@ WHERE username = @username
 
 -- Remove the staff replace entry
 DELETE FROM Request_Hr_Replace
-WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests)
+WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
 
 DELETE FROM Request_Manager_Replace
-WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests)
+WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
 
 DELETE FROM Request_Regular_Employee_Replace
-WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests)
+WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
 
 -- Delete from Leave requests and from Business Trips (it should be in one of them only)
 DELETE FROM Leave_Requests
-WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests)
+WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
 
 DELETE FROM Business_Trips
-WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests)
+WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
 
 -- Finally, delete the request entirely
 DELETE FROM Requests
 WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
 
 END
+
+-- EXEC Delete_my_Pending_Requests 'ShadiABarghash'
+
 GO
 
+--  TODO: [7] Send emails to staff members in my company.
+
+-- [8] View emails sent to me by other staff members of my company.
+CREATE PROC View_my_inbox_Emails
+@username VARCHAR(50)
+AS SELECT time_stamp, sender_username, subject, body
+	FROM Emails INNER JOIN Staff_send_Email SEND
+	ON Emails.id = SEND.email_id AND SEND.receiver_username = @username
+	WHERE Send.sender_username IN (SELECT SM2.username FROM Staff_Members SM1 INNER JOIN Staff_Members SM2
+									ON SM1.company = SM2.company AND SM1.username = @username)
+	ORDER BY Emails.time_stamp DESC
+
+-- TODO: Test with EXEC after testing [7]
+
+GO
+
+-- [9] TODO: Reply to an email sent to me, while the reply would be saved in the database as a new email record.
+--CREATE PROC Reply_to_Email
+--@email_id INT
+
+-- [10] View announcements related to my company within the past 20 days.
+CREATE PROC Announcements_of_my_Company
+@username VARCHAR(50), @days INT = 20
+AS
+	IF @days < 0
+		PRINT 'Sorry, we can''t get the announcements of the future.'
+	ELSE IF @username IS NULL
+		PRINT 'You have to enter a username.'
+	ELSE IF @username NOT IN (SELECT username FROM Staff_Members)
+		PRINT 'You have to be working in a company to view the announcements.'
+	ELSE BEGIN
+		SELECT * FROM Announcements
+		WHERE hr_username IN (SELECT SM2.username FROM Staff_Members SM1 INNER JOIN Staff_Members SM2
+								ON SM1.company = SM2.company AND SM1.username = @username)
+			AND DATEDIFF(d, date, GETDATE()) <= @days
+	END
+
+-- TODO: Test with EXEC, need some Announcements to be put first;
+-- at least two, where one is before 20 days and one is today for example.
+--EXEC Announcements_of_my_Company 'ShadiBarghash'

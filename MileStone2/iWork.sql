@@ -147,17 +147,17 @@ CREATE TABLE Attendance_Records (
 )
 
 CREATE TABLE Emails (
-  id INT PRIMARY KEY,
+  id INT PRIMARY KEY IDENTITY,
   subject VARCHAR(50),
   body VARCHAR(max),
   time_stamp AS CURRENT_TIMESTAMP --TIMESTAMP NOT NULL -- CURRENT_TIMESTAMP?
 )
 
 CREATE TABLE Staff_send_Email (
- id INT FOREIGN KEY REFERENCES Emails(id) ON DELETE CASCADE,
+ email_id INT FOREIGN KEY REFERENCES Emails(id) ON DELETE CASCADE,
  receiver_username VARCHAR(50) REFERENCES Staff_Members(username),
  sender_username VARCHAR(50) NOT NULL REFERENCES Staff_Members(username),
- PRIMARY KEY(id, receiver_username)
+ PRIMARY KEY(email_id, receiver_username)
 )
 
 CREATE TABLE Announcements (
