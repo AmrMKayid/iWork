@@ -1,21 +1,15 @@
 USE iWork
 GO
 
--- As a staff member, I should be able to ..
+-------- EXTRA PROCEDURES USED BY OUR PROCEDURES --------
 
--- [4]
--- Apply for requests of both types: leave requests or business trip requests,
--- by supplying all the needed information for the request.
--- As a staff member, I can not apply for a leave if I exceeded the number of annual leaves allowed.
--- If I am a manager applying for a request, the request does not need to be approved, but it only needs to be kept track of.
--- Also, I can not apply for a request when it’s applied period overlaps with another request.
+---- You can search for "-- END OF EXTRA PROCEDURES --" to proceed to the procedures of the user stories
 
 -- Apply_for_Request_CHECKS :
 -- Checks and validates the parameters needed to make a data entry in any of the request tables.
--- However, this does not create a new entry. It returns two outputs:
+-- However, this does not create a new entry. It just returns two outputs:
 -- @valid BIT OUTPUT: Indicates whether the input is valid according to this Procedures
--- @staff_category VARCHAR(10) OUTPUT: Returns 'HR', 'Mang' or 'RegE' to indicate the category of staff members.
--- REMARK: The requesting StaffMember and the replacing one must be one and the same one of these.
+-- @staff_category VARCHAR(10) OUTPUT: Returns 'HR', 'Mang' or 'RegE' to indicate the category of (both) staff members.
 CREATE PROC Apply_for_Request_CHECKS
 @staff_username VARCHAR(50), @username_replacing VARCHAR(50), @start_date DATE, @end_date DATE, @valid BIT OUTPUT, @staff_category VARCHAR(10) OUTPUT
 AS BEGIN
@@ -79,7 +73,17 @@ AS BEGIN
 END
 GO
 
--- The actual procedure for applying for a leave request
+-------- END OF EXTRA PROCEDURES --------
+
+-- As a staff member, I should be able to ..
+
+-- [4]
+-- Apply for requests of both types: leave requests or business trip requests,
+-- by supplying all the needed information for the request.
+-- As a staff member, I can not apply for a leave if I exceeded the number of annual leaves allowed.
+-- If I am a manager applying for a request, the request does not need to be approved, but it only needs to be kept track of.
+-- Also, I can not apply for a request when it’s applied period overlaps with another request.
+
 CREATE PROC Apply_for_Leave_Request
 @staff_username VARCHAR(50), @username_replacing VARCHAR(50), @start_date DATE, @end_date DATE, @leave_type VARCHAR(50)
 AS BEGIN
@@ -119,7 +123,6 @@ AS BEGIN
 END
 GO
 
--- The actual procedure for applying for a business trip request
 CREATE PROC Apply_for_Business_Trip
 @staff_username VARCHAR(50), @username_replacing VARCHAR(50), @start_date DATE, @end_date DATE, @destination VARCHAR(50), @purpose VARCHAR(50)
 AS BEGIN
@@ -165,9 +168,7 @@ GO
 --EXEC Apply_for_Business_Trip 'ShadiBarghash', 'YasmeenKhaled', '2018-06-01', '2018-07-01', 'Seattle, WA, USA', 'Imagine Cup 2016'
 --EXEC Apply_for_Leave_Request'YasmeenKhaled', 'ShadiBarghash', '2018-06-29', '2018-07-10', 'annual'
 
-
--- [5]
--- View the status of all requests I applied for before (HR employee and manager responses)
+-- [5] View the status of all requests I applied for before (HR employee and manager responses)
 CREATE PROC Show_my_Requests
 @username VARCHAR(50)
 AS
@@ -182,8 +183,7 @@ GO
 --EXEC Show_my_Requests 'AmrMKayid'
 
 
--- [6]
--- Delete any request I applied for as long as it is still in the review process.
+-- [6] Delete any request I applied for as long as it is still in the review process.
 CREATE PROC Delete_my_Pending_Requests
 @username VARCHAR(50)
 AS BEGIN
@@ -193,8 +193,9 @@ SELECT start_date
 FROM Requests
 WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
 
+-- If a Manager review was added, remove it
 DELETE FROM Manager_Request_Reviews
-WHERE username = @username AND manager_status = 'PENDING'
+WHERE username = @username
 
 DELETE FROM Request_Hr_Replace
 WHERE username = @username AND start_date IN (
@@ -225,3 +226,4 @@ DELETE FROM Requests
 WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
 
 END
+GO

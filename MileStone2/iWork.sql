@@ -39,7 +39,7 @@ CREATE TABLE Users (
 )
 
 CREATE TABLE User_Previous_Job_Titles (
-  title VARCHAR(50),
+  title VARCHAR(50), -- Increase title length or add 'at_company' field
   username VARCHAR(50) REFERENCES Users(username) ON DELETE CASCADE ON UPDATE CASCADE,
   PRIMARY KEY(title, username)
 )
@@ -85,14 +85,15 @@ GO
 
 CREATE TABLE Staff_Members (
   username VARCHAR(50) PRIMARY KEY REFERENCES Users(username) ON DELETE CASCADE ON UPDATE CASCADE,
-  company_email VARCHAR(100), -- can we use a function (in table creation file) to derive the company_email?
+  company_email AS dbo.form_staff_company_email(username, company),
   salary DECIMAL,
   day_off VARCHAR(9) CHECK(day_off in ('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')),
   annual_leaves INT,
   job_title VARCHAR(50),
   department VARCHAR(50),
   company VARCHAR(50),
-  FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON UPDATE CASCADE
+  FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON UPDATE CASCADE,
+  CONSTRAINT day_off_options CHECK(day_off in ('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'))
 )
 
 CREATE TABLE Hr_Employees (
@@ -174,7 +175,6 @@ CREATE TABLE Requests (
   start_date DATE, 
   request_date DATETIME,
   end_date DATE,
---  leave_days AS DATEDIFF(d, 'start_date', 'end_date'),
   leave_days AS DATEDIFF(d, start_date, end_date),
   hr_status VARCHAR(50) DEFAULT 'PENDING',
   manager_status VARCHAR(50) DEFAULT 'PENDING',
