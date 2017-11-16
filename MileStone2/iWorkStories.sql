@@ -1,4 +1,5 @@
 USE iWork
+GO
 
 -- As a staff member, I should be able to ..
 
@@ -8,8 +9,6 @@ USE iWork
 -- As a staff member, I can not apply for a leave if I exceeded the number of annual leaves allowed.
 -- If I am a manager applying for a request, the request does not need to be approved, but it only needs to be kept track of.
 -- Also, I can not apply for a request when it’s applied period overlaps with another request.
-
-GO
 
 -- Apply_for_Request_CHECKS :
 -- Checks and validates the parameters needed to make a data entry in any of the request tables.
@@ -78,9 +77,6 @@ AS BEGIN
 		END
 	END
 END
-
-GO
-
 GO
 
 -- The actual procedure for applying for a leave request
@@ -121,9 +117,6 @@ AS BEGIN
 
 	END
 END
-
-GO
-
 GO
 
 -- The actual procedure for applying for a business trip request
@@ -158,7 +151,6 @@ AS BEGIN
 
 	END
 END
-
 GO
 
 --EXEC Apply_for_Leave_Request 'AmrMKayid', 'YasmeenKhaled', '2017-12-11', '2017-12-01', 'annual'
@@ -173,11 +165,10 @@ GO
 --EXEC Apply_for_Business_Trip 'ShadiBarghash', 'YasmeenKhaled', '2018-06-01', '2018-07-01', 'Seattle, WA, USA', 'Imagine Cup 2016'
 --EXEC Apply_for_Leave_Request'YasmeenKhaled', 'ShadiBarghash', '2018-06-29', '2018-07-10', 'annual'
 
-GO
 
 -- [5]
 -- View the status of all requests I applied for before (HR employee and manager responses)
-CREATE PROCEDURE Show_my_Requests
+CREATE PROC Show_my_Requests
 @username VARCHAR(50)
 AS
 	SELECT R.start_date, end_date, request_date, R.manager_status, MR.reason, MR.mang_username, hr_status, hr_username
@@ -190,7 +181,6 @@ GO
 --EXEC Show_my_Requests 'YasmeenKhaled'
 --EXEC Show_my_Requests 'AmrMKayid'
 
-GO
 
 -- [6]
 -- Delete any request I applied for as long as it is still in the review process.
@@ -235,5 +225,3 @@ DELETE FROM Requests
 WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
 
 END
-
-GO
