@@ -77,9 +77,7 @@ CREATE TABLE Job_has_Questions (
 GO
 CREATE FUNCTION form_staff_company_email(@username VARCHAR(50), @company_domain VARCHAR(50)) RETURNS VARCHAR(100)
 AS BEGIN
-	DECLARE @email VARCHAR(100)
-	SET @email = @username + '@' + @company_domain
-	RETURN @email
+	RETURN @username + '@' + @company_domain
 END
 GO
 
