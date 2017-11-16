@@ -1,9 +1,7 @@
---DROP DATABASE iWork
 CREATE DATABASE iWork
+GO
 
-GO
 USE iWork
-GO
 
 CREATE TABLE Companies (
    domain VARCHAR(50) PRIMARY KEY,
