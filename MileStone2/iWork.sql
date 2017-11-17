@@ -132,7 +132,9 @@ CREATE TABLE Applications (
   app_username VARCHAR(50) NOT NULL REFERENCES Applicants(username) ON DELETE CASCADE ON UPDATE CASCADE,
   hr_username VARCHAR(50) REFERENCES Hr_Employees(username) ON DELETE NO ACTION ON UPDATE NO ACTION, --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TODOOO
   manager_username VARCHAR(50) REFERENCES Managers(username) ON DELETE NO ACTION ON UPDATE NO ACTION, --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TODOOO
-  FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company)
+  FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company),
+  CONSTRAINT hr_status_options CHECK (hr_status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
+  CONSTRAINT hr_status_options CHECK (manager_status IN (NULL, 'PENDING', 'ACCEPTED', 'REJECTED'))
 )
 
 -- TODO: ^^ HR_reviews_Application (hr_status, hr_username) -- putting status here is to ensure that no one just changes the Application status; instead you have to put that review record in the review table and a username OF AN HR IS NOT NULL
