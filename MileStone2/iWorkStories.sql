@@ -342,5 +342,23 @@ AS
 			PRINT 'HR Status of the Application is updated.'
 		END
 	END
+GO
+
+-- TODO: Test with EXEC
+
+-- [6] Post announcements related to my company to inform staff members about new updates.
+CREATE PROC Post_Announcement
+@hr_username VARCHAR(50), @type VARCHAR(50), @title VARCHAR(50), @description VARCHAR(50)
+AS
+	-- Make sure user is an HR
+	IF @hr_username NOT IN (SELECT username FROM Hr_Employees)
+		PRINT 'You have to be an HR Employee to post announcements to your company'
+	-- Make sure the HR makes a title for the announcement
+	-- Let's say the title can be descriptive so description is not required
+	ELSE IF @title IS NULL
+		PRINT 'Please put a title for the announcement as a headline.'
+	ELSE
+		INSERT INTO Announcements VALUES (@title, GETDATE(), @type, @description, @hr_username)
+GO
 
 -- TODO: Test with EXEC
