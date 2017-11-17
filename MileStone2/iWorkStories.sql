@@ -292,8 +292,8 @@ CREATE PROC View_new_Applications_for_Job_title_in_my_Department
 @hr_username VARCHAR(50), @job_title VARCHAR(50)
 AS
 	-- Make sure username is an HR employee
-	IF @hr_username IN (SELECT username FROM Hr_Employees)
-		PRINT 'Sorry, you have to be an HR employee to check all the new Applications for Jobs in the department.'
+	IF @hr_username NOT IN (SELECT username FROM Hr_Employees)
+		PRINT 'Sorry, you have to be an HR employee to check the new Job Applications in the department.'
 	-- Make sure job title is offered by his/her department
 	ELSE IF @job_title NOT IN (SELECT title FROM Jobs J WHERE EXISTS (SELECT * FROM Staff_Members S WHERE username = @hr_username
 																AND S.company = J.company AND S.department = J.department))
@@ -305,5 +305,42 @@ AS
 					INNER JOIN Users JS ON A.app_username = JS.username
 		WHERE A.job_title = @job_title AND A.hr_status = 'PENDING' AND EXISTS (SELECT * FROM Staff_Members S WHERE
 						S.username = @hr_username AND S.company = J.company AND S.department = J.department)
+GO
 
 -- TODO: Test with some EXEC, needs some fresh Applications
+
+-- [5] Accept or reject applications for jobs in my department.
+-- @accept: 'TRUE' or 1 for ACCEPT. 'FALSE' or 0 for REJECT.
+CREATE PROC Respond_to_Job_Application_in_my_Department
+@hr_username VARCHAR(50), @app_id INT, @accept BIT
+AS
+	-- Make sure username is an HR employee
+	IF @hr_username NOT IN (SELECT username FROM Hr_Employees)
+		PRINT 'Sorry, you have to be an HR employee to respond to the new Job Applications in the department.'
+	-- Check that the Job Appplication exist
+	ELSE IF @app_id NOT IN (SELECT id FROM Applications)
+		PRINT 'There is no Job Application made with this Id'
+	-- Check that the id referenced by @app_id is for a Job in the department that @hr_username works in
+	ELSE IF NOT EXISTS (SELECT * FROM Staff_Members SM INNER JOIN Applications A
+					ON SM.department = A.department AND SM.company = A.company
+						AND SM.username = @hr_username AND A.id = @app_id)
+		PRINT 'The Application you are trying to review is not in your Department'
+	ELSE BEGIN
+		DECLARE @new_status VARCHAR(50)
+		IF @accept = 1
+			SET @new_status = 'ACCEPTED'
+		ELSE IF @accept = 0
+			SET @new_status = 'REJECTED'
+		ELSE
+			PRINT 'Application not changed'
+
+		IF @new_status IS NOT NULL BEGIN
+			UPDATE Applications
+			SET hr_status = @new_status, hr_username = @hr_username
+			WHERE id = @app_id
+
+			PRINT 'HR Status of the Application is updated.'
+		END
+	END
+
+-- TODO: Test with EXEC

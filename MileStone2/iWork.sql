@@ -124,7 +124,7 @@ CREATE TABLE Applicants (
 CREATE TABLE Applications (
   id INT PRIMARY KEY,
   score INT,
-  hr_status VARCHAR(50),
+  hr_status VARCHAR(50) DEFAULT 'PENDING',
   manager_status VARCHAR(50),
   job_title VARCHAR(50),
   department VARCHAR(50),
