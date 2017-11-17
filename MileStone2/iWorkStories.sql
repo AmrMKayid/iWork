@@ -389,3 +389,35 @@ CREATE PROC View_Requests_in_my_Department_approved_by_Manager_only
 AS SELECT R.*, MR.manager_status, MR.mang_username FROM Requests R INNER JOIN Staff_Members SM ON R.username = SM.username AND R.hr_status = 'PENDING' AND R.manager_status = 'ACCEPTED'
 							INNER JOIN Staff_Members HR ON HR.username = @hr_username AND HR.department = SM.department AND HR.company = SM.company
 							INNER JOIN Manager_Request_Reviews MR ON MR.username = R.username AND MR.start_date = R.start_date
+GO
+
+-- TODO: [8] Accept or reject requests of staff members working with me in the same department that were approved by a manager.
+-- My response decides the ?nal status of the request, therefore the annual leaves of the applying staff member should be
+-- updated in case the request was accepted.
+-- Take into consideration that if the duration of the request includes the staff member’s weekly day-off and/or Friday,
+-- they should not be counted as annual leaves.
+
+-- [9] View attendance records of a staff member in my department (check-in time, check-out time, duration, missing hours)
+-- within a certain period of time.
+
+CREATE PROC View_Attendance_of_Staff_Member
+@staff_username VARCHAR(50), @from DATETIME, @to DATETIME, @hr_username VARCHAR(50)
+AS
+	IF @hr_username IS NULL OR @hr_username NOT IN (SELECT username FROM Hr_Employees)
+		PRINT 'You have to be an HR employee to check attendance records of other staff members in your department.'
+	ELSE IF @staff_username IS NULL
+		PRINT 'Please specify the Staff Member you want to check his/her username.'
+	ELSE IF @staff_username NOT IN (SELECT SM.username FROM Staff_Members SM INNER JOIN Staff_Members HR
+									ON SM.company = HR.company AND SM.department = HR.department
+									AND HR.username = @hr_username)
+		PRINT 'That username is not a Staff Member in your department.'
+	ELSE IF @from IS NULL OR @to IS NULL
+		PRINT 'Please provide a date range to get attendance for.'
+	ELSE
+		SELECT A.* FROM Staff_Members SM INNER JOIN Attendance_Records A
+		ON SM.username = @staff_username AND SM.username = A.username
+		WHERE A.attendance_date BETWEEN @from AND @to
+GO
+
+-- TODO: Test with EXEC, needs some Attendance records
+
