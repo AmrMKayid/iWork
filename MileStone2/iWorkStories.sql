@@ -255,18 +255,19 @@ GO
 CREATE PROC Announcements_of_my_Company
 @username VARCHAR(50), @days INT = 20
 AS
-	IF @days < 0
-		PRINT 'Sorry, we can''t get the announcements of the future.'
-	ELSE IF @username IS NULL
+	IF @username IS NULL
 		PRINT 'You have to enter a username.'
 	ELSE IF @username NOT IN (SELECT username FROM Staff_Members)
 		PRINT 'You have to be working in a company to view the announcements.'
-	ELSE BEGIN
+	ELSE IF @days IS NULL
+		PRINT 'Please provide the number of days'
+	ELSE IF @days < 0
+		PRINT 'Sorry, we can''t get the announcements of the future.'
+	ELSE
 		SELECT * FROM Announcements
 		WHERE hr_username IN (SELECT SM2.username FROM Staff_Members SM1 INNER JOIN Staff_Members SM2
 								ON SM1.company = SM2.company AND SM1.username = @username)
 			AND DATEDIFF(d, date, GETDATE()) <= @days
-	END
 GO
 
 -- TODO: Test with EXEC, need some Announcements to be put first;
@@ -280,9 +281,28 @@ GO
 -- The title of the added job should contain at the beginning the role that will be assigned to the job seeker if he/she was
 -- accepted in this job; for example: “Manager - Junior Sales Manager”.
 
--- TODO: [2] View information about a job in my department.
---CREATE PROC View_Job
---@job_title VARCHAR(50), @department VARCHAR(50), @company VARCHAR(50)
+-- [2] View information about a job in my department.
+CREATE PROC View_Job_in_my_Department
+@hr_username VARCHAR(50), @job_title VARCHAR(50)
+AS
+	IF @hr_username IS NULL OR @job_title IS NULL
+		PRINT 'You have to provide a valid HR username and a valid job title'
+	ELSE IF @hr_username NOT IN (SELECT username FROM Hr_Employees)
+		PRINT 'This is not an HR employee' -- Is this necessary?
+	ELSE IF @job_title NOT IN (SELECT Jobs.title FROM Jobs INNER JOIN Staff_Members
+								ON Jobs.department = Staff_Members.department AND Jobs.company = Staff_Members.company
+								AND Staff_Members.username = @hr_username)
+		PRINT 'This job is not offered by your department.'
+	ELSE
+		SELECT J.* FROM Jobs J INNER JOIN Staff_Members SM
+		ON J.department = SM.department AND J.company = SM.company AND SM.username = @hr_username
+		WHERE J.title = @job_title
+GO
+
+--EXEC View_Job_in_my_Department 'Adel', 'Web Development HR'
+--EXEC View_Job_in_my_Department 'Adel', 'Windows App Developer'
+--EXEC View_Job_in_my_Department 'Adel', 'Artificial Intelligence Manager'
+--EXEC View_Job_in_my_Department NULL, 'Artificial Intelligence Manager'
 
 -- TODO: [3] Edit the information of a job in my department.
 
@@ -336,10 +356,10 @@ AS
 
 		IF @new_status IS NOT NULL BEGIN
 			UPDATE Applications
-			SET hr_status = @new_status, hr_username = @hr_username
+			SET hr_status = @new_status, hr_username = @hr_username, manager_status = 'PENDING'
 			WHERE id = @app_id
 
-			PRINT 'HR Status of the Application is updated.'
+			PRINT 'HR Status of the Application is updated. Pending Manager''s response.'
 		END
 	END
 GO
@@ -348,7 +368,7 @@ GO
 
 -- [6] Post announcements related to my company to inform staff members about new updates.
 CREATE PROC Post_Announcement
-@hr_username VARCHAR(50), @type VARCHAR(50), @title VARCHAR(50), @description VARCHAR(50)
+@hr_username VARCHAR(50), @type VARCHAR(50), @title VARCHAR(50), @description VARCHAR(max)
 AS
 	-- Make sure user is an HR
 	IF @hr_username NOT IN (SELECT username FROM Hr_Employees)
@@ -362,3 +382,10 @@ AS
 GO
 
 -- TODO: Test with EXEC
+
+-- [7] View requests of staff members working with me in the same department that were approved by a manager only.
+CREATE PROC View_Requests_in_my_Department_approved_by_Manager_only
+@hr_username VARCHAR(50)
+AS SELECT R.*, MR.manager_status, MR.mang_username FROM Requests R INNER JOIN Staff_Members SM ON R.username = SM.username AND R.hr_status = 'PENDING' AND R.manager_status = 'ACCEPTED'
+							INNER JOIN Staff_Members HR ON HR.username = @hr_username AND HR.department = SM.department AND HR.company = SM.company
+							INNER JOIN Manager_Request_Reviews MR ON MR.username = R.username AND MR.start_date = R.start_date

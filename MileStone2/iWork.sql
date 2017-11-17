@@ -134,7 +134,7 @@ CREATE TABLE Applications (
   manager_username VARCHAR(50) REFERENCES Managers(username) ON DELETE NO ACTION ON UPDATE NO ACTION, --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TODOOO
   FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company),
   CONSTRAINT hr_status_options CHECK (hr_status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
-  CONSTRAINT hr_status_options CHECK (manager_status IN (NULL, 'PENDING', 'ACCEPTED', 'REJECTED'))
+  CONSTRAINT manager_status_options CHECK (manager_status IN (NULL, 'PENDING', 'ACCEPTED', 'REJECTED'))
 )
 
 -- TODO: ^^ HR_reviews_Application (hr_status, hr_username) -- putting status here is to ensure that no one just changes the Application status; instead you have to put that review record in the review table and a username OF AN HR IS NOT NULL
@@ -163,7 +163,7 @@ CREATE TABLE Staff_send_Email (
 )
 
 CREATE TABLE Announcements (
-  id INT PRIMARY KEY,
+  id INT PRIMARY KEY IDENTITY,
   title VARCHAR(50),
   date DATETIME NOT NULL, -- just to make sure we know when an announcement was made
   type VARCHAR(50),
@@ -172,14 +172,17 @@ CREATE TABLE Announcements (
 )
 
 CREATE TABLE Requests (
+  --username  VARCHAR(50) REFERENCES Staff_Members(username) ON DELETE CASCADE ON UPDATE CASCADE,
   start_date DATE, 
   request_date DATETIME,
   end_date DATE,
   leave_days AS DATEDIFF(d, start_date, end_date),
   hr_status VARCHAR(50) DEFAULT 'PENDING',
   manager_status VARCHAR(50) DEFAULT 'PENDING',
-  username  VARCHAR(50) REFERENCES Staff_Members(username) ON DELETE CASCADE ON UPDATE CASCADE,
+  username  VARCHAR(50) REFERENCES Staff_Members(username) ON DELETE CASCADE ON UPDATE CASCADE, -- MOVE to top, it's a PK
   hr_username VARCHAR(50) REFERENCES Hr_Employees(username),
+  CONSTRAINT hr_status_options CHECK (hr_status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
+  CONSTRAINT manager_status_options CHECK (manager_status IN (NULL, 'PENDING', 'ACCEPTED', 'REJECTED')),
   PRIMARY KEY(start_date, username)
 )
 
