@@ -1,9 +1,7 @@
 USE iWork
 GO
 
--------- EXTRA PROCEDURES USED BY OUR PROCEDURES --------
-
----- You can search for "-- END OF EXTRA PROCEDURES --" to proceed to the procedures of the user stories
+-------- EXTRA PROCEDURES USED BY OUR PROCEDURES -------- Ended by "-- END OF EXTRA PROCEDURES --"
 
 -- Apply_for_Request_CHECKS :
 -- Checks and validates the parameters needed to make a data entry in any of the request tables.
@@ -24,12 +22,15 @@ AS BEGIN
 		--------     [ 7aga zayy break;	aw return; ] ?
 	END
 
-	-- Check that replacing username is not the same as the requesting username
-	IF @staff_username = @username_replacing BEGIN
+	-- Check that replacing username is not the same as the requesting username, and he's in the same department -- company
+	IF @staff_username = @username_replacing OR @username_replacing IN (
+		SELECT S2.username FROM Staff_Members S1 INNER JOIN Staff_Members S2
+		ON S1.username = @staff_username AND S1.company = S2.company AND S1.department = S2.department)
+	BEGIN
 		SET @valid = 0
-		PRINT 'The staff member replacing you in your leave has to be someone else. You will find someone.'
+		PRINT 'The staff member replacing you in your leave has to be someone else in the same department. You will find someone. :)'
 	END
-	ELSE BEGIN -- TODO: Add HERE a check that thay are in the same company/department
+	ELSE BEGIN
 
 		-- Check that they are both Regular Employees, both Managers or both HR Employees,
 		-- Type of A is T -> Type of B is T
@@ -78,8 +79,8 @@ CREATE FUNCTION Get_my_Pending_Requests (@username VARCHAR(50)) RETURNS TABLE
 AS RETURN
 	SELECT * FROM Requests WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
 GO
-
 -------- END OF EXTRA PROCEDURES --------
+
 
 -- As a staff member, I should be able to ..
 
@@ -89,16 +90,12 @@ GO
 -- As a staff member, I can not apply for a leave if I exceeded the number of annual leaves allowed.
 -- If I am a manager applying for a request, the request does not need to be approved, but it only needs to be kept track of.
 -- Also, I can not apply for a request when it’s applied period overlaps with another request.
-
 CREATE PROC Apply_for_Leave_Request
 @staff_username VARCHAR(50), @username_replacing VARCHAR(50), @start_date DATE, @end_date DATE, @leave_type VARCHAR(50)
 AS BEGIN
 
 	DECLARE @valid BIT
 	DECLARE @staff_category VARCHAR(10)
-
-	SET @valid = 1
-	SET @staff_category = NULL
 
 	EXEC Apply_for_Request_CHECKS @staff_username, @username_replacing, @start_date, @end_date,
 		@valid OUTPUT, @staff_category OUTPUT
@@ -135,9 +132,6 @@ AS BEGIN
 
 	DECLARE @valid BIT
 	DECLARE @staff_category VARCHAR(10)
-
-	SET @valid = 1
-	SET @staff_category = NULL
 
 	EXEC Apply_for_Request_CHECKS @staff_username, @username_replacing, @start_date, @end_date,
 		@valid OUTPUT, @staff_category OUTPUT
@@ -182,51 +176,63 @@ AS
 	FROM Requests R LEFT OUTER JOIN Manager_Request_Reviews MR
 	ON R.start_date = MR.start_date AND R.username = MR.username
 	WHERE R.username = @username
+GO
 
 --EXEC Show_my_Requests 'ShadiBarghash'
 --EXEC Show_my_Requests 'YasmeenKhaled'
 --EXEC Show_my_Requests 'AmrMKayid'
-
-GO
-
 
 -- [6] Delete any request I applied for as long as it is still in the review process.
 CREATE PROC Delete_my_Pending_Requests
 @username VARCHAR(50)
 AS BEGIN
 
--- If a Manager review was added, remove it
-DELETE FROM Manager_Request_Reviews
-WHERE username = @username
+	-- If a Manager review was added, remove it
+	DELETE FROM Manager_Request_Reviews
+	WHERE username = @username
 
--- Remove the staff replace entry
-DELETE FROM Request_Hr_Replace
-WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
+	-- Remove the staff replace entry
+	DELETE FROM Request_Hr_Replace
+	WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
 
-DELETE FROM Request_Manager_Replace
-WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
+	DELETE FROM Request_Manager_Replace
+	WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
 
-DELETE FROM Request_Regular_Employee_Replace
-WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
+	DELETE FROM Request_Regular_Employee_Replace
+	WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
 
--- Delete from Leave requests and from Business Trips (it should be in one of them only)
-DELETE FROM Leave_Requests
-WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
+	-- Delete from Leave requests and from Business Trips (it should be in one of them only)
+	DELETE FROM Leave_Requests
+	WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
 
-DELETE FROM Business_Trips
-WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
+	DELETE FROM Business_Trips
+	WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
 
--- Finally, delete the request entirely
-DELETE FROM Requests
-WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
+	-- Finally, delete the request entirely
+	DELETE FROM Requests
+	WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
 
 END
+GO
 
 -- EXEC Delete_my_Pending_Requests 'ShadiABarghash'
 
-GO
-
 --  TODO: [7] Send emails to staff members in my company.
+
+-- @email_id: IF provided, it just sends that existing email.
+--			  IF NULL, it creates a new Email message with provided @subject and @body and sends it
+--CREATE PROC Send_Email
+--@sender VARCHAR(50), @recipient VARCHAR(50), @subject VARCHAR(50), @body VARCHAR(max), @email_id INT = NULL
+--AS BEGIN
+--	IF @recipient IN (SELECT S2.username FROM Staff_Members S1 INNER JOIN Staff_Members S2
+--						ON S1.username = @sender AND S1.company = S2.company) BEGIN
+--		IF @email_id IS NULL BEGIN
+--			INSERT INTO Emails VALUES (@subject, @body)
+			
+--		END
+--	END
+--END
+--GO
 
 -- [8] View emails sent to me by other staff members of my company.
 CREATE PROC View_my_inbox_Emails
@@ -237,10 +243,9 @@ AS SELECT time_stamp, sender_username, subject, body
 	WHERE Send.sender_username IN (SELECT SM2.username FROM Staff_Members SM1 INNER JOIN Staff_Members SM2
 									ON SM1.company = SM2.company AND SM1.username = @username)
 	ORDER BY Emails.time_stamp DESC
+GO
 
 -- TODO: Test with EXEC after testing [7]
-
-GO
 
 -- [9] TODO: Reply to an email sent to me, while the reply would be saved in the database as a new email record.
 --CREATE PROC Reply_to_Email
@@ -262,7 +267,43 @@ AS
 								ON SM1.company = SM2.company AND SM1.username = @username)
 			AND DATEDIFF(d, date, GETDATE()) <= @days
 	END
+GO
 
 -- TODO: Test with EXEC, need some Announcements to be put first;
 -- at least two, where one is before 20 days and one is today for example.
 --EXEC Announcements_of_my_Company 'ShadiBarghash'
+
+-- As an HR Employee, I should be able to ..
+
+-- TODO: [1] Add a new job that belongs to my department,
+-- including all the information needed about the job and its interview questions along with their model answers.
+-- The title of the added job should contain at the beginning the role that will be assigned to the job seeker if he/she was
+-- accepted in this job; for example: “Manager - Junior Sales Manager”.
+
+-- TODO: [2] View information about a job in my department.
+--CREATE PROC View_Job
+--@job_title VARCHAR(50), @department VARCHAR(50), @company VARCHAR(50)
+
+-- TODO: [3] Edit the information of a job in my department.
+
+-- [4] View new applications for a speci?c job in my department.
+-- For each application, I should be able to check information about the job seeker, job & the score s/he got while applying.
+CREATE PROC View_new_Applications_for_Job_title_in_my_Department
+@hr_username VARCHAR(50), @job_title VARCHAR(50)
+AS
+	-- Make sure username is an HR employee
+	IF @hr_username IN (SELECT username FROM Hr_Employees)
+		PRINT 'Sorry, you have to be an HR employee to check all the new Applications for Jobs in the department.'
+	-- Make sure job title is offered by his/her department
+	ELSE IF @job_title NOT IN (SELECT title FROM Jobs J WHERE EXISTS (SELECT * FROM Staff_Members S WHERE username = @hr_username
+																AND S.company = J.company AND S.department = J.department))
+		PRINT 'That job title is not offered in your department.'
+	-- Then, just get the needed info where HR status is PENDING and job title is the one I'm looking for
+	ELSE
+		SELECT J.*, A.id, A.score, JS.username, JS.first_name, JS.middle_name, JS.last_name, JS.email, JS.age, JS.birth_date, JS.years_of_experience
+		FROM Jobs J INNER JOIN Applications A ON A.job_title = J.title AND A.department = J.department AND A.company = J.company
+					INNER JOIN Users JS ON A.app_username = JS.username
+		WHERE A.job_title = @job_title AND A.hr_status = 'PENDING' AND EXISTS (SELECT * FROM Staff_Members S WHERE
+						S.username = @hr_username AND S.company = J.company AND S.department = J.department)
+
+-- TODO: Test with some EXEC, needs some fresh Applications
