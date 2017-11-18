@@ -234,6 +234,35 @@ GO
 --END
 --GO
 
+CREATE PROC Create_Email
+@subject VARCHAR(50), @body VARCHAR(max), @id OUT
+AS BEGIN
+	-- Trying to avoid spam, prevent NULL or empty strings
+	IF @subject IS NULL OR @subject = ''
+		PRINT 'Please give a subject to your email.'
+	ELSE IF @body IS NULL OR @body = ''
+		PRINT 'Please write the body of your email.'
+	ELSE BEGIN
+		INSERT INTO Emails VALUES (@subject, @body)
+
+		SET @id = SCOPE_IDENTITY()
+	END
+END
+GO
+
+CREATE PROC Send_Email_in_Comapany
+@sender VARCHAR(50), @receiver VARCHAR(50), @subject VARCHAR(50), @body VARCHAR(max)
+AS BEGIN
+	IF @sender IS NULL OR @sender NOT IN (SELECT username FROM Staff_Members)
+		PRINT 'A staff member must send the email'
+	ELSE IF @receiver IS NULL
+		PRINT 'You must send the Email to someone.'
+		-- TODO: Check that the receiver is in the same company
+	DECLARE @email_id INT
+	EXEC Create_Email @subject, @body, @email_id OUT
+END
+GO
+
 -- [8] View emails sent to me by other staff members of my company.
 CREATE PROC View_my_inbox_Emails
 @username VARCHAR(50)
@@ -421,3 +450,8 @@ GO
 
 -- TODO: Test with EXEC, needs some Attendance records
 
+-- TODO: [10] View the total number of hours for any staff member in my department in each month of a certain year.
+
+-- TODO: [11] View names of the top 3 high achievers in my department.
+-- A high achiever is a regular employee who stayed the longest hours in the company for a certain month
+-- and all tasks assigned to him/her with deadline within this month are fixed.
