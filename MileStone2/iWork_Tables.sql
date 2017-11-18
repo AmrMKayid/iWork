@@ -1,4 +1,5 @@
-CREATE DATABASE iWork
+--DROP DATABASE iWork
+CREATE DATABASE iWork;
 GO
 
 USE iWork
@@ -50,7 +51,7 @@ CREATE TABLE Jobs (
   company VARCHAR(50),
   short_description VARCHAR(100),
   detailed_description VARCHAR(max),
-  working_hours INT,
+  working_hours DECIMAL,
   min_years_of_experience INT,
   salary DECIMAL,
   vacancy INT,
@@ -60,9 +61,9 @@ CREATE TABLE Jobs (
 )
 
 CREATE TABLE Questions (
-  id INT PRIMARY KEY,
+  id INT PRIMARY KEY IDENTITY,
   question VARCHAR(50) NOT NULL,
-  answer VARCHAR(150),
+  answer BIT,
 )
 
 CREATE TABLE Job_has_Questions (
@@ -84,7 +85,7 @@ CREATE TABLE Staff_Members (
   department VARCHAR(50),
   company VARCHAR(50),
   FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON UPDATE CASCADE,
-  CONSTRAINT day_off_options CHECK(day_off in ('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Saturday'))
+  CONSTRAINT day_off_options CHECK(day_off in ('Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'))
 )
 
 CREATE TABLE Hr_Employees (
@@ -115,10 +116,10 @@ CREATE TABLE Applicants (
 )
 
 CREATE TABLE Applications (
-  id INT PRIMARY KEY,
+  id INT PRIMARY KEY IDENTITY,
   score INT,
   hr_status VARCHAR(50) DEFAULT 'PENDING',
-  manager_status VARCHAR(50),
+  manager_status VARCHAR(50) DEFAULT 'PENDING',
   job_title VARCHAR(50),
   department VARCHAR(50),
   company VARCHAR(50),
@@ -127,26 +128,28 @@ CREATE TABLE Applications (
   manager_username VARCHAR(50) REFERENCES Managers(username) ON DELETE NO ACTION ON UPDATE NO ACTION, --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TODOOO
   FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company),
   CONSTRAINT hr_status_options_Applications CHECK (hr_status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
-  CONSTRAINT manager_status_options_Applications CHECK (manager_status IN (NULL, 'PENDING', 'ACCEPTED', 'REJECTED'))
+  CONSTRAINT manager_status_options_Applications CHECK (manager_status IN ('PENDING', 'ACCEPTED', 'REJECTED'))
 )
 
 -- TODO: ^^ HR_reviews_Application (hr_status, hr_username) -- putting status here is to ensure that no one just changes the Application status; instead you have to put that review record in the review table and a username OF AN HR IS NOT NULL
 -- TODO: ^^ Manager_reviews_Application (manager_status, manager_username) -- same ^^
 
 CREATE TABLE Attendance_Records (
-  attendance_date DATETIME,
-  time_of_start TIME, --<<<<--- Amr: NOT SURE .. Shadi: 3adi, bass momken nekhalli "attendance_date" DATE not DATETIME (mesh moskela)
-  time_of_leave TIME,
   username VARCHAR(50) REFERENCES Staff_Members(username) ON DELETE CASCADE ON UPDATE CASCADE,
-  PRIMARY KEY(attendance_date, username)
+  attendance_date DATE,
+  time_of_start TIME,
+  time_of_leave TIME,
+  duration DECIMAL(4,2),
+  missing_hours DECIMAL(4,2),
+  PRIMARY KEY(username , attendance_date)
 )
 
 CREATE TABLE Emails (
   id INT PRIMARY KEY IDENTITY,
   subject VARCHAR(50),
   body VARCHAR(max),
-  time_stamp AS CURRENT_TIMESTAMP,
-  reply_to INT REFERENCES Emails(id) -- ON DELETE NO ACTION
+  reply_to INT REFERENCES Emails(id), -- ON DELETE NO ACTION
+  time_stamp AS CURRENT_TIMESTAMP
 )
 
 CREATE TABLE Staff_send_Email (
@@ -167,16 +170,18 @@ CREATE TABLE Announcements (
 
 CREATE TABLE Requests (
   start_date DATE, 
-  username  VARCHAR(50) REFERENCES Staff_Members(username) ON DELETE CASCADE ON UPDATE CASCADE,
+  username VARCHAR(50) REFERENCES Staff_Members(username) ON DELETE CASCADE ON UPDATE CASCADE,
   request_date DATETIME,
   end_date DATE,
-  leave_days AS DATEDIFF(d, start_date, end_date),
+  leave_days AS DATEDIFF(d, start_date, end_date), --- THNIK
   hr_status VARCHAR(50) DEFAULT 'PENDING',
   manager_status VARCHAR(50) DEFAULT 'PENDING',
+  reason VARCHAR(50),
   hr_username VARCHAR(50) REFERENCES Hr_Employees(username),
+  mang_username VARCHAR(50) REFERENCES Managers(username),
   CONSTRAINT hr_status_options_Requests CHECK (hr_status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
-  CONSTRAINT manager_status_options_Requests CHECK (manager_status IN (NULL, 'PENDING', 'ACCEPTED', 'REJECTED')),
-  PRIMARY KEY(start_date, username)
+  CONSTRAINT manager_status_options_Requests CHECK (manager_status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
+  PRIMARY KEY(start_date, username),
 )
 
 CREATE TABLE Business_Trips (
@@ -194,21 +199,11 @@ CREATE TABLE Leave_Requests (
   type VARCHAR(50),
   CONSTRAINT leave_type_options CHECK (type in ('sick', 'accidental', 'annual')),
   PRIMARY KEY(start_date, username),
-  FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username) ON DELETE CASCADE
-)
-
-CREATE TABLE Manager_Request_Reviews (
-  start_date DATE,
-  username VARCHAR(50),
-  manager_status VARCHAR(50) NOT NULL,
-  reason VARCHAR(50),
-  mang_username VARCHAR(50) NOT NULL REFERENCES Managers(username),
-  PRIMARY KEY(start_date, username),
-  FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username)
+  FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username) ON DELETE CASCADE,
 )
 
 CREATE TABLE Request_Hr_Replace (
-   start_date DATE,
+  start_date DATE,
   username VARCHAR(50),
   username_replacing VARCHAR(50) REFERENCES Hr_Employees(username) ON UPDATE CASCADE
   PRIMARY KEY(start_date, username),
@@ -216,7 +211,7 @@ CREATE TABLE Request_Hr_Replace (
 )
 
 CREATE TABLE Request_Manager_Replace (
-   start_date DATE,
+  start_date DATE,
   username VARCHAR(50),
   username_replacing VARCHAR(50) REFERENCES Managers(username) ON UPDATE CASCADE
   PRIMARY KEY(start_date, username),
@@ -263,12 +258,11 @@ CREATE TABLE Tasks (
 )
 
 CREATE TABLE Comments (
-  id INT,
+  id INT PRIMARY KEY IDENTITY,
   task VARCHAR(50),
   project VARCHAR(50),
   company VARCHAR(50),
   content VARCHAR(150),
   username VARCHAR(50) NOT NULL REFERENCES Staff_Members(username) ON DELETE CASCADE,
-  PRIMARY KEY(id, task, project, company),
   FOREIGN KEY(task, project, company) REFERENCES Tasks(name, project, company) ON UPDATE CASCADE
 )
