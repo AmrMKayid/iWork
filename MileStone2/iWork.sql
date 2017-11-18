@@ -169,7 +169,7 @@ CREATE TABLE Requests (
   end_date DATE,
   leave_days AS DATEDIFF(d, 'start_date', 'end_date'),
   hr_status VARCHAR(50),
-  manager_status VARCHAR(50),
+  manager_status VARCHAR(50), --------<<<<<<<<<< TODO: DELETE 
   username  VARCHAR(50) REFERENCES Staff_Members(username) ON DELETE CASCADE ON UPDATE CASCADE,
   hr_username VARCHAR(50) REFERENCES Hr_Employees(username),
   PRIMARY KEY(start_date, username)
