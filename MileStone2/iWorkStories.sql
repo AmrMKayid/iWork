@@ -5,6 +5,8 @@ USE iWork
 
 -- View the Assigned Project for a specific employee 
 -- by getting them from Project_Assignments and Projects
+
+-- >>>>>> DROP Procedure ChangeTaskStatus
 GO
 Create Procedure viewMyAssignedProjects
 (
@@ -12,10 +14,10 @@ Create Procedure viewMyAssignedProjects
 )
 As
 Begin
-     SELECT Projects.*
-     FROM Project_Assignments, Projects
-     WHERE regular_employee_username = @username and
-           Project_Assignments.project_name = Projects.name
+     SELECT P.*
+     FROM Project_Assignments PA, Projects P
+     WHERE PA.regular_employee_username = @username AND
+           (PA.project_name = P.name AND PA.company = P.company) -- FOREIGN KEY
 End
 
 GO
@@ -28,51 +30,51 @@ Create Procedure viewMyAssignedTasksInAProject
 )
 As
 Begin
-     SELECT *
-     FROM Tasks
-     WHERE regular_employee_username = @username and
-           Tasks.project = @project
+     SELECT T.*
+     FROM Tasks T, Projects P
+     WHERE T.regular_employee_username = @username AND
+           T.project = P.name AND T.company = P.company  -- FOREIGN KEY
 End
 
 GO
 -- EXEC viewMyAssignedTasksInAProject 'Regular', 'First Project'
 
-
 GO
 Create Procedure FinishedTask
 (
-@username VARCHAR(50), @task varchar(50)
+@username VARCHAR(50), @task varchar(50), @project varchar(50)
 )
 As
 Begin
     UPDATE Tasks
     SET [status] = 'Fixed'
     WHERE SYSDATETIME() < deadline 
-          AND Tasks.name = @task 
-          AND Tasks.regular_employee_username = @username
+          AND name = @task 
+          AND regular_employee_username = @username
+          AND project = @project
 End
 
 GO
--- EXEC FinishedTask 'Regular', 'First Task'
-
+-- EXEC FinishedTask 'Regular', 'First Task', 'First Project'
 
 GO
 Create Procedure ChangeTaskStatus
 (
-@username VARCHAR(50), @task varchar(50)
+@username VARCHAR(50), @task varchar(50), @project varchar(50)
 )
 As
 Begin
     UPDATE Tasks
     SET [status] = 'Assigned'
     WHERE SYSDATETIME() < deadline 
-          AND Tasks.name = @task 
-          AND Tasks.regular_employee_username = @username
-          AND Tasks.[status] <> 'Closed'
+          AND name = @task 
+          AND regular_employee_username = @username
+          AND [status] <> 'Closed'
+          AND project = @project
 End
 
 GO
--- EXEC FinishedTask 'Regular', 'First Task'
+-- EXEC ChangeTaskStatus 'Regular', 'First Task', 'First Project'
 
 ---- ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####  ##### ##### ##### ##### -----
 
