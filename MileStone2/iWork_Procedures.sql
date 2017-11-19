@@ -882,10 +882,10 @@ GO
 
 -- EXEC Delete_my_Pending_Requests 'ShadiABarghash'
 
---  TODO: [7] Send emails to staff members in my company.
+--  [7] Send emails to staff members in my company.
 
 CREATE PROC Create_Email
-@subject VARCHAR(50), @body VARCHAR(max), @id OUT
+@subject VARCHAR(50), @body VARCHAR(max), @id INT OUT
 AS BEGIN
 	-- Trying to avoid spam, prevent NULL or empty strings
 	IF @subject IS NULL OR @subject = ''
@@ -893,23 +893,28 @@ AS BEGIN
 	ELSE IF @body IS NULL OR @body = ''
 		PRINT 'Please write the body of your email.'
 	ELSE BEGIN
-		INSERT INTO Emails VALUES (@subject, @body)
+		INSERT INTO Emails (subject, body) VALUES (@subject, @body)
 
 		SET @id = SCOPE_IDENTITY()
 	END
 END
 GO
 
-CREATE PROC Send_Email_in_Comapany
+CREATE PROC Send_Email_in_Company
 @sender VARCHAR(50), @receiver VARCHAR(50), @subject VARCHAR(50), @body VARCHAR(max)
 AS BEGIN
 	IF @sender IS NULL OR @sender NOT IN (SELECT username FROM Staff_Members)
 		PRINT 'A staff member must send the email'
 	ELSE IF @receiver IS NULL
 		PRINT 'You must send the Email to someone.'
-		-- TODO: Check that the receiver is in the same company
-	DECLARE @email_id INT
-	EXEC Create_Email @subject, @body, @email_id OUT
+	ELSE IF @receiver NOT IN (SELECT Sr.username FROM Staff_Members Ss INNER JOIN Staff_Members Sr
+								ON Ss.username = @sender AND Ss.company = Sr.company)
+		PRINT 'You can only send to a Staff Member in your company.'
+	ELSE BEGIN
+		DECLARE @email_id INT
+		EXEC Create_Email @subject, @body, @email_id OUT
+		INSERT INTO Staff_send_Email VALUES (@email_id, @receiver, @sender)
+	END
 END
 GO
 
@@ -977,7 +982,7 @@ GO
 -- TODO: [1] Add a new job that belongs to my department,
 -- including all the information needed about the job and its interview questions along with their model answers.
 -- The title of the added job should contain at the beginning the role that will be assigned to the job seeker if he/she was
--- accepted in this job; for example: �Manager - Junior Sales Manager�.
+-- accepted in this job; for example: "Manager - Junior Sales Manager".
 
 -- [2] View information about a job in my department.
 CREATE PROC View_Job_in_Department
