@@ -549,7 +549,7 @@ if(exists(select a.*
 			else
 			if(@day =(select s.day_off
 			          from Staff_Members s
-					  where s.username=@username))
+					  where s.username=@username) or @day='friday')
 					  print 'you can not check in on your day off'
 			else
 			Insert into Attendance_Records(username,attendance_date,time_of_start) values(@username,@date,@starttime)
@@ -584,7 +584,7 @@ if(exists(select a.*
 			print 'you can not check out twice a day'
 			else if(@day =(select s.day_off
 			          from Staff_Members s
-					  where s.username=@username))
+					  where s.username=@username) or @day='friday')
 					  print 'you can not check out on your day off'
 					  else
 					  begin
