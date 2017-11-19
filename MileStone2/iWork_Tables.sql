@@ -126,8 +126,8 @@ CREATE TABLE Applications (
   department VARCHAR(50),
   company VARCHAR(50),
   app_username VARCHAR(50) NOT NULL REFERENCES Applicants(username) ON DELETE CASCADE ON UPDATE CASCADE,
-  hr_username VARCHAR(50) default null REFERENCES Hr_Employees(username) ON DELETE NO ACTION ON UPDATE NO ACTION, --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TODOOO
-  manager_username VARCHAR(50) default null  REFERENCES Managers(username) ON DELETE NO ACTION ON UPDATE NO ACTION, --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TODOOO
+  hr_username VARCHAR(50) REFERENCES Hr_Employees(username) ON DELETE NO ACTION ON UPDATE NO ACTION, --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TODOOO
+  manager_username VARCHAR(50) REFERENCES Managers(username) ON DELETE NO ACTION ON UPDATE NO ACTION, --<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< TODOOO
   FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company),
   CONSTRAINT HR_Status_Applications_Options CHECK (hr_status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
   CONSTRAINT Manager_Status_Applications_Options CHECK (manager_status IN ('PENDING', 'ACCEPTED', 'REJECTED'))
@@ -179,7 +179,7 @@ CREATE TABLE Requests (
   manager_status VARCHAR(50) DEFAULT 'PENDING',
   reason VARCHAR(50),
   hr_username VARCHAR(50) REFERENCES Hr_Employees(username),
-  mang_username VARCHAR(50) NOT NULL REFERENCES Managers(username),
+  mang_username VARCHAR(50) REFERENCES Managers(username),
   CONSTRAINT HR_Status_Request_Options CHECK (hr_status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
   CONSTRAINT Manager_Status_Request_Options CHECK (manager_status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
   PRIMARY KEY(start_date, username),
