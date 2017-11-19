@@ -179,9 +179,9 @@ CREATE TABLE Requests (
   reason VARCHAR(50),
   hr_username VARCHAR(50) REFERENCES Hr_Employees(username),
   mang_username VARCHAR(50) REFERENCES Managers(username),
-  CONSTRAINT hr_status_options_Requests CHECK (hr_status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
-  CONSTRAINT manager_status_options_Requests CHECK (manager_status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
   PRIMARY KEY(start_date, username),
+  CONSTRAINT hr_status_options_Requests CHECK (hr_status IN ('PENDING', 'ACCEPTED', 'REJECTED')),
+  CONSTRAINT manager_status_options_Requests CHECK (manager_status IN ('PENDING', 'ACCEPTED', 'REJECTED'))
 )
 
 CREATE TABLE Business_Trips (
@@ -197,9 +197,9 @@ CREATE TABLE Leave_Requests (
   start_date DATE,
   username  VARCHAR(50),
   type VARCHAR(50),
-  CONSTRAINT leave_type_options CHECK (type in ('sick', 'accidental', 'annual')),
   PRIMARY KEY(start_date, username),
   FOREIGN KEY(start_date, username) REFERENCES Requests(start_date, username) ON DELETE CASCADE,
+  CONSTRAINT leave_type_options CHECK (type IN ('sick', 'accidental', 'annual'))
 )
 
 CREATE TABLE Request_Hr_Replace (
