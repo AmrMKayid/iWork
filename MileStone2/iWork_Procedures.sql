@@ -883,26 +883,26 @@ GO
 -- EXEC Delete_my_Pending_Requests 'ShadiABarghash'
 
 --  [7] Send emails to staff members in my company.
-
 CREATE PROC Create_Email
-@subject VARCHAR(50), @body VARCHAR(max), @id INT OUT
-AS BEGIN
+@subject VARCHAR(50), @body VARCHAR(max), @id INT OUT, @reply_to INT = NULL
+AS
 	-- Trying to avoid spam, prevent NULL or empty strings
 	IF @subject IS NULL OR @subject = ''
 		PRINT 'Please give a subject to your email.'
 	ELSE IF @body IS NULL OR @body = ''
 		PRINT 'Please write the body of your email.'
+	ELSE IF @reply_to IS NOT NULL AND @reply_to NOT IN (SELECT id FROM Emails)
+		PRINT 'The base email does not exist.'
 	ELSE BEGIN
-		INSERT INTO Emails (subject, body) VALUES (@subject, @body)
+		INSERT INTO Emails VALUES (@subject, @body, @reply_to)
 
 		SET @id = SCOPE_IDENTITY()
 	END
-END
 GO
 
 CREATE PROC Send_Email_in_Company
-@sender VARCHAR(50), @receiver VARCHAR(50), @subject VARCHAR(50), @body VARCHAR(max)
-AS BEGIN
+@sender VARCHAR(50), @receiver VARCHAR(50), @subject VARCHAR(50), @body VARCHAR(max), @reply_to INT = NULL
+AS
 	IF @sender IS NULL OR @sender NOT IN (SELECT username FROM Staff_Members)
 		PRINT 'A staff member must send the email'
 	ELSE IF @receiver IS NULL
@@ -910,21 +910,23 @@ AS BEGIN
 	ELSE IF @receiver NOT IN (SELECT Sr.username FROM Staff_Members Ss INNER JOIN Staff_Members Sr
 								ON Ss.username = @sender AND Ss.company = Sr.company)
 		PRINT 'You can only send to a Staff Member in your company.'
+	ELSE IF @reply_to IS NOT NULL AND @reply_to NOT IN (SELECT email_id FROM Staff_send_Email
+														WHERE receiver_username = @sender)
+		PRINT 'Sorry, this Email was not sent to you in the first place.'
 	ELSE BEGIN
 		DECLARE @email_id INT
-		EXEC Create_Email @subject, @body, @email_id OUT
+		EXEC Create_Email @subject, @body, @email_id OUT, @reply_to
 		INSERT INTO Staff_send_Email VALUES (@email_id, @receiver, @sender)
 	END
-END
 GO
 
 -- [8] View emails sent to me by other staff members of my company.
 CREATE PROC View_my_inbox_Emails
 @username VARCHAR(50)
 AS SELECT time_stamp, sender_username, subject, body
-	FROM Emails INNER JOIN Staff_send_Email SEND
-	ON Emails.id = SEND.email_id AND SEND.receiver_username = @username
-	WHERE Send.sender_username IN (SELECT SM2.username FROM Staff_Members SM1 INNER JOIN Staff_Members SM2
+	FROM Emails INNER JOIN Staff_send_Email S
+	ON Emails.id = S.email_id AND S.receiver_username = @username
+	WHERE S.sender_username IN (SELECT SM2.username FROM Staff_Members SM1 INNER JOIN Staff_Members SM2
 									ON SM1.company = SM2.company AND SM1.username = @username)
 	ORDER BY Emails.time_stamp DESC
 GO
@@ -933,25 +935,9 @@ GO
 
 -- [9] Reply to an email sent to me, while the reply would be saved in the database as a new email record.
 CREATE PROC Reply_to_Email
-@orig_email INT, @new_sender VARCHAR(50), @new_recipient VARCHAR(50), @subject VARCHAR(50), @body VARCHAR(max)
-AS BEGIN
-	IF NOT EXISTS (SELECT * FROM Staff_send_Email
-				WHERE email_id = @orig_email AND receiver_username = @new_sender AND sender_username = @new_recipient)
-		PRINT 'You should reply to an Email that you have received.'
-	ELSE IF @subject IS NULL OR @subject = ''
-		PRINT 'Please give a subject to your message'
-	ELSE IF @body IS NULL OR @body = ''
-		PRINT 'Please type the body of your message.'
-	ELSE BEGIN
-		DECLARE @new_email INT
-
-		INSERT INTO Emails VALUES (@subject, @body, @orig_email)
-
-		SET @new_email = SCOPE_IDENTITY()
-
-		INSERT INTO Staff_send_Email VALUES (@new_email, @new_recipient, @new_sender)
-	END
-END
+@orig_email INT, @reply_sender VARCHAR(50), @recipient VARCHAR(50), @subject VARCHAR(50), @body VARCHAR(max)
+AS
+	EXEC Send_Email_in_Company @reply_sender, @recipient, @subject, @body, @orig_email
 GO
 
 -- [10] View announcements related to my company within the past 20 days.
@@ -979,10 +965,61 @@ GO
 
 -- As an HR Employee, I should be able to ..
 
--- TODO: [1] Add a new job that belongs to my department,
+-- NOT SURE: [1] Add a new job that belongs to my department,
 -- including all the information needed about the job and its interview questions along with their model answers.
 -- The title of the added job should contain at the beginning the role that will be assigned to the job seeker if he/she was
 -- accepted in this job; for example: "Manager - Junior Sales Manager".
+CREATE PROC Add_Job
+@hr_username VARCHAR(50),
+@title VARCHAR(50), @department VARCHAR(50), @company VARCHAR(50),
+@short_desc VARCHAR(100), @detail_desc VARCHAR(max),
+@working_hrs DECIMAL, @min_yrs_exp INT, @salary DECIMAL,
+@deadline DATETIME, @vacancy INT = 1
+AS BEGIN
+	IF @hr_username NOT IN (SELECT username FROM Hr_Employees)
+		PRINT 'You must be an HR Employee to add a new Job.'
+	ELSE IF @hr_username NOT IN (SELECT username FROM Staff_Members WHERE company = @company AND department = @department)
+		PRINT 'You can add new Jobs for your department only.'
+	ELSE IF @working_hrs < 0 OR @working_hrs > 24
+		PRINT 'Please provide valid working hours'
+	ELSE IF @min_yrs_exp < 0
+		PRINT 'Please provide valid minimum years of experience.'
+	ELSE IF @salary < 0
+		PRINT 'Please provide valid salary.'
+	ELSE IF @vacancy < 0
+		PRINT 'Please provide valid number of vacancies for this Job.'
+	ELSE BEGIN
+		INSERT INTO Jobs
+		VALUES (@title, @department, @company, @short_desc, @detail_desc, @working_hrs, @min_yrs_exp, @salary, @vacancy, @deadline)
+
+		INSERT INTO Hr_Employee_creates_Job VALUES (@title, @department, @company, @hr_username)
+	END
+END
+GO
+
+CREATE PROC Create_Question
+@question VARCHAR(100), @answer BIT, @qid INT OUT
+AS
+	IF @question IS NULL
+		PRINT 'Please enter the question as it will be shown to new job applicants.'
+	ELSE BEGIN
+		INSERT INTO Questions VALUES (@question, @answer)
+		SET @qid = SCOPE_IDENTITY();
+	END
+GO
+
+CREATE PROC Add_Job_Question_to_Job
+@qid VARCHAR(50), @job_title VARCHAR(50), @department VARCHAR(50), @company VARCHAR(50)
+AS
+	IF @qid IS NULL
+		PRINT 'You must not enter the question you want to add to this job.'
+	ELSE IF @qid NOT IN (SELECT id FROM Questions)
+		PRINT 'This question does not exist'
+	ELSE IF @job_title NOT IN (SELECT title FROM Jobs WHERE company = @company AND department = @department)
+		PRINT 'This job is not offered by this department.'
+	ELSE
+		INSERT INTO Job_has_Questions VALUES (@job_title, @department, @company, @qid)
+GO
 
 -- [2] View information about a job in my department.
 CREATE PROC View_Job_in_Department
@@ -1007,7 +1044,41 @@ GO
 --EXEC View_Job_in_my_Department 'Adel', 'Artificial Intelligence Manager'
 --EXEC View_Job_in_my_Department NULL, 'Artificial Intelligence Manager'
 
--- TODO: [3] Edit the information of a job in my department.
+-- NOT SURE: [3] Edit the information of a job in my department.
+CREATE PROC Edit_Job_in_Department
+@hr_username VARCHAR(50), @job_title VARCHAR(50),
+@short_desc VARCHAR(100), @detail_desc VARCHAR(max),
+@working_hrs DECIMAL, @min_yrs_exp INT, @salary DECIMAL,
+@deadline DATETIME, @vacancy INT = 1
+AS BEGIN
+	IF @hr_username IS NULL OR @hr_username NOT IN (SELECT username FROM Hr_Employees)
+		PRINT 'You must be an HR to edit a Job.'
+	ELSE IF @job_title NOT IN (SELECT J.title FROM Staff_Members HR, Jobs J
+								WHERE J.company = HR.company AND J.department = HR.department AND HR.username = @hr_username)
+		PRINT 'This job title is not offered in your department.'
+	ELSE IF @working_hrs < 0 OR @working_hrs > 24
+		PRINT 'Please enter valid working hours.'
+	ELSE IF @min_yrs_exp < 0
+		PRINT 'Please enter valid minimum years of experience.'
+	ELSE IF @salary < 0
+		PRINT 'Please enter valid salary.'
+	ELSE IF @vacancy < 0
+		PRINT 'Number of vacanies cannot be less then 0.'
+	ELSE BEGIN
+		DECLARE @department VARCHAR(50)
+		DECLARE @company VARCHAR(50)
+
+		SELECT @department = department, @company = @company FROM Staff_Members WHERE username = @hr_username
+
+		UPDATE Jobs
+		SET short_description = @short_desc, detailed_description = @detail_desc,
+			working_hours = @working_hrs, min_years_of_experience = @min_yrs_exp, salary = @salary,
+			deadline = @deadline, vacancy = @vacancy
+		WHERE title = @job_title AND company = @company AND department = @department
+
+	END
+END
+GO
 
 -- [4] View new applications for a speci?c job in my department.
 -- For each application, I should be able to check information about the job seeker, job & the score s/he got while applying.
@@ -1017,24 +1088,27 @@ AS
 	-- Make sure username is an HR employee
 	IF @hr_username NOT IN (SELECT username FROM Hr_Employees)
 		PRINT 'Sorry, you have to be an HR employee to check the new Job Applications in the department.'
+
 	-- Make sure job title is offered by his/her department
 	ELSE IF @job_title NOT IN (SELECT title FROM Jobs J WHERE EXISTS (SELECT * FROM Staff_Members S WHERE username = @hr_username
 																AND S.company = J.company AND S.department = J.department))
 		PRINT 'That job title is not offered in your department.'
+
 	-- Then, just get the needed info where HR status is PENDING and job title is the one I'm looking for
 	ELSE
 		SELECT J.*, A.id, A.score, JS.username, JS.first_name, JS.middle_name, JS.last_name, JS.email, JS.age, JS.birth_date, JS.years_of_experience
 		FROM Jobs J INNER JOIN Applications A ON A.job_title = J.title AND A.department = J.department AND A.company = J.company
 					INNER JOIN Users JS ON A.app_username = JS.username
-		WHERE A.job_title = @job_title AND A.hr_status = 'PENDING' AND EXISTS (SELECT * FROM Staff_Members S WHERE
-						S.username = @hr_username AND S.company = J.company AND S.department = J.department)
+		WHERE A.job_title = @job_title AND A.hr_status = 'PENDING'
+		AND EXISTS (SELECT * FROM Staff_Members S
+					WHERE S.username = @hr_username AND S.company = J.company AND S.department = J.department)
 GO
 
 -- TODO: Test with some EXEC, needs some fresh Applications
 
 -- [5] Accept or reject applications for jobs in my department.
 -- @accept: 'TRUE' or 1 for ACCEPT. 'FALSE' or 0 for REJECT.
-CREATE PROC Respond_to_Job_Application_in_Department
+CREATE PROC Respond_to_Job_Application_HR
 @hr_username VARCHAR(50), @app_id INT, @accept BIT
 AS
 	-- Make sure username is an HR employee
@@ -1058,20 +1132,14 @@ AS
 			PRINT 'Application not changed'
 
 		IF @new_status IS NOT NULL BEGIN
-			IF @new_status = 'ACCEPTED' BEGIN
+			IF @new_status = 'ACCEPTED'
 				UPDATE Applications
 				SET hr_status = @new_status, hr_username = @hr_username, manager_status = 'PENDING'
 				WHERE id = @app_id
-				
-				PRINT 'HR Status of the Application is updated. Pending Manager''s response.'
-
-			END ELSE IF @new_status = 'REJECTED' BEGIN
+			ELSE IF @new_status = 'REJECTED'
 				UPDATE Applications
-				SET hr_status = @new_status, hr_username = @hr_username, manager_status = 'REJECTED' -- or leave it NULL?
+				SET hr_status = @new_status, hr_username = @hr_username, manager_status = 'REJECTED'
 				WHERE id = @app_id
-
-				PRINT 'Application rejected. Manager''s will not see the Application.'
-			END
 		END
 	END
 GO
@@ -1106,7 +1174,7 @@ GO
 -- TODO: [8] Accept or reject requests of staff members working with me in the same department that were approved by a manager.
 -- My response decides the ?nal status of the request, therefore the annual leaves of the applying staff member should be
 -- updated in case the request was accepted.
--- Take into consideration that if the duration of the request includes the staff member�s weekly day-off and/or Friday,
+-- Take into consideration that if the duration of the request includes the staff member's weekly day-off and/or Friday,
 -- they should not be counted as annual leaves.
 
 -- [9] View attendance records of a staff member in my department (check-in time, check-out time, duration, missing hours)

@@ -62,7 +62,7 @@ CREATE TABLE Jobs (
 
 CREATE TABLE Questions (
   id INT PRIMARY KEY IDENTITY,
-  question VARCHAR(50) NOT NULL,
+  question VARCHAR(100) NOT NULL,
   answer BIT,
 )
 
@@ -81,11 +81,11 @@ CREATE TABLE Staff_Members (
   salary DECIMAL,
   day_off VARCHAR(9),
   annual_leaves INT,
-  job_title VARCHAR(50),
-  department VARCHAR(50),
-  company VARCHAR(50),
+  job_title VARCHAR(50) NOT NULL,
+  department VARCHAR(50) NOT NULL,
+  company VARCHAR(50) NOT NULL,
   FOREIGN KEY(job_title, department, company) REFERENCES Jobs(title, department, company) ON UPDATE CASCADE,
-  CONSTRAINT day_off_options CHECK(day_off in ('Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'))
+  CONSTRAINT day_off_options CHECK(day_off IN ('Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'))
 )
 
 CREATE TABLE Hr_Employees (
