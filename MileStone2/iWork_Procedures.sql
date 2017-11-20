@@ -399,7 +399,7 @@ if(exists(select *
 		 if(exists(select a.*
 		   from Applications a
 		   where @username=a.app_username and @jobtitle=a.job_title and @dep=a.department and @comp=a.company and ((a.hr_status='pending' or a.hr_status='accepted') and a.manager_status='pending')))
-		   print 'you already applied for this job and it id in the reviewing process'
+		   print 'you already applied for this job and it is in the reviewing process'
 
 		else
 		if(exists(select a.*
@@ -666,9 +666,17 @@ where username=@username and attendance_date between @startdate and @enddate
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Shadi Start  ##### ##### ##### #####  ##### ##### ##### ##### -----
 GO
 
--------- EXTRA PROCEDURES USED BY OUR PROCEDURES -------- Ended by "-- END OF EXTRA PROCEDURES --"
 
--- Apply_for_Request_CHECKS :
+-- As a staff member, I should be able to ..
+
+-- [4]
+-- Apply for requests of both types: leave requests or business trip requests,
+-- by supplying all the needed information for the request.
+-- As a staff member, I can not apply for a leave if I exceeded the number of annual leaves allowed.
+-- If I am a manager applying for a request, the request does not need to be approved, but it only needs to be kept track of.
+-- Also, I can not apply for a request when it�s applied period overlaps with another request.
+
+-- [HELPER] Apply_for_Request_CHECKS :
 -- Checks and validates the parameters needed to make a data entry in any of the request tables.
 -- However, this does not create a new entry. It just returns two outputs:
 -- @valid BIT OUTPUT: Indicates whether the input is valid according to this Procedures
@@ -739,22 +747,7 @@ AS BEGIN
 END
 GO
 
--- GET the request I have created that are in the review process. Used for deletion.
-CREATE FUNCTION Get_my_Pending_Requests (@username VARCHAR(50)) RETURNS TABLE
-AS RETURN
-	SELECT * FROM Requests WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
-GO
--------- END OF EXTRA PROCEDURES --------
-
-
--- As a staff member, I should be able to ..
-
--- [4]
--- Apply for requests of both types: leave requests or business trip requests,
--- by supplying all the needed information for the request.
--- As a staff member, I can not apply for a leave if I exceeded the number of annual leaves allowed.
--- If I am a manager applying for a request, the request does not need to be approved, but it only needs to be kept track of.
--- Also, I can not apply for a request when it�s applied period overlaps with another request.
+-- >>> Apply for a "Leave" Request for a certain Staff Member
 CREATE PROC Apply_for_Leave_Request
 @staff_username VARCHAR(50), @username_replacing VARCHAR(50), @start_date DATE, @end_date DATE, @leave_type VARCHAR(50)
 AS BEGIN
@@ -785,12 +778,11 @@ AS BEGIN
 		ELSE IF @staff_category = 'RegE'
 			INSERT INTO Request_Regular_Employee_Replace VALUES (@start_date, @staff_username, @username_replacing)
 
-		PRINT 'Leave Request added'
-
 	END
 END
 GO
 
+-- >>> Apply for a "Business Trip" Request for a certain Staff Member
 CREATE PROC Apply_for_Business_Trip
 @staff_username VARCHAR(50), @username_replacing VARCHAR(50), @start_date DATE, @end_date DATE, @destination VARCHAR(50), @purpose VARCHAR(50)
 AS BEGIN
@@ -798,8 +790,7 @@ AS BEGIN
 	DECLARE @valid BIT
 	DECLARE @staff_category VARCHAR(10)
 
-	EXEC Apply_for_Request_CHECKS @staff_username, @username_replacing, @start_date, @end_date,
-		@valid OUTPUT, @staff_category OUTPUT
+	EXEC Apply_for_Request_CHECKS @staff_username, @username_replacing, @start_date, @end_date, @valid OUT, @staff_category OUT
 
 	IF @valid = 1 BEGIN
 
@@ -814,8 +805,6 @@ AS BEGIN
 			INSERT INTO Request_Manager_Replace VALUES (@start_date, @staff_username, @username_replacing)
 		ELSE IF @staff_category = 'RegE'
 			INSERT INTO Request_Regular_Employee_Replace VALUES (@start_date, @staff_username, @username_replacing)
-
-		PRINT 'Business Trip Request added'
 
 	END
 END
@@ -848,6 +837,14 @@ GO
 --EXEC Show_my_Requests 'AmrMKayid'
 
 -- [6] Delete any request I applied for as long as it is still in the review process.
+
+-- [HELPER] GET the requests I have created that are in the review process. Used for deletion.
+CREATE FUNCTION Get_my_Pending_Requests (@username VARCHAR(50)) RETURNS TABLE
+AS RETURN
+	SELECT * FROM Requests WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
+GO
+
+ -- >>> Delete all the requests I have applied for and are currently in the review process
 CREATE PROC Delete_my_Pending_Requests
 @username VARCHAR(50)
 AS BEGIN
@@ -883,6 +880,8 @@ GO
 -- EXEC Delete_my_Pending_Requests 'ShadiABarghash'
 
 --  [7] Send emails to staff members in my company.
+
+-- A procedure that creates an Email record, that can be a reply to another Email or not, and returns it's ID
 CREATE PROC Create_Email
 @subject VARCHAR(50), @body VARCHAR(max), @id INT OUT, @reply_to INT = NULL
 AS
@@ -900,10 +899,13 @@ AS
 	END
 GO
 
+-- A procedure that sends an Email to someone
 CREATE PROC Send_Email_in_Company
-@sender VARCHAR(50), @receiver VARCHAR(50), @subject VARCHAR(50), @body VARCHAR(max), @reply_to INT = NULL
+@sender VARCHAR(50), @receiver VARCHAR(50), @email_id INT
 AS
-	IF @sender IS NULL OR @sender NOT IN (SELECT username FROM Staff_Members)
+	IF @email_id IS NULL
+		PRINT 'This procedures must take as input the id of the email to be sent. Use ''Create_Email'' to create an Email and gets its ID.'
+	ELSE IF @sender IS NULL OR @sender NOT IN (SELECT username FROM Staff_Members)
 		PRINT 'A staff member must send the email'
 	ELSE IF @receiver IS NULL
 		PRINT 'You must send the Email to someone.'
@@ -913,11 +915,8 @@ AS
 	ELSE IF @reply_to IS NOT NULL AND @reply_to NOT IN (SELECT email_id FROM Staff_send_Email
 														WHERE receiver_username = @sender)
 		PRINT 'Sorry, this Email was not sent to you in the first place.'
-	ELSE BEGIN
-		DECLARE @email_id INT
-		EXEC Create_Email @subject, @body, @email_id OUT, @reply_to
+	ELSE
 		INSERT INTO Staff_send_Email VALUES (@email_id, @receiver, @sender)
-	END
 GO
 
 -- [8] View emails sent to me by other staff members of my company.
@@ -937,7 +936,9 @@ GO
 CREATE PROC Reply_to_Email
 @orig_email INT, @reply_sender VARCHAR(50), @recipient VARCHAR(50), @subject VARCHAR(50), @body VARCHAR(max)
 AS
-	EXEC Send_Email_in_Company @reply_sender, @recipient, @subject, @body, @orig_email
+	DECLARE @new_email INT
+	EXEC Create_Email @subject, @recipient, @new_email, @orig_email
+	EXEC Send_Email_in_Company @reply_sender, @recipient, @new_email
 GO
 
 -- [10] View announcements related to my company within the past 20 days.
@@ -965,10 +966,12 @@ GO
 
 -- As an HR Employee, I should be able to ..
 
--- NOT SURE: [1] Add a new job that belongs to my department,
+-- [1] Add a new job that belongs to my department,
 -- including all the information needed about the job and its interview questions along with their model answers.
 -- The title of the added job should contain at the beginning the role that will be assigned to the job seeker if he/she was
 -- accepted in this job; for example: "Manager - Junior Sales Manager".
+
+-- Add a new Job, without the questions, yet.
 CREATE PROC Add_Job
 @hr_username VARCHAR(50),
 @title VARCHAR(50), @department VARCHAR(50), @company VARCHAR(50),
@@ -997,6 +1000,8 @@ AS BEGIN
 END
 GO
 
+-- Create and store a question that can be reused in different Jobs.
+-- Returns the id of the new question.
 CREATE PROC Create_Question
 @question VARCHAR(100), @answer BIT, @qid INT OUT
 AS
@@ -1008,6 +1013,7 @@ AS
 	END
 GO
 
+-- Add a question to a Job.
 CREATE PROC Add_Job_Question_to_Job
 @qid VARCHAR(50), @job_title VARCHAR(50), @department VARCHAR(50), @company VARCHAR(50)
 AS
@@ -1164,7 +1170,7 @@ GO
 -- TODO: Test with EXEC
 
 -- [7] View requests of staff members working with me in the same department that were approved by a manager only.
-CREATE PROC View_Requests_in_Department_approved_by_Manager_only
+CREATE PROC View_Requests_approved_by_Manager_only
 @hr_username VARCHAR(50)
 AS SELECT R.*, MR.manager_status, MR.mang_username FROM Requests R INNER JOIN Staff_Members SM ON R.username = SM.username AND R.hr_status = 'PENDING' AND R.manager_status = 'ACCEPTED'
 							INNER JOIN Staff_Members HR ON HR.username = @hr_username AND HR.department = SM.department AND HR.company = SM.company
@@ -1172,14 +1178,13 @@ AS SELECT R.*, MR.manager_status, MR.mang_username FROM Requests R INNER JOIN St
 GO
 
 -- TODO: [8] Accept or reject requests of staff members working with me in the same department that were approved by a manager.
--- My response decides the ?nal status of the request, therefore the annual leaves of the applying staff member should be
+-- My response decides the final status of the request, therefore the annual leaves of the applying staff member should be
 -- updated in case the request was accepted.
 -- Take into consideration that if the duration of the request includes the staff member's weekly day-off and/or Friday,
 -- they should not be counted as annual leaves.
 
 -- [9] View attendance records of a staff member in my department (check-in time, check-out time, duration, missing hours)
 -- within a certain period of time.
-
 CREATE PROC View_Attendance_of_Staff_Member
 @staff_username VARCHAR(50), @from DATETIME, @to DATETIME, @hr_username VARCHAR(50)
 AS
