@@ -369,6 +369,73 @@ INSERT INTO Tasks VALUES ('8thTask', 'finaltask', 'fixed'   , '2017/10/23' , 'Se
 
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Amr Data  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
+-- INSERT INTO Project_Assignments VALUES ('Second Project', 'google.com', 'Regular1' , 'AmrMKayid') -- Testing Amr
+
+------ Regular Employee Testing
+INSERT INTO Users VALUES ('Regular7' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
+INSERT INTO Staff_Members VALUES ('Regular7'     ,  175735   , 'Sunday'     , 47, 'Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Regular_Employees VALUES('Regular7')
+
+INSERT INTO Project_Assignments VALUES ('Second Project', 'google.com', 'Regular7' , 'AmrMKayid')
+
+---- TOTEST: Number 3
+INSERT INTO Tasks VALUES ('AssignedAmr''sTask', 'Test FinishedTask', 'Assigned'   , '2018/01/10' , 'Second Project', 'google.com', 'Regular7' , 'AmrMKayid')
+INSERT INTO Tasks VALUES ('FixedAmr''sTask', 'Test FinishedTask', 'Fixed'   , '2018/01/10' , 'Second Project', 'google.com', 'Regular7' , 'AmrMKayid')
+INSERT INTO Tasks VALUES ('AssignedAmr''sTaskAfterDeadline', 'Test FinishedTask', 'Assigned'   , '2017/01/10' , 'Second Project', 'google.com', 'Regular7' , 'AmrMKayid')
+
+---- TOTEST: Number 4
+INSERT INTO Tasks VALUES ('Number4Case1', 'Test FinishedTask', 'Fixed'   , '2018/01/10' , 'Second Project', 'google.com', 'Regular7' , 'AmrMKayid')
+INSERT INTO Tasks VALUES ('Number4Case2', 'Test FinishedTask', 'Closed'   , '2018/01/10' , 'Second Project', 'google.com', 'Regular7' , 'AmrMKayid')
+INSERT INTO Tasks VALUES ('Number4Case3', 'Test FinishedTask', 'Fixed'   , '2017/01/10' , 'Second Project', 'google.com', 'Regular7' , 'AmrMKayid')
+
+
+------ Manager Testing
+
+---- TOTEST: Number 1
+INSERT INTO Users VALUES ('YasmeenHRTestingAmr'     , 'Hello, World!', 'amr@gmail.com'    , 'Amr'     , 'Mohamed', 'Kayid', '1997/07/10', 3)
+INSERT INTO Staff_Members VALUES ('YasmeenHRTestingAmr'    , 25732   , 'Monday'     , 37, 'Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Managers VALUES('YasmeenHRTestingAmr', 'HR')
+
+INSERT INTO Users VALUES ('AmrHR'         , 'Hello, World3', 'Ahmed@gmail.com'  , 'Ahmed'   , 'Mohamed', 'Ahmed', '1997/01/01', 2)
+INSERT INTO Staff_Members VALUES ('AmrHR'     , 15023   , 'Monday'     , 27, 'Software Engineering HR', 'G_Research', 'google.com')
+INSERT INTO Hr_Employees VALUES('AmrHR')
+
+INSERT INTO Users VALUES ('YasmeenNOTHRTestingAmr'     , 'Hello, World!', 'amr@gmail.com'    , 'Amr'     , 'Mohamed', 'Kayid', '1997/07/10', 3)
+INSERT INTO Staff_Members VALUES ('YasmeenNOTHRTestingAmr'    , 25732   , 'Monday'     , 37, 'Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Managers VALUES('YasmeenNOTHRTestingAmr', '!HR')
+
+INSERT INTO Users VALUES ('AmrNOTHrBUTReg'         , 'Hello, World3', 'Ahmed@gmail.com'  , 'Ahmed'   , 'Mohamed', 'Ahmed', '1997/01/01', 2)
+INSERT INTO Staff_Members VALUES ('AmrNOTHrBUTReg'     , 15023   , 'Monday'     , 27, 'Software Engineering HR', 'G_Research', 'google.com')
+INSERT INTO Regular_Employees VALUES('AmrNOTHrBUTReg')
+
+----- New Requests
+-- HR Request
+INSERT INTO Requests(start_date, username, request_date, end_date) VALUES ('2018/01/01', 'AmrHR', '2017/11/20'  , '2018/09/01')
+-- NOT HR Request BUT Regular_Employees
+INSERT INTO Requests(start_date, username, request_date, end_date) VALUES ('2018/01/01', 'AmrNOTHrBUTReg', '2017/11/20'  , '2018/09/01') 
+
+
+----- View Applications
+INSERT INTO Users VALUES ('AmrApplicant1', 'Hello, World!', 'amr@gmail.com', 'Amr'     , 'Mohamed', 'Kayid', '1997/07/10', 3)
+INSERT INTO Applicants VALUES('AmrApplicant1')
+
+INSERT INTO Users VALUES ('AmrApplicant2', 'Hello, World!', 'amr@gmail.com', 'Amr'     , 'Mohamed', 'Kayid', '1997/07/10', 3)
+INSERT INTO Applicants VALUES('AmrApplicant2')
+
+INSERT INTO Applications(job_title, department, company, app_username, score, hr_status) VALUES('Software Engineering Manager', 'G_Research', 'google.com', 'AmrApplicant1', 10, 'ACCEPTED')
+INSERT INTO Applications(job_title, department, company, app_username, score, hr_status) VALUES('Software Engineering Manager', 'G_Research', 'google.com', 'AmrApplicant2', 70, 'ACCEPTED')
+
+
+INSERT INTO Users VALUES ('RegEmpWithNoTasks'         , 'Hello, World3', 'Ahmed@gmail.com'  , 'Ahmed'   , 'Mohamed', 'Ahmed', '1997/01/01', 2)
+INSERT INTO Staff_Members VALUES ('RegEmpWithNoTasks'     , 15023   , 'Monday'     , 27, 'Software Engineering HR', 'G_Research', 'google.com')
+INSERT INTO Regular_Employees VALUES('RegEmpWithNoTasks')
+
+INSERT INTO Project_Assignments VALUES ('First Project', 'google.com', 'RegEmpWithNoTasks' , 'YasmeenHRTestingAmr')
+
+
+-- ---- ##### ##### ##### ##### ##### ##### ##### #####  Amr Data  ##### ##### ##### #####  ##### ##### ##### ##### -----
+
+
 
 -- INSERT INTO Users VALUES ('Regular'         , 'Hello, World*', 'Sabry3@gmail.com'  , 'Sabry3'   , 'Mohamed', 'Ahmed', '1997/09/10', 10)
 -- INSERT INTO Staff_Members VALUES ('Regular', 17246   , 'Sunday'     , 80, 'TV Development HR', 'iTV', 'apple.com')
@@ -387,4 +454,3 @@ INSERT INTO Tasks VALUES ('8thTask', 'finaltask', 'fixed'   , '2017/10/23' , 'Se
 -- -- Tasks
 -- INSERT INTO Tasks VALUES ('First Task', 'The easy task', 'Pending'   , '2017/11/17' , 'First Project', 'apple.com', 'Regular' , 'Eyad3')
 -- INSERT INTO Tasks VALUES ('Assigned Task', 'The easy task', 'Assigned'   , '2017/11/17' , 'First Project', 'apple.com', 'Regular' , 'Eyad3')
--- ---- ##### ##### ##### ##### ##### ##### ##### #####  Amr Data  ##### ##### ##### #####  ##### ##### ##### ##### -----

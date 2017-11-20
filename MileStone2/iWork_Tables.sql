@@ -252,7 +252,7 @@ CREATE TABLE Tasks (
   deadline DATETIME,
   project varchar(50),
   company VARCHAR(50),
-  regular_employee_username VARCHAR(50) NOT NULL REFERENCES Regular_Employees(username),
+  regular_employee_username VARCHAR(50) REFERENCES Regular_Employees(username),
   mananger_username VARCHAR(50) NOT NULL REFERENCES Managers(username),
   PRIMARY KEY(name, project, company),
   FOREIGN KEY(project, company) REFERENCES Projects(name, company) ON DELETE CASCADE ON UPDATE CASCADE

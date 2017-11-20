@@ -1172,8 +1172,6 @@ Begin
            (PA.project_name = P.name AND PA.company = P.company) -- FOREIGN KEY
 End
 
-GO
--- EXEC viewMyAssignedProjects 'Regular'
 
 GO
 Create Procedure viewMyAssignedTasksInAProject
@@ -1189,9 +1187,6 @@ Begin
 End
 
 GO
--- EXEC viewMyAssignedTasksInAProject 'Regular', 'First Project'
-
-GO
 Create Procedure FinishedTask
 (
 @username VARCHAR(50), @task varchar(50), @project varchar(50)
@@ -1201,13 +1196,10 @@ Begin
     UPDATE Tasks
     SET [status] = 'Fixed'
     WHERE SYSDATETIME() < deadline 
-          AND name = @task 
+          AND name = @task  AND [status] = 'Assigned'
           AND regular_employee_username = @username
           AND project = @project
 End
-
-GO
--- EXEC FinishedTask 'Regular', 'First Task', 'First Project'
 
 GO
 Create Procedure ChangeTaskStatus
@@ -1221,12 +1213,9 @@ Begin
     WHERE SYSDATETIME() < deadline 
           AND name = @task 
           AND regular_employee_username = @username
-          AND [status] <> 'Closed'
+          AND [status] <> 'Closed' AND [status] = 'Fixed' 
           AND project = @project
 End
-
-GO
--- EXEC ChangeTaskStatus 'Regular', 'First Task', 'First Project'
 
 ---- ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####  ##### ##### ##### ##### -----
 
@@ -1239,15 +1228,26 @@ Create Procedure ViewNewRequests
 )
 As
 Begin
-   SELECT * FROM Requests R
-   WHERE EXISTS(SELECT * FROM Managers M, Staff_Members S1
-        where M.username = @manager AND S1.username = @manager AND ((M.[type] = 'HR'
-        AND EXISTS(
-          SELECT * FROM Staff_Members S2, Hr_Employees HR
-          WHERE S2.department = S1.department AND R.username = S2.username AND S2.username = HR.username)) 
-        OR EXISTS(
-        SELECT * FROM Staff_Members S2
-        WHERE S2.department = S1.department AND R.username = S2.username)) )
+			DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
+																			where M.username = @manager AND S1.username = @manager)
+			DECLARE @department varchar(50) = (SELECT S1.department FROM Managers M, Staff_Members S1 
+																			where M.username = @manager AND S1.username = @manager)
+			IF EXISTS(SELECT * FROM Managers M
+									where M.username = @manager AND M.[type] = 'HR')
+			BEGIN
+				SELECT * FROM Requests R
+				WHERE R.manager_status = 'PENDING' AND R.username IN (
+					SELECT SM.username FROM Staff_Members SM
+					WHERE SM.company = @company AND SM.department = @department)
+			END
+			ELSE
+			BEGIN
+				SELECT * FROM Requests R
+				WHERE R.manager_status = 'PENDING' AND R.username NOT IN(SELECT * FROM Hr_Employees) 
+							AND R.username IN (
+											SELECT SM.username FROM Staff_Members SM
+											WHERE SM.company = @company AND SM.department = @department)
+			END
 End
 
 GO
@@ -1256,31 +1256,59 @@ Create Procedure ReviewRequest
 @manager VARCHAR(50), @start_date DATE, @username VARCHAR(50), @isAccepted BIT, @reason VARCHAR(max)
 )
 As
-Begin
-   IF(@isAccepted = 1)
-   BEGIN
-   UPDATE Requests
-   SET manager_status = 'Accepted'
-   WHERE username = @username AND start_date = @start_date AND
-        EXISTS(SELECT * FROM Managers M, Staff_Members S1
-        where M.username = @manager AND S1.username = @manager AND mang_username = @manager 
-        AND EXISTS(
-          SELECT * FROM Staff_Members S2
-          WHERE  S2.username = @username AND S2.department = S1.department))
-   END
-   ELSE
-   BEGIN
-   UPDATE Requests
-   SET manager_status = 'Rejected', reason = @reason
-   WHERE username = @username AND start_date = @start_date AND
-        EXISTS(SELECT * FROM Managers M, Staff_Members S1
-        where M.username = @manager AND S1.username = @manager AND mang_username = @manager 
-        AND EXISTS(
-                SELECT * FROM Staff_Members S2
-                WHERE  S2.username = @username AND S2.department = S1.department))
-   END
+Begin 
+			DECLARE @mang_status VARCHAR(50)
+			IF(@isAccepted = 1) SET @mang_status = 'Accepted' ELSE SET @mang_status = 'Rejected'
+			IF(@isAccepted = 1)
+			BEGIN
+					IF EXISTS(SELECT * FROM Hr_Employees HR WHERE HR.username = @username)
+					BEGIN
+					UPDATE Requests
+					SET manager_status = @mang_status, hr_status = @mang_status, mang_username = @manager
+					WHERE username = @username AND start_date = @start_date AND
+								EXISTS(SELECT * FROM Managers M, Staff_Members S1
+								where M.username = @manager AND S1.username = @manager
+								AND EXISTS(
+									SELECT * FROM Staff_Members S2
+									WHERE  S2.username = @username AND S2.department = S1.department AND S2.company = S1.company))
+					END
+					ELSE IF NOT EXISTS(SELECT * FROM Hr_Employees HR WHERE HR.username = @username)
+					BEGIN
+					UPDATE Requests
+					SET manager_status = @mang_status, mang_username = @manager
+					WHERE username = @username AND start_date = @start_date AND
+								EXISTS(SELECT * FROM Managers M, Staff_Members S1
+								where M.username = @manager AND S1.username = @manager
+								AND EXISTS(
+									SELECT * FROM Staff_Members S2
+									WHERE  S2.username = @username AND S2.department = S1.department AND S2.company = S1.company))
+					END
+			END
+   		ELSE
+					IF EXISTS(SELECT * FROM Hr_Employees HR WHERE HR.username = @username)
+					BEGIN
+					UPDATE Requests
+					SET manager_status = @mang_status, hr_status = @mang_status, mang_username = @manager, reason = @reason
+					WHERE username = @username AND start_date = @start_date AND
+								EXISTS(SELECT * FROM Managers M, Staff_Members S1
+								where M.username = @manager AND S1.username = @manager
+								AND EXISTS(
+									SELECT * FROM Staff_Members S2
+									WHERE  S2.username = @username AND S2.department = S1.department AND S2.company = S1.company))
+					END
+					ELSE IF NOT EXISTS(SELECT * FROM Hr_Employees HR WHERE HR.username = @username)
+					BEGIN
+					UPDATE Requests
+					SET manager_status = @mang_status, mang_username = @manager, reason = @reason
+					WHERE username = @username AND start_date = @start_date AND
+								EXISTS(SELECT * FROM Managers M, Staff_Members S1
+								where M.username = @manager AND S1.username = @manager
+								AND EXISTS(
+									SELECT * FROM Staff_Members S2
+									WHERE  S2.username = @username AND S2.department = S1.department AND S2.company = S1.company))
+					END
+END
 
-End
 
 
 GO
@@ -1295,62 +1323,48 @@ Begin
      WHERE A.job_title = J.title 
 		 AND EXISTS (SELECT * FROM Managers M, Staff_Members S1
 									where M.username = @manager AND S1.username = @manager
-									AND A.manager_username = M.username 
-									AND A.department = S1.department 
-									AND A.hr_status = 'Approved')
+									--AND A.manager_username = M.username 
+									AND A.department = S1.department AND A.company = S1.company
+									AND A.hr_status = 'ACCEPTED')
 End
 
 
 GO
 Create Procedure ReviewApplication
 (
-@manager VARCHAR(50), @id INT, @username VARCHAR(50), @isAccepted BIT
+@manager VARCHAR(50), @id INT, @isAccepted BIT
 )
 As
 IF EXISTS(SELECT * FROM Managers
         where Managers.username = @manager)
 Begin
-   IF(@isAccepted = 1)
-   BEGIN
-   UPDATE Applications
-   SET manager_status = 'Accepted'
-   WHERE app_username = @username AND hr_status = 'Approved' --AND
-        -- EXISTS(SELECT * FROM Managers M, Staff_Members S1
-        -- 				where M.username = @manager AND S1.username = @manager)
-        -- AND EXISTS(
-        --   SELECT * FROM Staff_Members S2
-        --   WHERE  S2.username = @username AND S2.department = S1.department))
-   END
-   ELSE
-   BEGIN
-   UPDATE Applications
-   SET manager_status = 'Rejected'
-   WHERE app_username = @username AND hr_status = 'Approved' --AND
-        -- EXISTS(SELECT * FROM Managers M, Staff_Members S1
-        -- 				where M.username = @manager AND S1.username = @manager)
-        -- AND EXISTS(
-        --   SELECT * FROM Staff_Members S2
-        --   WHERE  S2.username = @username AND S2.department = S1.department))
-   END
+		DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
+																where M.username = @manager AND S1.username = @manager)
+		DECLARE @department varchar(50) = (SELECT S1.department FROM Managers M, Staff_Members S1 
+																where M.username = @manager AND S1.username = @manager)
+		DECLARE @mang_status VARCHAR(50)
+		IF(@isAccepted = 1) SET @mang_status = 'Accepted' ELSE SET @mang_status = 'Rejected'
 
+		UPDATE Applications
+		SET manager_status = @mang_status
+		WHERE id = @id AND hr_status = 'ACCEPTED' AND company = @company AND department = @department
 End
 
 GO
 Create Procedure CreateNewProject
 (
-@manager VARCHAR(50), @name varchar(50), @company VARCHAR(50),
-@start_date DATETIME, @end_date DATETIME
+@manager VARCHAR(50), @name varchar(50), @start_date DATETIME, @end_date DATETIME
 )
 As
 IF EXISTS(SELECT * FROM Managers
         where Managers.username = @manager)
 Begin
+	DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
+														where M.username = @manager AND S1.username = @manager)
    INSERT INTO Projects 
    VALUES (@name, @company, @start_date, @end_date , @manager)
 End
 
-GO
--- EXEC CreateNewProject 'Eyad3', 'Creating third new Project', 'apple.com', '2017/11/15'  , '2017/11/17'
 
 GO
 Create Procedure AddEmployeeToProject
@@ -1361,11 +1375,11 @@ As
 IF EXISTS(SELECT * FROM Managers M, Staff_Members S1
 					where M.username = @manager AND S1.username = @manager
 	AND EXISTS( SELECT * FROM Regular_Employees E, Staff_Members S2
-          WHERE E.username = @regular_employee AND S2.username = @regular_employee AND S2.department = S1.department))
+          WHERE E.username = @regular_employee AND S2.username = @regular_employee AND S2.department = S1.department AND S2.company = S1.company))
 
 IF EXISTS(
-  SELECT count(regular_employee_username) FROM Tasks
-  WHERE regular_employee_username = @regular_employee 
+  SELECT count(regular_employee_username) FROM Project_Assignments
+  WHERE  regular_employee_username = @regular_employee 
   HAVING count(regular_employee_username) < 2)
 Begin
 		DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
@@ -1374,21 +1388,21 @@ Begin
     VALUES(@project, @company, @regular_employee, @manager)
 End
 
--- EXEC AddEmployeeToProject 'AmrMKayid', 'First Project', 'Regular4'
-
--- SELECT * FROM Project_Assignments
-
 GO
 Create Procedure RemoveEmployeeFromProject
 (
 @manager VARCHAR(50), @project varchar(50), @regular_employee varchar(50)
 )
 As
-IF EXISTS(SELECT * FROM Managers
-        where Managers.username = @manager)
+IF EXISTS(SELECT * FROM Managers M, Staff_Members S1
+					where M.username = @manager AND S1.username = @manager
+	AND EXISTS( SELECT * FROM Regular_Employees E, Staff_Members S2
+          WHERE E.username = @regular_employee AND S2.username = @regular_employee AND S2.department = S1.department AND S2.company = S1.company))
 Begin
+		DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
+																	where M.username = @manager AND S1.username = @manager)
     DELETE Project_Assignments
-    WHERE project_name = @project 
+    WHERE project_name = @project AND company = @company AND mananger_username = @manager
           AND regular_employee_username = @regular_employee 
           AND @regular_employee NOT IN (
             SELECT regular_employee_username
@@ -1399,10 +1413,28 @@ End
 -- EXEC RemoveEmployeeFromProject 'AmrMKayid', 'First Project', 'Regular2'
 
 GO
-Create Procedure CreateAndAssignNewTask
+Create Procedure CreateNewTask
 (
 @manager VARCHAR(50), @name varchar(50), @description varchar(max), 
-@deadline DATETIME, @project varchar(50), @regular_employee_username VARCHAR(50)
+@deadline DATETIME, @project varchar(50)
+)
+As
+IF EXISTS(SELECT * FROM Managers
+        where Managers.username = @manager)
+IF EXISTS(SELECT * FROM Project_Assignments PA
+        where PA.mananger_username = @manager 
+              AND PA.project_name = @project)
+Begin
+	DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
+																			where M.username = @manager AND S1.username = @manager)
+   INSERT INTO Tasks 
+   VALUES (@name, @description, 'Open', @deadline , @project, @company, NULL , @manager)
+End
+
+GO
+Create Procedure AssignTask
+(
+@manager VARCHAR(50), @name varchar(50), @project varchar(50), @regular_employee_username VARCHAR(50)
 )
 As
 IF EXISTS(SELECT * FROM Managers
@@ -1414,13 +1446,10 @@ IF EXISTS(SELECT * FROM Project_Assignments PA
 Begin
 	DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
 																			where M.username = @manager AND S1.username = @manager)
-   INSERT INTO Tasks 
-   VALUES (@name, @description, 'Open', @deadline , @project, @company, @regular_employee_username , @manager)
+   UPDATE Tasks 
+	 SET regular_employee_username = @regular_employee_username, [status] = 'Assigned'
+	 WHERE [name] = @name AND mananger_username = @manager AND project = @project --AND 
 End
-
--- EXEC CreateAndAssignNewTask 'AmrMKayid', '4th Task', 'The easy task', '2017/11/27' , 'First Project', 'Regular2'
-
--- SELECT * FROM Tasks
 
 GO
 Create Procedure ChangeTaskEmployee
