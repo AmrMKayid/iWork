@@ -695,6 +695,8 @@ AS BEGIN
 		--------     [ 7aga zayy break;	aw return; ] ?
 	END
 
+	-- TODO: (extra) Check that the start_date is later than today (request_date)
+
 	-- Check that replacing username is not the same as the requesting username, and he's in the same department -- company
 	IF @staff_username = @username_replacing OR @username_replacing IN (
 		SELECT S2.username FROM Staff_Members S1 INNER JOIN Staff_Members S2
@@ -1177,11 +1179,140 @@ AS SELECT R.*, MR.manager_status, MR.mang_username FROM Requests R INNER JOIN St
 							INNER JOIN Manager_Request_Reviews MR ON MR.username = R.username AND MR.start_date = R.start_date
 GO
 
--- TODO: [8] Accept or reject requests of staff members working with me in the same department that were approved by a manager.
+-- [8] Accept or reject requests of staff members working with me in the same department that were approved by a manager.
 -- My response decides the final status of the request, therefore the annual leaves of the applying staff member should be
 -- updated in case the request was accepted.
 -- Take into consideration that if the duration of the request includes the staff member's weekly day-off and/or Friday,
 -- they should not be counted as annual leaves.
+
+-- [HELPER] Decrement the annual leaves of a Staff Member by a certain number
+CREATE PROC Dec_annual_leaves_by
+@staff_username VARCHAR(50), @dec_by INT
+AS
+	IF @staff_username IS NULL OR @staff_username NOT IN (SELECT username FROM Staff_Members)
+		PRINT 'Please provide a username of a Staff Member.'
+	ELSE IF @dec_by IS NULL OR @dec_by < 0
+		PRINT 'Please provide the number of days to decrement by'
+	ELSE BEGIN
+		DECLARE @old_annual_lvs INT
+		SELECT @old_annual_lvs = annual_leaves FROM Staff_Members WHERE username = @staff_username
+
+		DECLARE @new_annual_lvs INT
+		SET @new_annual_lvs = @old_annual_lvs - @dec_by
+
+		IF @new_annual_lvs < 0 BEGIN
+			SET @new_annual_lvs = 0
+			PRINT 'annual leaves remaining was less than zero, so raised up to zero.'
+		END
+
+		UPDATE Staff_Members
+		SET annual_leaves = @new_annual_lvs
+		WHERE username = @staff_username
+	END
+GO
+
+-- [HELPER] Compute the number of leave days from start to end dates (inclusive),
+-- but excluding 'Friday' and the staff member's day off from the calculation.
+CREATE FUNCTION Get_leave_days (@start_date DATE, @end_date DATE, @day_off VARCHAR(9)) RETURNS INT
+AS BEGIN
+
+	-- Get the weekday equivelant of the day_off
+	DECLARE @day_off_wk INT
+	IF @day_off = 'Sunday'
+		SET @day_off_wk = 1
+	ELSE IF @day_off = 'Monday'
+		SET @day_off_wk = 2
+	ELSE IF @day_off = 'Tuesday'
+		SET @day_off_wk = 3
+	ELSE IF @day_off = 'Wednesday'
+		SET @day_off_wk = 4
+	ELSE IF @day_off = 'Thursday'
+		SET @day_off_wk = 5
+	ELSE IF @day_off = 'Saturday'
+		SET @day_off_wk = 7
+
+	-- Declare an accumulator to count the days in the range
+	DECLARE @days INT
+	SET @days = 0
+
+	-- Start counting from the start date (till the end_date, inclusive)
+	DECLARE @i_date DATE
+	SET @i_date = @start_date
+
+	-- Declare a variable that will be updated and used inside each iteration to store the weekday value of a DATE
+	DECLARE @wk INT
+
+	-- Start iterating from the start_date to the end_date inclusive, to count only the days that are not Friday or the day_off
+	WHILE @i_date <= @end_date BEGIN
+		
+		-- Get the weekday equivelant of the date considered in this iteration
+		SET @wk = DATEPART(WEEKDAY, @i_date)
+
+		-- Only increment the counted days if the weekday is not Friday (6) or the day_off of the staff member.
+		IF @wk <> 6 AND @wk <> @day_off_wk -- If not Friday or the day_off, count
+			SET @days = @days + 1
+
+		-- Update (increment) the current date to be considered in the next iteration
+		SET @i_date = DATEADD(DAY, 1, @i_date)
+
+	END
+
+	RETURN @days
+END
+GO
+
+--- >>> Accept or Reject a Request that a Manager has accepted.
+CREATE PROC Respond_to_Request_HR
+@hr_username VARCHAR(50), @req_start_date DATE, @req_username VARCHAR(50), @accept BIT
+AS
+	IF @hr_username IS NULL OR @hr_username NOT IN (SELECT username FROM Hr_Employees)
+		PRINT 'The request must be reviewed by an HR employee.'
+	ELSE IF NOT EXISTS (SELECT * FROM Requests WHERE username = @req_username AND start_date = @req_start_date
+												AND manager_status = 'ACCEPTED')
+		PRINT 'This request does not exist or has not been accepted by an HR Employee.'
+	ELSE IF EXISTS (SELECT * FROM Requests WHERE username = @req_username AND start_date = @req_start_date
+					AND hr_username IS NOT NULL)
+		PRINT 'This request has already been accepted.'
+	ELSE BEGIN
+
+		DECLARE @status VARCHAR(50)
+		IF @accept = 1
+			SET @status = 'ACCEPTED'
+		ELSE IF @accept = 0
+			SET @status = 'REJECTED'
+
+		IF @status IS NOT NULL BEGIN
+
+			-- UPDATE the new status and the username of the HR employee who made that response
+			UPDATE Requests
+			SET hr_status = @status, hr_username = @hr_username
+			WHERE username = @req_username AND start_date = @req_start_date
+
+			DECLARE @req_end_date DATE
+			SELECT @req_end_date = end_date FROM Requests
+			WHERE username = @req_username AND start_date = @req_start_date
+
+			DECLARE @staff_day_off VARCHAR(9)
+			SELECT @staff_day_off = day_off FROM Staff_Members WHERE username = @req_username
+
+			DECLARE @leave_days INT
+			SET @leave_days = dbo.Get_leave_days(@req_start_date, @req_end_date, @staff_day_off)
+
+			-- Decrement the annual leaves of this staff member by this number.
+			EXEC Dec_annual_leaves_by @req_username, @leave_days
+		END
+
+	END
+GO
+
+--INSERT INTO Requests (username, request_date, start_date, end_date, manager_status, mang_username)
+--VALUES ('Adel', '2017-11-01', '2017-11-05', '2017-11-19', 'ACCEPTED', 'Mohab')
+
+--EXEC Respond_to_Request_HR 'Sabry', '2017-11-05', 'Adel', 1
+
+--SELECT * FROM Requests
+
+--SELECT * FROM Staff_Members WHERE username = 'Adel'
 
 -- [9] View attendance records of a staff member in my department (check-in time, check-out time, duration, missing hours)
 -- within a certain period of time.
