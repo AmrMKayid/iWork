@@ -375,6 +375,14 @@ if(exists(select *
 	print 'Register or login'
 
 --######################################################################--
+--save score
+GO
+create proc savescore --will be used in applyforjob procedure above to provide it with the value of the score 
+@score int ,@scoreout int output  /* I see that the creation of an application record should be done after the score is calculated not before it to avoid the existance of application records whose users for 
+example clicked apply so the interview questions appeared ,however he closed the website and didnt submit his answers , so a reocrd will be saved when it shouldnt be , therefore the scenario i am doing is that 
+when apply is clicked interview questions should appear , then user solves them clicks submit the website calculates the score and calls Apply for job procedure to insert an application record with the score*/
+as
+set @scoreout=@score
 
 --Apply for a job
 GO
@@ -409,13 +417,13 @@ if(exists(select *
 		 else
 		 begin
 		 declare @scoreout int
-		 -- exex savescore @score ,@scoreout output
+		 exec savescore @score ,@scoreout output
+		
         insert into Applications (score,hr_status,manager_status,job_title,department,company,app_username)values(@scoreout,'pending','pending',@jobtitle ,@dep ,@comp,@username);
-		 end
-		 end
-		 end
 
-
+		 end
+		 end
+		 end
 --view questions
 GO
 create proc viewquestions
@@ -428,18 +436,8 @@ where q.title=@jobtitle and q.department=@dep and q.company=@comp
 
 
 
---save score
-GO
-create proc savescore --will be used in applyforjob procedure above to provide it with the value of the score 
-@score int ,@scoreout int output  /* I see that the creation of an application record should be done after the score is calculated not before it to avoid the existance of application records whose users for 
-example clicked apply so the interview questions appeared ,however he closed the website and didnt submit his answers , so a reocrd will be saved when it shouldnt be , therefore the scenario i am doing is that 
-when apply is clicked interview questions should appear , then user solves them clicks submit the website calculates the score and calls Apply for job procedure to insert an application record with the score*/
-as
-set @scoreout=@score
 
-declare @out int
--- exex savescore 12, @out output
-print @out
+
 --#################################################################--
 
 --view my job applications status
@@ -474,7 +472,17 @@ if(exists(select a.*
 		  print 'select a day other than Friday'
 		  else
 		  begin
+		   if(exists(select *
+          from Staff_Members
+		  where username=@username))
+		  begin
+		  delete from Staff_Members
+		  where username=@username
 		  insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);
+		  end 
+		  else
+		   insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);
+
 		  update Jobs
 		  set vacancy=vacancy-1
 		  where title=@jobtitle and department=@dep and company=@comp
@@ -1087,8 +1095,55 @@ GO
 -- TODO: Test with EXEC, needs some Attendance records
 
 -- TODO: [10] View the total number of hours for any staff member in my department in each month of a certain year.
+go
+create proc view_totalhours_of_staff
+@hr varchar(50) ,@staff varchar(50) ,@year int
+as
+if(exists(select *
+          from Hr_Employees 
+		  where username=@hr))
+		  begin
+		  if(exists(select *
+		  from Staff_Members  s
+		  inner join Staff_Members s1 on s1.company=s.company and s.department=s1.department
+		  where s.username=@hr and s1.username=@staff))
+		  begin
+		   select x.username,DATENAME(month,x.attendance_date) as month_name,DATEPART(month,x.attendance_date) as month_num,sum(x.duration) as total_hours
+		  from Attendance_Records x
+          where x.username=@staff and DATEPART ( year , x.attendance_date ) =@year
+		  group by x.username,DATENAME(month,x.attendance_date),DATEPART(month,x.attendance_date)
+		  order by month_num
+		  end
+		  end
+		
 
 -- TODO: [11] View names of the top 3 high achievers in my department.
+go
+
+create proc top_3_achievers
+@hr varchar(50),@month int,@year int
+as
+  select top 3 a.username, DATENAME(month,a.attendance_date) as month,sum(a.duration) as total_hours
+  from Attendance_Records a
+   where a.username in(
+           select t.regular_employee_username
+           from Tasks t
+           where t.regular_employee_username in(
+          select distinct s1.username
+		  from Staff_Members  s
+		  inner join Staff_Members s1 on s1.company=s.company and s.department=s1.department
+		  --inner join Attendance_Records a on s1.username=a.username
+		  where s.username=@hr and(exists(select *
+		                                      from Regular_Employees
+											  where username =s1.username))) and t.regular_employee_username not in(
+                                               select regular_employee_username
+                                               from Tasks
+                                               where status<>'fixed') and DATEPART(MONTH,a.attendance_date) >= @month and DATEPART(year,t.deadline)=@year )and DATepart(month,a.attendance_date)=@month and DATEPART(year,a.attendance_date)=@year
+  group by a.username, DATENAME(month,a.attendance_date)
+  order by sum(a.duration) desc
+
+
+
 -- A high achiever is a regular employee who stayed the longest hours in the company for a certain month
 -- and all tasks assigned to him/her with deadline within this month are fixed.
 

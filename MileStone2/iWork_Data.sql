@@ -257,7 +257,6 @@ Insert into Attendance_Records values('Adel','2017/10/18','03:49:00','05:49:00',
 Insert into Attendance_Records values('Adel','2017/10/19','03:49:00','05:49:00',2,5);
 Insert into Attendance_Records values('Adel','2017/10/20','03:49:00','05:49:00',2,5);
 Insert into Attendance_Records values('Adel','2017/10/21','03:49:00','05:49:00',2,5);
-Insert into Attendance_Records values('Adel3','2017/11/18','11:49:00',null,null,null);
 
 Insert into Applications values(90,'Accepted','Pending','Android HR','Android_OS','google.com','Maza','Mohamed',null);
 
@@ -282,10 +281,14 @@ INSERT INTO Attendance_Records VALUES ('Regular1', '2017/11/21', '10:15:00', '1:
 INSERT INTO Attendance_Records VALUES ('Regular1', '2017/11/22', '12:15:00', '5:30:00', 5.25, 0)
 INSERT INTO Attendance_Records VALUES ('Regular1', '2017/11/23', '9:15:00', '4:15:00', 6.30, 0)
 INSERT INTO Attendance_Records VALUES ('Regular1', '2017/11/24', '6:15:00', '1:40:00', 7, 0)
+INSERT INTO Attendance_Records VALUES ('Regular1', '2017/12/24', '6:15:00', '1:40:00', 7, 0)
+INSERT INTO Attendance_Records VALUES ('Regular1', '2017/01/24', '6:15:00', '1:40:00', 7, 0)
+INSERT INTO Attendance_Records VALUES ('Regular1', '2017/07/24', '6:15:00', '1:40:00', 7, 0)
+
 
 INSERT INTO Projects VALUES ('First Project', 'google.com', '2017/11/15'   , '2017/11/30' , 'AmrMKayid')
 INSERT INTO Project_Assignments VALUES ('First Project', 'google.com', 'Regular1' , 'AmrMKayid')
-INSERT INTO Tasks VALUES ('First Task', 'The easy task', 'Pending'   , '2017/11/27' , 'First Project', 'google.com', 'Regular1' , 'AmrMKayid')
+INSERT INTO Tasks VALUES ('First Task', 'The easy task', 'fixed'   , '2017/11/27' , 'First Project', 'google.com', 'Regular1' , 'AmrMKayid')
 -- ########################## --
 
 INSERT INTO Users VALUES ('Regular2' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
@@ -301,7 +304,7 @@ INSERT INTO Attendance_Records VALUES ('Regular2', '2017/11/27', '7:15:00', '1:4
 
 -- INSERT INTO Projects VALUES ('First Project', 'google.com', '2017/11/15'   , '2017/11/30' , 'AmrMKayid')
 INSERT INTO Project_Assignments VALUES ('First Project', 'google.com', 'Regular2' , 'AmrMKayid')
-INSERT INTO Tasks VALUES ('Second Task', 'The 2nd easy task', 'Pending'   , '2017/11/27' , 'First Project', 'google.com', 'Regular2' , 'AmrMKayid')
+INSERT INTO Tasks VALUES ('Second Task', 'The 2nd easy task', 'fixed'   , '2017/11/27' , 'First Project', 'google.com', 'Regular2' , 'AmrMKayid')
 -- ########################## --
 
 INSERT INTO Users VALUES ('Regular3' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
@@ -317,7 +320,7 @@ INSERT INTO Attendance_Records VALUES ('Regular3', '2017/11/23', '6:15:00', '1:4
 
 INSERT INTO Projects VALUES ('Second Project', 'google.com', '2017/11/15'   , '2017/11/25' , 'AmrMKayid')
 INSERT INTO Project_Assignments VALUES ('Second Project', 'google.com', 'Regular3' , 'AmrMKayid')
-INSERT INTO Tasks VALUES ('First Task', 'The easy task', 'Pending'   , '2017/11/23' , 'Second Project', 'google.com', 'Regular3' , 'AmrMKayid')
+INSERT INTO Tasks VALUES ('First Task', 'The easy task', 'fixed'   , '2017/11/23' , 'Second Project', 'google.com', 'Regular3' , 'AmrMKayid')
 -- ########################## --
 
 INSERT INTO Users VALUES ('Regular4' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
@@ -333,7 +336,10 @@ INSERT INTO Attendance_Records VALUES ('Regular4', '2017/11/28', '6:15:00', '1:4
 
 -- INSERT INTO Projects VALUES ('Second Project', 'google.com', '2017/11/15'   , '2017/11/25' , 'AmrMKayid')
 INSERT INTO Project_Assignments VALUES ('Second Project', 'google.com', 'Regular4' , 'AmrMKayid')
-INSERT INTO Tasks VALUES ('2nd Task', 'The easy task', 'Pending'   , '2017/11/23' , 'Second Project', 'google.com', 'Regular4' , 'AmrMKayid')
+INSERT INTO Tasks VALUES ('2nd Task', 'The easy task', 'fixed'   , '2017/11/23' , 'Second Project', 'google.com', 'Regular4' , 'AmrMKayid')
+
+INSERT INTO Tasks VALUES ('6th Task', 'The easy task', 'Assigned'   , '2017/11/23' , 'Second Project', 'google.com', 'Regular3' , 'AmrMKayid')
+
 -- ########################## --
 
 INSERT INTO Users VALUES ('Regular5' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
@@ -347,9 +353,15 @@ INSERT INTO Attendance_Records VALUES ('Regular5', '2017/11/29', '12:15:00', '5:
 INSERT INTO Attendance_Records VALUES ('Regular5', '2017/11/27', '9:15:00', '4:15:00', 6.30, 0)
 INSERT INTO Attendance_Records VALUES ('Regular5', '2017/11/24', '6:15:00', '1:40:00', 7, 0)
 
+INSERT INTO Attendance_Records VALUES ('Regular5', '2017/10/24', '6:15:00', '1:40:00', 7, 0)
+
+
 -- INSERT INTO Projects VALUES ('Second Project', 'google.com', '2017/11/15'   , '2017/11/25' , 'AmrMKayid')
 INSERT INTO Project_Assignments VALUES ('Second Project', 'google.com', 'Regular5' , 'AmrMKayid')
-INSERT INTO Tasks VALUES ('a5r Task', 'Rabna 3la el zalm w el moftariiiii', 'Pending'   , '2017/11/23' , 'Second Project', 'google.com', 'Regular5' , 'AmrMKayid')
+INSERT INTO Tasks VALUES ('5thTask', 'finaltask', 'fixed'   , '2017/11/23' , 'Second Project', 'google.com', 'Regular5' , 'AmrMKayid')
+INSERT INTO Tasks VALUES ('8thTask', 'finaltask', 'fixed'   , '2017/10/23' , 'Second Project', 'google.com', 'Regular5' , 'AmrMKayid')
+
+
 -- ########################## --
 
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Yasmeen Data  ##### ##### ##### #####  ##### ##### ##### ##### -----
