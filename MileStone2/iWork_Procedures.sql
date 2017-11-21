@@ -914,9 +914,6 @@ AS
 	ELSE IF @receiver NOT IN (SELECT Sr.username FROM Staff_Members Ss INNER JOIN Staff_Members Sr
 								ON Ss.username = @sender AND Ss.company = Sr.company)
 		PRINT 'You can only send to a Staff Member in your company.'
-	ELSE IF @reply_to IS NOT NULL AND @reply_to NOT IN (SELECT email_id FROM Staff_send_Email
-														WHERE receiver_username = @sender)
-		PRINT 'Sorry, this Email was not sent to you in the first place.'
 	ELSE
 		INSERT INTO Staff_send_Email VALUES (@email_id, @receiver, @sender)
 GO
