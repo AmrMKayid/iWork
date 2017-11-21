@@ -16,7 +16,6 @@ else
 select *
 from Companies 
 where replace(Companies.name,' ','')=replace(@name,' ','' ) --to be able to search without being space sensitive 
-
 select phone
 from Company_Phones
 where Company_Phones.company=replace(@name,' ','' )+'.com'
@@ -66,18 +65,17 @@ from Companies
 --view certain company and its departments
 GO
 create procedure viewcertaincompany
-@name varchar(50)
+@domain varchar(50)
 as
 select c.*
 from Companies c
-where c.name=@name
+where c.domain=@domain
 select p.phone
 from Company_Phones p
-where p.company=replace(@name,' ','')+'.com'
+where p.company=@domain
 select d.code,d.name 
 from Departments d
-where d.company=replace(@name,' ','')+'.com' --making sure no white spaces between letters or words
-
+where d.company=@domain
 --drop proc viewcertaincompany
 
 
@@ -132,7 +130,7 @@ end
 --after registering he will be able to enter his previous jobs or if he is an already registered an wants to add p-jobs
 GO
 create proc previousjobsentery
-@username varchar(50),@pjob varchar(100)
+@username varchar(50),@pjob varchar(50)
 as
 if(exists(select *
    from Users
@@ -163,10 +161,10 @@ where (title like '%'+@word+'%' or @word like '%'+title+'%' or short_description
 GO
 create proc highestavgsalaries
 as
-select c.name, avg(salary)
+select c.name,c.domain, avg(salary) as Avg_salaries
 from Companies c
 Inner join Staff_Members s on c.domain=s.company
-group by c.name
+group by c.name ,c.domain
 order by avg(s.salary) desc
 
 --drop proc highestavgsalaries
@@ -218,7 +216,7 @@ if(exists(select *
 
 --view all user info
 GO
-create proc Viewuserinfo
+create  proc Viewuserinfo
 @username varchar(50)
 as
 if(exists(select *
@@ -228,6 +226,10 @@ if(exists(select *
 		  select *
 		  from Users
 		  where Users.username=@username
+		  
+		  select *
+		  from User_Previous_Job_Titles
+		  where username=@username
 		  end
 else 
 print 'Register or log in'
@@ -375,7 +377,7 @@ if(exists(select *
 	print 'Register or login'
 
 --######################################################################--
-
+/*senario questions will be viewed ,the applicant will answer them ,score will be calculated on website using calculate answer by calling it multiple times and will be saved on website and entered with variable entering in the Apply procedure*/
 --Apply for a job
 GO
 create proc Applyforjob
@@ -409,16 +411,16 @@ if(exists(select *
 		 else
 		 begin
 		 declare @scoreout int
-		 -- exex savescore @score ,@scoreout output
-        insert into Applications (score,hr_status,manager_status,job_title,department,company,app_username)values(@scoreout,'pending','pending',@jobtitle ,@dep ,@comp,@username);
-		 end
-		 end
-		 end
+	
+		
+        insert into Applications (score,hr_status,manager_status,job_title,department,company,app_username)values(@score,'pending','pending',@jobtitle ,@dep ,@comp,@username);
 
-
+		 end
+		 end
+		 end
 --view questions
 GO
-create proc viewquestions
+create  proc viewquestions
 @jobtitle varchar(50),@dep varchar(50),@comp varchar(50)
 as 
 select c.question
@@ -426,20 +428,25 @@ from Job_has_Questions q
 inner join Questions c on c.id=q.question
 where q.title=@jobtitle and q.department=@dep and q.company=@comp
 
-
-
---save score
-GO
-create proc savescore --will be used in applyforjob procedure above to provide it with the value of the score 
-@score int ,@scoreout int output  /* I see that the creation of an application record should be done after the score is calculated not before it to avoid the existance of application records whose users for 
-example clicked apply so the interview questions appeared ,however he closed the website and didnt submit his answers , so a reocrd will be saved when it shouldnt be , therefore the scenario i am doing is that 
-when apply is clicked interview questions should appear , then user solves them clicks submit the website calculates the score and calls Apply for job procedure to insert an application record with the score*/
+--calculating score of one quetion
+Go
+create  proc calculateanswer
+@number int ,@answer bit ,@scoreout int output
 as
-set @scoreout=@score
+declare @correctanswer bit
+set @correctanswer =(select answer
+                     from Questions
+					 where id=@number)
+if(@answer=@correctanswer)
+set @scoreout=10
+else
+set @scoreout=0
 
-declare @out int
--- exex savescore 12, @out output
-print @out
+print @scoreout
+
+
+
+
 --#################################################################--
 
 --view my job applications status
@@ -474,14 +481,43 @@ if(exists(select a.*
 		  print 'select a day other than Friday'
 		  else
 		  begin
+		  if(@jobtitle like 'Manager%')
+		  begin
 		  insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);
+		 declare @jobtitle1 varchar(50)
+         declare @type1 varchar(50)
+         declare @type2 varchar(50)
+         declare @type varchar(50)
+         set @jobtitle1=replace(@jobtitle,' ','')
+		 set @type1= SUBSTRING(@jobtitle1,charindex('Manager-',@jobtitle1) + LEN('Manager-'), LEN(@jobtitle1) ) 
+		 if(@type1 like 'J%')
+		 set @type2= SUBSTRING(@jobtitle1,charindex('Junior',@jobtitle1) + LEN('Junior'), LEN(@jobtitle1) )
+          else
+      set @type2= SUBSTRING(@jobtitle1,charindex('senior',@jobtitle1) + LEN('senior'), LEN(@jobtitle1) )
+         set @type=LEFT(@type2, CHARINDEX('Manager',@type2)-1)
+		  insert into Managers values(@username,@type);
+		  end
+		  else
+		  if(@jobtitle like 'Hr%')
+		  begin 
+		  insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);
+		  insert into Hr_Employees values(@username);
+		  end
+		  else 
+		  if(@jobtitle like 'Regular%')
+		  begin
+		  insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);
+		  insert into Regular_Employees values(@username);
+		  end
+		  else
+		  insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);--as not all staff members fit in our 3 categoriesS
+
 		  update Jobs
 		  set vacancy=vacancy-1
 		  where title=@jobtitle and department=@dep and company=@comp
 
 end
 end
-
 -- exex chooseajob 2,'Maza2','Android HR','Android_OS','google.com',sunday
 
 --#######################################################################--
@@ -492,7 +528,7 @@ create proc deletejobapp
 as
 if(exists (select a.*
           from Applications a
-		  where a.id=@id and a.app_username=@username and a.hr_status='pending'))
+		  where a.id=@id and a.app_username=@username and a.hr_status='pending' or a.manager_status='pending'))
 		  begin
 		  DELETE FROM Applications
 		  where id=@id
@@ -549,7 +585,7 @@ if(exists(select a.*
 			else
 			if(@day =(select s.day_off
 			          from Staff_Members s
-					  where s.username=@username))
+					  where s.username=@username) or @day='friday')
 					  print 'you can not check in on your day off'
 			else
 			Insert into Attendance_Records(username,attendance_date,time_of_start) values(@username,@date,@starttime)
@@ -584,7 +620,7 @@ if(exists(select a.*
 			print 'you can not check out twice a day'
 			else if(@day =(select s.day_off
 			          from Staff_Members s
-					  where s.username=@username))
+					  where s.username=@username) or @day='friday')
 					  print 'you can not check out on your day off'
 					  else
 					  begin
@@ -669,20 +705,19 @@ GO
 
 -- As a staff member, I should be able to ..
 
--- [4]
--- Apply for requests of both types: leave requests or business trip requests,
+-- [4] Apply for requests of both types: leave requests or business trip requests,
 -- by supplying all the needed information for the request.
 -- As a staff member, I can not apply for a leave if I exceeded the number of annual leaves allowed.
 -- If I am a manager applying for a request, the request does not need to be approved, but it only needs to be kept track of.
--- Also, I can not apply for a request when it�s applied period overlaps with another request.
+-- Also, I can not apply for a request when its applied period overlaps with another request.
 
 -- [HELPER] Apply_for_Request_CHECKS :
 -- Checks and validates the parameters needed to make a data entry in any of the request tables.
 -- However, this does not create a new entry. It just returns two outputs:
--- @valid BIT OUTPUT: Indicates whether the input is valid according to this Procedures
+-- @valid BIT OUT: Indicates whether the input is valid according to this Procedures
 -- @staff_category VARCHAR(10) OUTPUT: Returns 'HR', 'Mang' or 'RegE' to indicate the category of (both) staff members.
 CREATE PROC Apply_for_Request_CHECKS
-@staff_username VARCHAR(50), @username_replacing VARCHAR(50), @start_date DATE, @end_date DATE, @valid BIT OUTPUT, @staff_category VARCHAR(10) OUTPUT
+@staff_username VARCHAR(50), @username_replacing VARCHAR(50), @start_date DATE, @end_date DATE, @valid BIT OUT, @staff_category VARCHAR(10) OUT
 AS BEGIN
 
 	SET @valid = 1
@@ -698,7 +733,7 @@ AS BEGIN
 	-- TODO: (extra) Check that the start_date is later than today (request_date)
 
 	-- Check that replacing username is not the same as the requesting username, and he's in the same department -- company
-	IF @staff_username = @username_replacing OR @username_replacing IN (
+	IF @staff_username = @username_replacing OR @username_replacing NOT IN (
 		SELECT S2.username FROM Staff_Members S1 INNER JOIN Staff_Members S2
 		ON S1.username = @staff_username AND S1.company = S2.company AND S1.department = S2.department)
 	BEGIN
@@ -812,31 +847,14 @@ AS BEGIN
 END
 GO
 
---EXEC Apply_for_Leave_Request 'AmrMKayid', 'YasmeenKhaled', '2017-12-11', '2017-12-01', 'annual'
---EXEC Apply_for_Leave_Request 'AmrMKayid', 'AmrMKayid', '2017-12-11', '2017-12-01', 'annual'
---EXEC Apply_for_Leave_Request 'AmrMKayid', 'Amr', '2017-12-01', '2017-12-11', 'annual'
---EXEC Apply_for_Leave_Request 'AmrMKayid', 'YasmeenKhaled', '2017-12-01', '2017-12-11', 'salamo3aleikoo'
---EXEC Apply_for_Leave_Request 'AmrMKayid', 'ShadiBarghash', '2017-12-12', '2017-12-12', 'annual'
-
---EXEC Apply_for_Business_Trip 'ShadiBarghash', 'AmrMKayid', '2017-12-27', '2017-01-10', 'Athens, Greece', 'MDC'
---EXEC Apply_for_Business_Trip 'ShadiBarghash', 'AmrMKayid', '2017-12-27', '2018-01-10', 'Athens, Greece', 'MDC'
-
---EXEC Apply_for_Business_Trip 'ShadiBarghash', 'YasmeenKhaled', '2018-06-01', '2018-07-01', 'Seattle, WA, USA', 'Imagine Cup 2016'
---EXEC Apply_for_Leave_Request'YasmeenKhaled', 'ShadiBarghash', '2018-06-29', '2018-07-10', 'annual'
-
 -- [5] View the status of all requests I applied for before (HR employee and manager responses)
 CREATE PROC Show_my_Requests
 @username VARCHAR(50)
 AS
-	SELECT R.start_date, end_date, request_date, R.manager_status, MR.reason, MR.mang_username, hr_status, hr_username
-	FROM Requests R LEFT OUTER JOIN Manager_Request_Reviews MR
-	ON R.start_date = MR.start_date AND R.username = MR.username
-	WHERE R.username = @username
+	SELECT start_date, end_date, request_date, manager_status, reason, mang_username, hr_status, hr_username
+	FROM Requests
+	WHERE username = @username
 GO
-
---EXEC Show_my_Requests 'ShadiBarghash'
---EXEC Show_my_Requests 'YasmeenKhaled'
---EXEC Show_my_Requests 'AmrMKayid'
 
 -- [6] Delete any request I applied for as long as it is still in the review process.
 
@@ -849,41 +867,14 @@ GO
  -- >>> Delete all the requests I have applied for and are currently in the review process
 CREATE PROC Delete_my_Pending_Requests
 @username VARCHAR(50)
-AS BEGIN
-
-	-- If a Manager review was added, remove it
-	DELETE FROM Manager_Request_Reviews
-	WHERE username = @username
-
-	-- Remove the staff replace entry
-	DELETE FROM Request_Hr_Replace
-	WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
-
-	DELETE FROM Request_Manager_Replace
-	WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
-
-	DELETE FROM Request_Regular_Employee_Replace
-	WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
-
-	-- Delete from Leave requests and from Business Trips (it should be in one of them only)
-	DELETE FROM Leave_Requests
-	WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
-
-	DELETE FROM Business_Trips
-	WHERE username = @username AND start_date IN (SELECT start_date FROM dbo.Get_my_Pending_Requests(@username))
-
-	-- Finally, delete the request entirely
+AS
 	DELETE FROM Requests
 	WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
-
-END
 GO
 
--- EXEC Delete_my_Pending_Requests 'ShadiABarghash'
+-- [7] Send emails to staff members in my company.
 
---  [7] Send emails to staff members in my company.
-
--- A procedure that creates an Email record, that can be a reply to another Email or not, and returns it's ID
+-- A procedure that creates an Email record, that can be a reply to another Email or not, and returns its ID
 CREATE PROC Create_Email
 @subject VARCHAR(50), @body VARCHAR(max), @id INT OUT, @reply_to INT = NULL
 AS
@@ -929,14 +920,12 @@ AS SELECT time_stamp, sender_username, subject, body
 	ORDER BY Emails.time_stamp DESC
 GO
 
--- TODO: Test with EXEC after testing [7]
-
 -- [9] Reply to an email sent to me, while the reply would be saved in the database as a new email record.
 CREATE PROC Reply_to_Email
 @orig_email INT, @reply_sender VARCHAR(50), @recipient VARCHAR(50), @subject VARCHAR(50), @body VARCHAR(max)
 AS
 	DECLARE @new_email INT
-	EXEC Create_Email @subject, @recipient, @new_email, @orig_email
+	EXEC Create_Email @subject, body, @new_email OUT, @orig_email
 	EXEC Send_Email_in_Company @reply_sender, @recipient, @new_email
 GO
 
@@ -958,10 +947,6 @@ AS
 								ON SM1.company = SM2.company AND SM1.username = @username)
 			AND DATEDIFF(d, date, GETDATE()) <= @days
 GO
-
--- TODO: Test with EXEC, need some Announcements to be put first;
--- at least two, where one is before 20 days and one is today for example.
---EXEC Announcements_of_my_Company 'ShadiBarghash'
 
 -- As an HR Employee, I should be able to ..
 
@@ -1044,11 +1029,6 @@ AS
 		WHERE J.title = @job_title
 GO
 
---EXEC View_Job_in_my_Department 'Adel', 'Web Development HR'
---EXEC View_Job_in_my_Department 'Adel', 'Windows App Developer'
---EXEC View_Job_in_my_Department 'Adel', 'Artificial Intelligence Manager'
---EXEC View_Job_in_my_Department NULL, 'Artificial Intelligence Manager'
-
 -- NOT SURE: [3] Edit the information of a job in my department.
 CREATE PROC Edit_Job_in_Department
 @hr_username VARCHAR(50), @job_title VARCHAR(50),
@@ -1085,7 +1065,7 @@ AS BEGIN
 END
 GO
 
--- [4] View new applications for a speci?c job in my department.
+-- [4] View new applications for a specific job in my department.
 -- For each application, I should be able to check information about the job seeker, job & the score s/he got while applying.
 CREATE PROC View_new_Applications_for_Job_in_Department
 @hr_username VARCHAR(50), @job_title VARCHAR(50)
@@ -1101,15 +1081,13 @@ AS
 
 	-- Then, just get the needed info where HR status is PENDING and job title is the one I'm looking for
 	ELSE
-		SELECT J.*, A.id, A.score, JS.username, JS.first_name, JS.middle_name, JS.last_name, JS.email, JS.age, JS.birth_date, JS.years_of_experience
+		SELECT A.id, A.score, JS.username, JS.first_name, JS.middle_name, JS.last_name, JS.email, JS.age, JS.birth_date, JS.years_of_experience, J.*
 		FROM Jobs J INNER JOIN Applications A ON A.job_title = J.title AND A.department = J.department AND A.company = J.company
 					INNER JOIN Users JS ON A.app_username = JS.username
 		WHERE A.job_title = @job_title AND A.hr_status = 'PENDING'
 		AND EXISTS (SELECT * FROM Staff_Members S
 					WHERE S.username = @hr_username AND S.company = J.company AND S.department = J.department)
 GO
-
--- TODO: Test with some EXEC, needs some fresh Applications
 
 -- [5] Accept or reject applications for jobs in my department.
 -- @accept: 'TRUE' or 1 for ACCEPT. 'FALSE' or 0 for REJECT.
@@ -1149,8 +1127,6 @@ AS
 	END
 GO
 
--- TODO: Test with EXEC
-
 -- [6] Post announcements related to my company to inform staff members about new updates.
 CREATE PROC Post_Announcement
 @hr_username VARCHAR(50), @type VARCHAR(50), @title VARCHAR(50), @description VARCHAR(max)
@@ -1166,14 +1142,12 @@ AS
 		INSERT INTO Announcements VALUES (@title, GETDATE(), @type, @description, @hr_username)
 GO
 
--- TODO: Test with EXEC
-
 -- [7] View requests of staff members working with me in the same department that were approved by a manager only.
 CREATE PROC View_Requests_approved_by_Manager_only
 @hr_username VARCHAR(50)
-AS SELECT R.*, MR.manager_status, MR.mang_username FROM Requests R INNER JOIN Staff_Members SM ON R.username = SM.username AND R.hr_status = 'PENDING' AND R.manager_status = 'ACCEPTED'
-							INNER JOIN Staff_Members HR ON HR.username = @hr_username AND HR.department = SM.department AND HR.company = SM.company
-							INNER JOIN Manager_Request_Reviews MR ON MR.username = R.username AND MR.start_date = R.start_date
+AS SELECT R.*
+	FROM Requests R INNER JOIN Staff_Members SM ON R.username = SM.username AND R.hr_status = 'PENDING' AND R.manager_status = 'ACCEPTED'
+					INNER JOIN Staff_Members HR ON HR.username = @hr_username AND HR.department = SM.department AND HR.company = SM.company
 GO
 
 -- [8] Accept or reject requests of staff members working with me in the same department that were approved by a manager.
@@ -1266,7 +1240,7 @@ AS
 		PRINT 'The request must be reviewed by an HR employee.'
 	ELSE IF NOT EXISTS (SELECT * FROM Requests WHERE username = @req_username AND start_date = @req_start_date
 												AND manager_status = 'ACCEPTED')
-		PRINT 'This request does not exist or has not been accepted by an HR Employee.'
+		PRINT 'This request does not exist or has not been accepted by a Manager.'
 	ELSE IF EXISTS (SELECT * FROM Requests WHERE username = @req_username AND start_date = @req_start_date
 					AND hr_username IS NOT NULL)
 		PRINT 'This request has already been accepted.'
@@ -1302,15 +1276,6 @@ AS
 	END
 GO
 
---INSERT INTO Requests (username, request_date, start_date, end_date, manager_status, mang_username)
---VALUES ('Adel', '2017-11-01', '2017-11-05', '2017-11-19', 'ACCEPTED', 'Mohab')
-
---EXEC Respond_to_Request_HR 'Sabry', '2017-11-05', 'Adel', 1
-
---SELECT * FROM Requests
-
---SELECT * FROM Staff_Members WHERE username = 'Adel'
-
 -- [9] View attendance records of a staff member in my department (check-in time, check-out time, duration, missing hours)
 -- within a certain period of time.
 CREATE PROC View_Attendance_of_Staff_Member
@@ -1332,26 +1297,69 @@ AS
 		WHERE A.attendance_date BETWEEN @from AND @to
 GO
 
--- TODO: Test with EXEC, needs some Attendance records
-
 -- TODO: [10] View the total number of hours for any staff member in my department in each month of a certain year.
+go
+create proc view_totalhours_of_staff
+@hr varchar(50) ,@staff varchar(50) ,@year int
+as
+if(exists(select *
+          from Hr_Employees 
+		  where username=@hr))
+		  begin
+		  if(exists(select *
+		  from Staff_Members  s
+		  inner join Staff_Members s1 on s1.company=s.company and s.department=s1.department
+		  where s.username=@hr and s1.username=@staff))
+		  begin
+		   select x.username,DATENAME(month,x.attendance_date) as month_name,DATEPART(month,x.attendance_date) as month_num,sum(x.duration) as total_hours
+		  from Attendance_Records x
+          where x.username=@staff and DATEPART ( year , x.attendance_date ) =@year
+		  group by x.username,DATENAME(month,x.attendance_date),DATEPART(month,x.attendance_date)
+		  order by month_num
+		  end
+		  end
+		
 
 -- TODO: [11] View names of the top 3 high achievers in my department.
+go
+
+create proc top_3_achievers
+@hr varchar(50),@month int,@year int
+as
+  select top 3 a.username, DATENAME(month,a.attendance_date) as month,sum(a.duration) as total_hours
+  from Attendance_Records a
+   where a.username in(
+           select t.regular_employee_username
+           from Tasks t
+           where t.regular_employee_username in(
+          select distinct s1.username
+		  from Staff_Members  s
+		  inner join Staff_Members s1 on s1.company=s.company and s.department=s1.department
+		  --inner join Attendance_Records a on s1.username=a.username
+		  where s.username=@hr and(exists(select *
+		                                      from Regular_Employees
+											  where username =s1.username))) and t.regular_employee_username not in(
+                                               select regular_employee_username
+                                               from Tasks
+                                               where status<>'fixed') and DATEPART(MONTH,a.attendance_date) >= @month and DATEPART(year,t.deadline)=@year )and DATepart(month,a.attendance_date)=@month and DATEPART(year,a.attendance_date)=@year
+  group by a.username, DATENAME(month,a.attendance_date)
+  order by sum(a.duration) desc
+
+
+
 -- A high achiever is a regular employee who stayed the longest hours in the company for a certain month
 -- and all tasks assigned to him/her with deadline within this month are fixed.
 
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Shadi END  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 
----- ##### ##### ##### ##### ##### ##### ##### #####  Amr Start  ##### ##### ##### #####  ##### ##### ##### ##### -----
+---- ##### ##### ##### ##### ##### ##### ##### #####  Start of Amr's Procedures  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 
--- “As a regular employee, I should be able to ...”
+-- REGULAR EMPLOYEE: “As a regular employee, I should be able to ...”
 
--- View the Assigned Project for a specific employee 
--- by getting them from Project_Assignments and Projects
-
--- >>>>>> DROP Procedure ChangeTaskStatus
+-- Number 1: View the Assigned Project for a specific employee 
+-- by getting them from Project_Assignments and Projects Tables
 GO
 Create Procedure viewMyAssignedProjects
 (
@@ -1365,9 +1373,9 @@ Begin
            (PA.project_name = P.name AND PA.company = P.company) -- FOREIGN KEY
 End
 
-GO
--- EXEC viewMyAssignedProjects 'Regular'
 
+-- Number 2: View the Assigned Tasks for a specific employee 
+-- by getting them from Tasks and Projects Tables
 GO
 Create Procedure viewMyAssignedTasksInAProject
 (
@@ -1381,9 +1389,9 @@ Begin
            T.project = P.name AND T.company = P.company  -- FOREIGN KEY
 End
 
-GO
--- EXEC viewMyAssignedTasksInAProject 'Regular', 'First Project'
-
+-- Number 3: Setting the status of a specific task >to> "Fixed"
+-- as long as it did not pass the deadline.
+-- By checking that the current time less than the deadline
 GO
 Create Procedure FinishedTask
 (
@@ -1394,14 +1402,15 @@ Begin
     UPDATE Tasks
     SET [status] = 'Fixed'
     WHERE SYSDATETIME() < deadline 
-          AND name = @task 
+          AND name = @task  AND [status] = 'Assigned'
           AND regular_employee_username = @username
           AND project = @project
 End
 
-GO
--- EXEC FinishedTask 'Regular', 'First Task', 'First Project'
-
+-- Number 4: Changing the status of a specific task >to> "Assigned"
+-- as long as it did not pass the deadline and the manager did not review it yet 
+-- and it's current status is Fixed
+-- By checking that the current time less than the deadline
 GO
 Create Procedure ChangeTaskStatus
 (
@@ -1414,17 +1423,20 @@ Begin
     WHERE SYSDATETIME() < deadline 
           AND name = @task 
           AND regular_employee_username = @username
-          AND [status] <> 'Closed'
+          AND [status] <> 'Closed' AND [status] = 'Fixed' 
           AND project = @project
 End
 
-GO
--- EXEC ChangeTaskStatus 'Regular', 'First Task', 'First Project'
-
 ---- ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####  ##### ##### ##### ##### -----
 
--- “As a manager, I should be able to ...”
+-- MANAGER: “As a manager, I should be able to ...”
 
+
+-- Number 1: View ALL New Request If he is an HR Manager
+-- otherwise he views ALL new requests EXCEPT HR Requests
+-- By checking first he is a manager and in the same department of the company and 
+-- checking if his type is HR then he views all requests
+-- otherwise we check that the username of the request is not in the Hr_Employee Table
 GO
 Create Procedure ViewNewRequests
 (
@@ -1432,157 +1444,204 @@ Create Procedure ViewNewRequests
 )
 As
 Begin
-   SELECT * FROM Requests R
-   WHERE EXISTS(SELECT * FROM Managers M, Staff_Members S1
-        where M.username = @manager AND S1.username = @manager AND ((M.[type] = 'HR'
-        AND EXISTS(
-          SELECT * FROM Staff_Members S2, Hr_Employees HR
-          WHERE S2.department = S1.department AND R.username = S2.username AND S2.username = HR.username)) 
-        OR EXISTS(
-        SELECT * FROM Staff_Members S2
-        WHERE S2.department = S1.department AND R.username = S2.username)) )
+			DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
+																			where M.username = @manager AND S1.username = @manager)
+			DECLARE @department varchar(50) = (SELECT S1.department FROM Managers M, Staff_Members S1 
+																			where M.username = @manager AND S1.username = @manager)
+			IF EXISTS(SELECT * FROM Managers M
+									where M.username = @manager AND M.[type] = 'HR')
+			BEGIN
+				SELECT * FROM Requests R
+				WHERE R.manager_status = 'PENDING' AND R.username IN (
+					SELECT SM.username FROM Staff_Members SM
+					WHERE SM.company = @company AND SM.department = @department)
+			END
+			ELSE
+			BEGIN
+				SELECT * FROM Requests R
+				WHERE R.manager_status = 'PENDING' AND R.username NOT IN(SELECT * FROM Hr_Employees) 
+							AND R.username IN (
+											SELECT SM.username FROM Staff_Members SM
+											WHERE SM.company = @company AND SM.department = @department)
+			END
 End
 
+
+
+-- Number 2: Review a specific Request 
+-- if he accept it and the request from hr then the After the HR REVIEW AND ACCEPTED it then setting 
+-- otherwise we only update the mang_status
+-- BUT if he reject it then the final status is his status and we update both status and He must give a reason
 GO
 Create Procedure ReviewRequest
 (
 @manager VARCHAR(50), @start_date DATE, @username VARCHAR(50), @isAccepted BIT, @reason VARCHAR(max)
 )
 As
-Begin
-   IF(@isAccepted = 1)
-   BEGIN
-   UPDATE Manager_Request_Reviews
-   SET manager_status = 'Accepted'
-   WHERE username = @username AND start_date = @start_date AND
-        EXISTS(SELECT * FROM Managers M, Staff_Members S1
-        where M.username = @manager AND S1.username = @manager
-        AND EXISTS(
-          SELECT * FROM Staff_Members S2
-          WHERE  S2.username = @username AND S2.department = S1.department))
-   END
-   ELSE
-   BEGIN
-   UPDATE Manager_Request_Reviews
-   SET manager_status = 'Rejected', reason = @reason
-   WHERE username = @username AND start_date = @start_date AND
-        EXISTS(SELECT * FROM Managers M, Staff_Members S1
-        where M.username = @manager AND S1.username = @manager
-        AND EXISTS(
-                SELECT * FROM Staff_Members S2
-                WHERE  S2.username = @username AND S2.department = S1.department))
-   END
+Begin 
+			DECLARE @mang_status VARCHAR(50)
+			IF(@isAccepted = 1) SET @mang_status = 'Accepted' ELSE SET @mang_status = 'Rejected'
+			IF(@isAccepted = 1)
+			BEGIN
+					IF EXISTS(SELECT * FROM Hr_Employees HR WHERE HR.username = @username)
+					BEGIN
+					UPDATE Requests
+					SET manager_status = @mang_status, hr_status = @mang_status, mang_username = @manager
+					WHERE username = @username AND start_date = @start_date AND
+								EXISTS(SELECT * FROM Managers M, Staff_Members S1
+								where M.username = @manager AND S1.username = @manager
+								AND EXISTS(
+									SELECT * FROM Staff_Members S2
+									WHERE  S2.username = @username AND S2.department = S1.department AND S2.company = S1.company))
+					END
+					ELSE IF NOT EXISTS(SELECT * FROM Hr_Employees HR WHERE HR.username = @username)
+					BEGIN
+					UPDATE Requests
+					SET manager_status = @mang_status, mang_username = @manager
+					WHERE username = @username AND start_date = @start_date AND
+								EXISTS(SELECT * FROM Managers M, Staff_Members S1
+								where M.username = @manager AND S1.username = @manager
+								AND EXISTS(
+									SELECT * FROM Staff_Members S2
+									WHERE  S2.username = @username AND S2.department = S1.department AND S2.company = S1.company))
+					END
+			END
+   		ELSE
+					IF EXISTS(SELECT * FROM Hr_Employees HR WHERE HR.username = @username)
+					BEGIN
+					UPDATE Requests
+					SET manager_status = @mang_status, hr_status = @mang_status, mang_username = @manager, reason = @reason
+					WHERE username = @username AND start_date = @start_date AND
+								EXISTS(SELECT * FROM Managers M, Staff_Members S1
+								where M.username = @manager AND S1.username = @manager
+								AND EXISTS(
+									SELECT * FROM Staff_Members S2
+									WHERE  S2.username = @username AND S2.department = S1.department AND S2.company = S1.company))
+					END
+					ELSE IF NOT EXISTS(SELECT * FROM Hr_Employees HR WHERE HR.username = @username)
+					BEGIN
+					UPDATE Requests
+					SET manager_status = @mang_status, hr_status = @mang_status, mang_username = @manager, reason = @reason
+					WHERE username = @username AND start_date = @start_date AND
+								EXISTS(SELECT * FROM Managers M, Staff_Members S1
+								where M.username = @manager AND S1.username = @manager
+								AND EXISTS(
+									SELECT * FROM Staff_Members S2
+									WHERE  S2.username = @username AND S2.department = S1.department AND S2.company = S1.company))
+					END
+END
 
-End
 
 
+-- Number 3: View Applications of a specific Job
+-- by getting it from pplications and Jobs Tables
 GO
 Create Procedure ViewApplication
 (
 @manager VARCHAR(50), @job_title varchar(50)
 )
 As
--- IF EXISTS(SELECT * FROM Managers
---         where Managers.username = @manager)
 Begin
      SELECT *
      FROM Applications A, Jobs J
-     WHERE A.job_title = J.title AND EXISTS (SELECT * FROM Managers M
-                                                where M.username = @manager 
-                                                AND A.manager_username = M.username 
-                                                AND A.department = M.username 
-                                                AND A.hr_status = 'Approved')
+     WHERE A.job_title = J.title 
+		 AND EXISTS (SELECT * FROM Managers M, Staff_Members S1
+									where M.username = @manager AND S1.username = @manager
+									--AND A.manager_username = M.username 
+									AND A.department = S1.department AND A.company = S1.company
+									AND A.hr_status = 'ACCEPTED')
 End
 
 
+-- Number 4: Review a specific Application from it's ID 
+-- Checking first he is a manager in the same department of the company
+-- After the HR REVIEW AND ACCEPTED it then updating the manager status after he review it 
 GO
 Create Procedure ReviewApplication
 (
-@manager VARCHAR(50), @id INT, @username VARCHAR(50), @isAccepted BIT
-)
-As
-Begin
-   IF(@isAccepted = 1)
-   BEGIN
-   UPDATE Applications
-   SET manager_status = 'Accepted'
-   WHERE app_username = @username AND hr_status = 'Approved' AND
-        EXISTS(SELECT * FROM Managers M, Staff_Members S1
-        where M.username = @manager AND S1.username = @manager
-        AND EXISTS(
-          SELECT * FROM Staff_Members S2
-          WHERE  S2.username = @username AND S2.department = S1.department))
-   END
-   ELSE
-   BEGIN
-   UPDATE Applications
-   SET manager_status = 'Rejected'
-   WHERE app_username = @username AND hr_status = 'Approved' AND
-        EXISTS(SELECT * FROM Managers M, Staff_Members S1
-        where M.username = @manager AND S1.username = @manager
-        AND EXISTS(
-          SELECT * FROM Staff_Members S2
-          WHERE  S2.username = @username AND S2.department = S1.department))
-   END
-
-End
-
-GO
-Create Procedure CreateNewProject
-(
-@manager VARCHAR(50), @name varchar(50), @company VARCHAR(50),
-@start_date DATETIME, @end_date DATETIME
+@manager VARCHAR(50), @id INT, @isAccepted BIT
 )
 As
 IF EXISTS(SELECT * FROM Managers
         where Managers.username = @manager)
 Begin
+		DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
+																where M.username = @manager AND S1.username = @manager)
+		DECLARE @department varchar(50) = (SELECT S1.department FROM Managers M, Staff_Members S1 
+																where M.username = @manager AND S1.username = @manager)
+		DECLARE @mang_status VARCHAR(50)
+		IF(@isAccepted = 1) SET @mang_status = 'Accepted' ELSE SET @mang_status = 'Rejected'
+
+		UPDATE Applications
+		SET manager_status = @mang_status
+		WHERE id = @id AND hr_status = 'ACCEPTED' AND company = @company AND department = @department
+End
+
+-- Number 5: Creating NEW Project
+-- Checking first he is a manager in the same company
+-- Then Inserting new Project with the details from the input of the procedure
+GO
+Create Procedure CreateNewProject
+(
+@manager VARCHAR(50), @name varchar(50), @start_date DATETIME, @end_date DATETIME
+)
+As
+IF EXISTS(SELECT * FROM Managers
+        where Managers.username = @manager)
+Begin
+	DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
+														where M.username = @manager AND S1.username = @manager)
    INSERT INTO Projects 
    VALUES (@name, @company, @start_date, @end_date , @manager)
 End
 
-GO
--- EXEC CreateNewProject 'Eyad3', 'Creating third new Project', 'apple.com', '2017/11/15'  , '2017/11/17'
 
+-- Number 6: Adding NEW Employee from my department to the Project
+-- Checking first he is a manager in the same department and company
+-- Then Checking the the employee is not working in more that two projects
+-- After that we Add the Employee with the details from the input of the procedure to the Project
 GO
 Create Procedure AddEmployeeToProject
 (
-@manager VARCHAR(50), @project varchar(50), @company varchar(50), @regular_employee varchar(50)
+@manager VARCHAR(50), @project varchar(50), @regular_employee varchar(50)
 )
 As
 IF EXISTS(SELECT * FROM Managers M, Staff_Members S1
-        where M.username = @manager AND S1.username = @manager
-        AND EXISTS(
-          SELECT * FROM Regular_Employees E, Staff_Members S2
-          WHERE E.username = @regular_employee AND S2.username = @regular_employee AND S2.department = S1.department
-        )
-)
+					where M.username = @manager AND S1.username = @manager
+	AND EXISTS( SELECT * FROM Regular_Employees E, Staff_Members S2
+          WHERE E.username = @regular_employee AND S2.username = @regular_employee AND S2.department = S1.department AND S2.company = S1.company))
+
 IF EXISTS(
-  SELECT count(regular_employee_username)
-  FROM Tasks
-  WHERE regular_employee_username = @regular_employee 
-  HAVING count(regular_employee_username) < 2
-)
+  SELECT count(regular_employee_username) FROM Project_Assignments
+  WHERE  regular_employee_username = @regular_employee 
+  HAVING count(regular_employee_username) < 2)
 Begin
+		DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
+																			where M.username = @manager AND S1.username = @manager)
     INSERT INTO Project_Assignments 
     VALUES(@project, @company, @regular_employee, @manager)
 End
 
--- EXEC AddEmployeeToProject 'Eyad3', 'First Project', 'apple.com', 'Regular2'
 
--- SELECT * FROM Project_Assignments
-
+-- Number 7: Removing an Employee in my department from a Project
+-- Checking first he is a manager in the same department and company
+-- Then Checking the the employee is not having any tasks in this project
+-- After that we remove the Employee from the project
 GO
 Create Procedure RemoveEmployeeFromProject
 (
 @manager VARCHAR(50), @project varchar(50), @regular_employee varchar(50)
 )
 As
-IF EXISTS(SELECT * FROM Managers
-        where Managers.username = @manager)
+IF EXISTS(SELECT * FROM Managers M, Staff_Members S1
+					where M.username = @manager AND S1.username = @manager
+	AND EXISTS( SELECT * FROM Regular_Employees E, Staff_Members S2
+          WHERE E.username = @regular_employee AND S2.username = @regular_employee AND S2.department = S1.department AND S2.company = S1.company))
 Begin
+		DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
+																	where M.username = @manager AND S1.username = @manager)
     DELETE Project_Assignments
-    WHERE project_name = @project 
+    WHERE project_name = @project AND company = @company AND mananger_username = @manager
           AND regular_employee_username = @regular_employee 
           AND @regular_employee NOT IN (
             SELECT regular_employee_username
@@ -1590,31 +1649,57 @@ Begin
           )
 End
 
--- EXEC RemoveEmployeeFromProject 'Eyad3', 'First Project', 'Regular2'
-
+-- Number 8: Creating New Task in a Project with Status Open
+-- Checking first he is a manager in the same company
+-- Then Checking That there exist a project related to this manager
+-- After that we Create the task
 GO
-Create Procedure CreateAndAssignNewTask
+Create Procedure CreateNewTask
 (
 @manager VARCHAR(50), @name varchar(50), @description varchar(max), 
-@deadline DATETIME, @project varchar(50), @company VARCHAR(50),
-@regular_employee_username VARCHAR(50)
+@deadline DATETIME, @project varchar(50)
 )
 As
 IF EXISTS(SELECT * FROM Managers
         where Managers.username = @manager)
-IF EXISTS(SELECT * FROM Project_Assignments
-        where Project_Assignments.mananger_username = @manager 
-              AND Project_Assignments.project_name = @project
-              AND Project_Assignments.regular_employee_username = @regular_employee_username)
+IF EXISTS(SELECT * FROM Project_Assignments PA
+        where PA.mananger_username = @manager 
+              AND PA.project_name = @project)
 Begin
+	DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
+																			where M.username = @manager AND S1.username = @manager)
    INSERT INTO Tasks 
-   VALUES (@name, @description, 'Open', @deadline , @project, @company, @regular_employee_username , @manager)
+   VALUES (@name, @description, 'Open', @deadline , @project, @company, NULL , @manager)
 End
 
--- EXEC CreateAndAssignNewTask 'Eyad3', '5th Task by Proc', 'The easy task', '2017/11/17' , 'First Project', 'apple.com', 'Regular'
+-- Number 9: Assign Employee in the same project of the task to the task
+-- Checking first he is a manager in the same company
+-- Then Checking That there exist a project related to this manager and the employee assigned to this project
+-- After that We Assign him to the Task
+GO
+Create Procedure AssignTask
+(
+@manager VARCHAR(50), @name varchar(50), @project varchar(50), @regular_employee_username VARCHAR(50)
+)
+As
+IF EXISTS(SELECT * FROM Managers
+        where Managers.username = @manager)
+IF EXISTS(SELECT * FROM Project_Assignments PA
+        where PA.mananger_username = @manager 
+              AND PA.project_name = @project
+              AND PA.regular_employee_username = @regular_employee_username)
+Begin
+	DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
+																			where M.username = @manager AND S1.username = @manager)
+   UPDATE Tasks 
+	 SET regular_employee_username = @regular_employee_username, [status] = 'Assigned'
+	 WHERE [name] = @name AND mananger_username = @manager AND project = @project
+End
 
--- SELECT * FROM Tasks
 
+-- Number 10: Change The Assigned Employee in the task
+-- Checking first he is a manager in the same company
+-- Then updating the employee having that the task status is Assigned
 GO
 Create Procedure ChangeTaskEmployee
 (
@@ -1629,11 +1714,20 @@ Begin
     SET regular_employee_username = @regular_employee_replacing
     WHERE name = @task 
           AND regular_employee_username = @regular_employee 
+					AND mananger_username = @manager
+					AND project = @project
           AND [status] = 'Assigned'
+					AND @regular_employee_replacing IN(
+							SELECT regular_employee_username FROM Project_Assignments PA
+									where PA.mananger_username = @manager 
+									AND PA.project_name = @project
+									AND PA.regular_employee_username = @regular_employee_replacing
+					)
 End
 
--- EXEC ChangeTaskEmployee 'Eyad3', 'First Project', 'Assigned Task', 'Regular2', 'Regular'
-
+-- Number 11: View the task that the manager created
+-- Checking first he is a manager in the same company
+-- Then selecting all the tasks from Task Table
 GO
 Create Procedure ViewProjectTasks
 (
@@ -1650,8 +1744,10 @@ Begin
            [status] = @status
 End
 
--- EXEC ViewProjectTasks 'Eyad3', 'First Project', 'Pending' 
 
+-- Number 12: ReView the task that the manager created
+-- If he Accept it then it will be closed and we update it's status
+-- otherwise it'll be assigned to the same employee with a new deadline
 GO
 Create Procedure ReviewTask
 (
@@ -1678,4 +1774,5 @@ Begin
    END
 
 End
----- ##### ##### ##### ##### ##### ##### ##### #####  Amr END  ##### ##### ##### #####  ##### ##### ##### ##### -----
+
+---- ##### ##### ##### ##### ##### ##### ##### #####  End of Amr's Procedures  ##### ##### ##### #####  ##### ##### ##### ##### -----
