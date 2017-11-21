@@ -1547,7 +1547,7 @@ Begin
 					ELSE IF NOT EXISTS(SELECT * FROM Hr_Employees HR WHERE HR.username = @username)
 					BEGIN
 					UPDATE Requests
-					SET manager_status = @mang_status, mang_username = @manager, reason = @reason
+					SET manager_status = @mang_status, hr_status = @mang_status, mang_username = @manager, reason = @reason
 					WHERE username = @username AND start_date = @start_date AND
 								EXISTS(SELECT * FROM Managers M, Staff_Members S1
 								where M.username = @manager AND S1.username = @manager
@@ -1658,8 +1658,6 @@ Begin
           )
 End
 
--- EXEC RemoveEmployeeFromProject 'AmrMKayid', 'First Project', 'Regular2'
-
 GO
 Create Procedure CreateNewTask
 (
@@ -1696,7 +1694,7 @@ Begin
 																			where M.username = @manager AND S1.username = @manager)
    UPDATE Tasks 
 	 SET regular_employee_username = @regular_employee_username, [status] = 'Assigned'
-	 WHERE [name] = @name AND mananger_username = @manager AND project = @project --AND 
+	 WHERE [name] = @name AND mananger_username = @manager AND project = @project
 End
 
 GO
@@ -1713,10 +1711,16 @@ Begin
     SET regular_employee_username = @regular_employee_replacing
     WHERE name = @task 
           AND regular_employee_username = @regular_employee 
+					AND mananger_username = @manager
+					AND project = @project
           AND [status] = 'Assigned'
+					AND @regular_employee_replacing IN(
+							SELECT regular_employee_username FROM Project_Assignments PA
+									where PA.mananger_username = @manager 
+									AND PA.project_name = @project
+									AND PA.regular_employee_username = @regular_employee_replacing
+					)
 End
-
--- EXEC ChangeTaskEmployee 'AmrMKayid', 'First Project', '4th Task', 'Regular2', 'Regular1'
 
 GO
 Create Procedure ViewProjectTasks
@@ -1733,8 +1737,6 @@ Begin
            project = @project AND
            [status] = @status
 End
-
--- EXEC ViewProjectTasks 'AmrMKayid', 'First Project', 'Pending' 
 
 GO
 Create Procedure ReviewTask
@@ -1762,7 +1764,5 @@ Begin
    END
 
 End
-
--- EXEC ReviewTask 'AmrMKayid', 'First Project', 'First Task', 0, '2017/11/27'
 
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Amr END  ##### ##### ##### #####  ##### ##### ##### ##### -----

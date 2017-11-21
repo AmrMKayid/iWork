@@ -431,6 +431,12 @@ INSERT INTO Regular_Employees VALUES('RegEmpWithNoTasks')
 INSERT INTO Project_Assignments VALUES ('First Project', 'google.com', 'RegEmpWithNoTasks' , 'YasmeenHRTestingAmr')
 
 
+--- Change Task Employee
+INSERT INTO Users VALUES ('Regular8' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
+INSERT INTO Staff_Members VALUES ('Regular8'     ,  175735   , 'Sunday'     , 47, 'Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Regular_Employees VALUES('Regular8')
+
+
 -- ---- ##### ##### ##### ##### ##### ##### ##### #####  Amr Data  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 
