@@ -203,21 +203,8 @@ EXEC Delete_my_Pending_Requests 'danial.ashraf'
 
 -- [7] Send emails to staff members in my company.
 DECLARE @email1_id INT
-EXEC Create_Email 'Finished my part', 'I''ve just finished my part from Windows-iOS P2P comm.', @email1_id OUT
-EXEC Send_Email_in_Company 'shadi.barghash', 'nesrine.anwarr', @email1_id
-EXEC Send_Email_in_Company 'shadi.barghash', 'danial.ashraf', @email1_id
-
-DECLARE @email2_id INT
-EXEC Create_Email 'Finished my part, too', 'I''ve just finished my part from Windows-iOS P2P comm.', @email2_id OUT
-EXEC Send_Email_in_Company 'danial.ashraf', 'nesrine.anwarr', @email2_id
-
-DECLARE @email3_id INT
-EXEC Create_Email 'Summer Vacation', 'Please approve the leave request for my annual summer vacation.', @email3_id OUT
-EXEC Send_Email_in_Company 'shadi.barghash', 'nourAli', @email3_id
-
-DECLARE @email4_id INT
-EXEC Create_Email 'Shadi requested Vacation', 'Shadi asked me to accept his summer vacation.', @email4_id OUT
-EXEC Send_Email_in_Company 'nourAli', 'nesrine.anwarr', @email4_id
+EXEC Create_Email 'Finished my part, too.', 'I''ve just finished my part from Windows-iOS P2P comm.', @email1_id OUT
+EXEC Send_Email_in_Company 'danial.ashraf', 'nesrine.anwarr', @email1_id
 
 -- [8] View emails sent to me by other staff members of my company.
 EXEC View_my_inbox_Emails 'nesrine.anwarr'
@@ -251,24 +238,17 @@ EXEC View_Job_in_Department 'nourAli', 'Regular Employee - Windows App Programme
 
 -- NOT SURE: [3] Edit the information of a job in my department.
 
--- [HELPER] Get unchanged data from old job
-DECLARE @short_desc VARCHAR(100)
-DECLARE @detail_desc VARCHAR(max)
-DECLARE @deadline DATETIME
-
-SELECT @short_desc = short_description, @detail_desc = detailed_description, @deadline = deadline FROM Jobs
-WHERE title = 'Regular Employee - Android Programmer' AND company = 'runtastic.com' AND department = 'AppDev'
-
 -- >>> Edit the job, with some new data and some copied from the original entry. In the end, the whole job is updated.
-EXEC Edit_Job_in_Department 'nourAli', 'Regular Employee - Android Programmer', @short_desc, @detail_desc,
-							4, 6, 4000, @deadline, 1
+EXEC Edit_Job_in_Department 'nourAli', 'Regular Employee - Android Programmer',
+							'Program the Andorid App.', 'Program the Android App bardo :D',
+							4, 6, 4000, '2017-12-21', 1
 
 -- [4] View new applications for a specific job in my department.
 EXEC View_new_Applications_for_Job_in_Department 'shadwa-barghash', 'HR Employee - Motivation'
 
 -- [5] Accept or reject applications for jobs in my department.
-EXEC Respond_to_Job_Application_HR 'shadwa-barghash', 9, 'TRUE' -- TODO: Make sure it is the correct ID
-EXEC Respond_to_Job_Application_HR 'shadwa-barghash', 10, 'FALSE' -- TODO: Make sure it is the correct ID
+EXEC Respond_to_Job_Application_HR 'shadwa-barghash', 9, 'TRUE'
+EXEC Respond_to_Job_Application_HR 'shadwa-barghash', 10, 'FALSE'
 
 -- [6] Post announcements related to my company to inform staff members about new updates.
 EXEC Post_Announcement 'shadwa-barghash', 'Employee Birthday', 'Surprise birthday', 'As you all know, Shadi is my twin brother, and one of the best programmers in Runtastic, so we want to make him a surprise birthday party. Please join, he''s Gemini and he''ll like it.'
@@ -283,9 +263,9 @@ EXEC Respond_to_Request_HR 'nourAli', '2018-01-20', 'shadi.barghash', 'FALSE'
 -- [9] View attendance records of a staff member in my department
 EXEC View_Attendance_of_Staff_Member 'Regular1', '2017-11-22', '2017-11-24', 'Ahmed'
 
---[10]
+-- [10]
 exec  view_totalhours_of_staff @hr='Ahmed',@staff='Regular1',@year=2017
---[11]
+-- [11]
 exec top_3_achievers 'Ahmed' , 11,2017
 
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Start of Amr's Executions  ##### ##### ##### #####  ##### ##### ##### ##### -----
