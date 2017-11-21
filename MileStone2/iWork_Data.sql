@@ -452,3 +452,94 @@ INSERT INTO Project_Assignments VALUES ('First Project', 'google.com', 'RegEmpWi
 -- -- Tasks
 -- INSERT INTO Tasks VALUES ('First Task', 'The easy task', 'Pending'   , '2017/11/17' , 'First Project', 'apple.com', 'Regular' , 'Eyad3')
 -- INSERT INTO Tasks VALUES ('Assigned Task', 'The easy task', 'Assigned'   , '2017/11/17' , 'First Project', 'apple.com', 'Regular' , 'Eyad3')
+
+-- ###############################################################################################################
+
+-- Company "Runtastic"
+INSERT INTO Companies VALUES ('runtastic.com', 'Runtastic', 'info@runtastic.com', 'Linz, Austria', 'International', 'Healthy lifestyle', 'Fitness App');
+
+-- Department "App Development" in Runtastic
+INSERT INTO Departments VALUES ('AppDev', 'runtastic.com', 'App Development');
+
+-- Job "Windows App Programmer"
+INSERT INTO Jobs VALUES ('Regular Employee - Windows App Programmer', 'AppDev', 'runtastic.com', 'Programs Runtastic App for the Windows platform', 'Programs Runtastic App for the Windows platform bardo. Ah, Windows (Phone) 8.1, w Windows UWP (10 for all devices)', 5, 4, 2000, 2, '2018-12-12');
+
+-- User: Shadi Barghash
+INSERT INTO Users VALUES ('shadi.barghash', 'ayy7agaPassword:"D', 'shady.barghash@outlook.com', 'Shadi', 'Ayman', 'Barghash', '1997-06-17', 6);
+INSERT INTO Staff_Members VALUES ('shadi.barghash', 2500, 'Saturday', 26, 'Regular Employee - Windows App Programmer', 'AppDev', 'runtastic.com');
+INSERT INTO Regular_Employees VALUES ('shadi.barghash');
+
+INSERT INTO User_Previous_Job_Titles VALUES ('Windows App Developer (Founder) at GUCian App', 'shadi.barghash');
+INSERT INTO User_Previous_Job_Titles VALUES ('UWP Developer at Vditory (Award Winner)', 'shadi.barghash');
+INSERT INTO User_Previous_Job_Titles VALUES ('Windows App Developer at Whisperings', 'shadi.barghash');
+INSERT INTO User_Previous_Job_Titles VALUES ('Software Developer at Exams Miner for IGCSE', 'shadi.barghash');
+
+-- Job "iOS Developer"
+INSERT INTO Jobs VALUES ('Regular Employee - iOS Developer', 'AppDev', 'runtastic.com', 'Programs Runtastic App for the iOS', 'Programs Runtastic App for iOS bardo.', 5, 4, 2000, 2, '2018-12-12');
+
+-- User: Daniel Achraf
+INSERT INTO Users VALUES ('danial.ashraf', 'haHaha2Password_xD', 'danial.ashraf@outlook.com', 'Daniel', 'Achraf', 'Daniel''s Family', '1996-07-14', 6);
+INSERT INTO Staff_Members VALUES ('danial.ashraf', 2500, 'Sunday', 20, 'Regular Employee - iOS Developer', 'AppDev', 'runtastic.com');
+INSERT INTO Regular_Employees VALUES ('danial.ashraf');
+
+-- Job "AppDevHR"
+INSERT INTO Jobs VALUES ('HR Employee - App Dev', 'AppDev', 'runtastic.com', 'Manages HR for App Dev department.', 'Manages HR for App Dev department. bardo.', 5, 4, 2000, 2, '2018-12-12');
+
+-- User: Nourhane Ali
+INSERT INTO Users VALUES ('nourAli', 'YeaYea!Password_xD', 'nour_ali@outlook.com', 'Nourhane', 'Ali', 'Nour''s Fam', '1997-06-14', 4);
+INSERT INTO Staff_Members VALUES ('nourAli', 2500, 'Monday', 20, 'HR Employee - App Dev', 'AppDev', 'runtastic.com');
+INSERT INTO Hr_Employees VALUES ('nourAli');
+
+-- Announcements:
+INSERT INTO Announcements VALUES ('Running', '2017-12-20', 'Sports Activity', 'We''ll run 4km in Linz on Saturday, 2/1/2018. Location is a surprise.', 'nourAli');
+INSERT INTO Announcements VALUES ('Annual Meeting', '2017-11-01', 'Conference', 'In this annual conference, we encourage all employees to attend and celebrate our achievements of the year.', 'nourAli');
+INSERT INTO Announcements VALUES ('Running Sponsor', '2017-09-01', 'Event Sponsorship', 'We were invited by a group of GUC in Berlin to join them in their run as a sponsor.', 'nourAli');
+
+-- Job "Delivery Manager"
+INSERT INTO Jobs VALUES ('Manager - Delivery Manager', 'AppDev', 'runtastic.com', 'Manages project delivery for App Dev department.', 'Manages project delivery for App Dev department. bardoo.', 5, 4, 2000, 2, '2018-12-12');
+
+-- User: Nesrine Anwar
+INSERT INTO Users VALUES ('nesrine.anwarr', 'Family<3', 'nesrine.anwar@outlook.com', 'Nesrine', 'Anwar', 'Abd El Khalek', '1972-09-14', 25);
+INSERT INTO Staff_Members VALUES ('nesrine.anwarr', 5000, 'Saturday', 28, 'HR Employee - App Dev', 'AppDev', 'runtastic.com');
+INSERT INTO Managers VALUES ('nesrine.anwarr', 'Projects');
+
+INSERT INTO Requests (start_date, end_date, username, manager_status, mang_username)
+VALUES ('2018-01-01', '2018-01-10', 'danial.ashraf', 'ACCEPTED', 'nesrine.anwarr')
+INSERT INTO Requests (start_date, end_date, username, manager_status, mang_username)
+VALUES ('2018-01-20', '2018-01-22', 'shadi.barghash', 'ACCEPTED', 'nesrine.anwarr')
+
+-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+-- Department "Business Development" in Runtastic
+INSERT INTO Departments VALUES ('BusinessDevelopment', 'runtastic.com', 'Business Development');
+
+-- Job "HR Employee - Motivation"
+INSERT INTO Jobs VALUES ('HR Employee - Motivation', 'BusinessDevelopment', 'runtastic.com', 'Motivates other employees in the department.', 'We need more HR motivation employees to motivate employees even more!', 3, 3, 2000, 4, '2017-11-25')
+
+-- User: Shadwa
+INSERT INTO Users VALUES ('shadwa-barghash', 'shadwy', 'shadwa-ayman@hotmail.com', 'Shadwa', 'Ayman', 'Barghash', '1997-06-17', 4);
+INSERT INTO Staff_Members VALUES ('shadwa-barghash', 3500, 'Saturday', 28, 'HR Employee - Motivation', 'BusinessDevelopment', 'runtastic.com');
+INSERT INTO Hr_Employees VALUES ('shadwa-barghash');
+
+-- Job Seeker: Mariam Hussein
+INSERT INTO Users VALUES ('mariam-hussein', 'mairam', 'mariam-hussein@outlook.com', 'Mariam', NULL, 'Hussein', '1997-07-18', 3)
+INSERT INTO Applicants VALUES ('mariam-hussein');
+
+-- Job Applications for "HR Employee - Motivation"
+INSERT INTO Applications (app_username, score, job_title, department, company)
+VALUES ('mariam-hussein', 95, 'HR Employee - Motivation', 'BusinessDevelopment', 'runtastic.com');
+
+-- Job Seeker: Mohamed Sharkawy
+INSERT INTO Users VALUES ('moh-sharkawy', 'MMEESHOOOHh', 'moh-sharkawyy@outlook.com', 'Mohamed', NULL, 'Sharkawy', '1997-07-18', 3)
+INSERT INTO Applicants VALUES ('moh-sharkawy');
+
+-- Job Applications for "HR Employee - Motivation"
+INSERT INTO Applications (app_username, score, job_title, department, company)
+VALUES ('moh-sharkawy', 85, 'HR Employee - Motivation', 'BusinessDevelopment', 'runtastic.com');
+
+-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+-- TODO: Add a third department
+-- TODO: Add a second HR and second Manager in each Department
+
+-- ###############################################################################################################
