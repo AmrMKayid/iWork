@@ -124,8 +124,6 @@ INSERT INTO Users VALUES ('Sabry'         , 'Hello, World*', 'Sabry@gmail.com'  
 INSERT INTO Staff_Members VALUES ('Sabry'     , 28543   , 'Sunday'     , 80, 'Web Development HR', 'Web_Dev', 'google.com')
 INSERT INTO Hr_Employees VALUES('Sabry')
 
-
-
 ---- ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 -- Facebook -- => Facebook AI Research

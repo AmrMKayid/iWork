@@ -407,7 +407,7 @@ if(exists(select *
 		 if(exists(select a.*
 		   from Applications a
 		   where @username=a.app_username and @jobtitle=a.job_title and @dep=a.department and @comp=a.company and ((a.hr_status='pending' or a.hr_status='accepted') and a.manager_status='pending')))
-		   print 'you already applied for this job and it id in the reviewing process'
+		   print 'you already applied for this job and it is in the reviewing process'
 
 		else
 		if(exists(select a.*
@@ -674,9 +674,17 @@ where username=@username and attendance_date between @startdate and @enddate
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Shadi Start  ##### ##### ##### #####  ##### ##### ##### ##### -----
 GO
 
--------- EXTRA PROCEDURES USED BY OUR PROCEDURES -------- Ended by "-- END OF EXTRA PROCEDURES --"
 
--- Apply_for_Request_CHECKS :
+-- As a staff member, I should be able to ..
+
+-- [4]
+-- Apply for requests of both types: leave requests or business trip requests,
+-- by supplying all the needed information for the request.
+-- As a staff member, I can not apply for a leave if I exceeded the number of annual leaves allowed.
+-- If I am a manager applying for a request, the request does not need to be approved, but it only needs to be kept track of.
+-- Also, I can not apply for a request when it�s applied period overlaps with another request.
+
+-- [HELPER] Apply_for_Request_CHECKS :
 -- Checks and validates the parameters needed to make a data entry in any of the request tables.
 -- However, this does not create a new entry. It just returns two outputs:
 -- @valid BIT OUTPUT: Indicates whether the input is valid according to this Procedures
@@ -694,6 +702,8 @@ AS BEGIN
 		PRINT 'Please check the start and end dates.'
 		--------     [ 7aga zayy break;	aw return; ] ?
 	END
+
+	-- TODO: (extra) Check that the start_date is later than today (request_date)
 
 	-- Check that replacing username is not the same as the requesting username, and he's in the same department -- company
 	IF @staff_username = @username_replacing OR @username_replacing IN (
@@ -747,22 +757,7 @@ AS BEGIN
 END
 GO
 
--- GET the request I have created that are in the review process. Used for deletion.
-CREATE FUNCTION Get_my_Pending_Requests (@username VARCHAR(50)) RETURNS TABLE
-AS RETURN
-	SELECT * FROM Requests WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
-GO
--------- END OF EXTRA PROCEDURES --------
-
-
--- As a staff member, I should be able to ..
-
--- [4]
--- Apply for requests of both types: leave requests or business trip requests,
--- by supplying all the needed information for the request.
--- As a staff member, I can not apply for a leave if I exceeded the number of annual leaves allowed.
--- If I am a manager applying for a request, the request does not need to be approved, but it only needs to be kept track of.
--- Also, I can not apply for a request when it�s applied period overlaps with another request.
+-- >>> Apply for a "Leave" Request for a certain Staff Member
 CREATE PROC Apply_for_Leave_Request
 @staff_username VARCHAR(50), @username_replacing VARCHAR(50), @start_date DATE, @end_date DATE, @leave_type VARCHAR(50)
 AS BEGIN
@@ -793,12 +788,11 @@ AS BEGIN
 		ELSE IF @staff_category = 'RegE'
 			INSERT INTO Request_Regular_Employee_Replace VALUES (@start_date, @staff_username, @username_replacing)
 
-		PRINT 'Leave Request added'
-
 	END
 END
 GO
 
+-- >>> Apply for a "Business Trip" Request for a certain Staff Member
 CREATE PROC Apply_for_Business_Trip
 @staff_username VARCHAR(50), @username_replacing VARCHAR(50), @start_date DATE, @end_date DATE, @destination VARCHAR(50), @purpose VARCHAR(50)
 AS BEGIN
@@ -806,8 +800,7 @@ AS BEGIN
 	DECLARE @valid BIT
 	DECLARE @staff_category VARCHAR(10)
 
-	EXEC Apply_for_Request_CHECKS @staff_username, @username_replacing, @start_date, @end_date,
-		@valid OUTPUT, @staff_category OUTPUT
+	EXEC Apply_for_Request_CHECKS @staff_username, @username_replacing, @start_date, @end_date, @valid OUT, @staff_category OUT
 
 	IF @valid = 1 BEGIN
 
@@ -822,8 +815,6 @@ AS BEGIN
 			INSERT INTO Request_Manager_Replace VALUES (@start_date, @staff_username, @username_replacing)
 		ELSE IF @staff_category = 'RegE'
 			INSERT INTO Request_Regular_Employee_Replace VALUES (@start_date, @staff_username, @username_replacing)
-
-		PRINT 'Business Trip Request added'
 
 	END
 END
@@ -856,6 +847,14 @@ GO
 --EXEC Show_my_Requests 'AmrMKayid'
 
 -- [6] Delete any request I applied for as long as it is still in the review process.
+
+-- [HELPER] GET the requests I have created that are in the review process. Used for deletion.
+CREATE FUNCTION Get_my_Pending_Requests (@username VARCHAR(50)) RETURNS TABLE
+AS RETURN
+	SELECT * FROM Requests WHERE username = @username AND (hr_status = 'PENDING' OR manager_status = 'PENDING')
+GO
+
+ -- >>> Delete all the requests I have applied for and are currently in the review process
 CREATE PROC Delete_my_Pending_Requests
 @username VARCHAR(50)
 AS BEGIN
@@ -890,42 +889,67 @@ GO
 
 -- EXEC Delete_my_Pending_Requests 'ShadiABarghash'
 
---  TODO: [7] Send emails to staff members in my company.
+--  [7] Send emails to staff members in my company.
 
--- @email_id: IF provided, it just sends that existing email.
---			  IF NULL, it creates a new Email message with provided @subject and @body and sends it
---CREATE PROC Send_Email
---@sender VARCHAR(50), @recipient VARCHAR(50), @subject VARCHAR(50), @body VARCHAR(max), @email_id INT = NULL
---AS BEGIN
---	IF @recipient IN (SELECT S2.username FROM Staff_Members S1 INNER JOIN Staff_Members S2
---						ON S1.username = @sender AND S1.company = S2.company) BEGIN
---		IF @email_id IS NULL BEGIN
---			INSERT INTO Emails VALUES (@subject, @body)
-			
---		END
---	END
---END
---GO
+-- A procedure that creates an Email record, that can be a reply to another Email or not, and returns it's ID
+CREATE PROC Create_Email
+@subject VARCHAR(50), @body VARCHAR(max), @id INT OUT, @reply_to INT = NULL
+AS
+	-- Trying to avoid spam, prevent NULL or empty strings
+	IF @subject IS NULL OR @subject = ''
+		PRINT 'Please give a subject to your email.'
+	ELSE IF @body IS NULL OR @body = ''
+		PRINT 'Please write the body of your email.'
+	ELSE IF @reply_to IS NOT NULL AND @reply_to NOT IN (SELECT id FROM Emails)
+		PRINT 'The base email does not exist.'
+	ELSE BEGIN
+		INSERT INTO Emails VALUES (@subject, @body, @reply_to)
+
+		SET @id = SCOPE_IDENTITY()
+	END
+GO
+
+-- A procedure that sends an Email to someone
+CREATE PROC Send_Email_in_Company
+@sender VARCHAR(50), @receiver VARCHAR(50), @email_id INT
+AS
+	IF @email_id IS NULL
+		PRINT 'This procedures must take as input the id of the email to be sent. Use ''Create_Email'' to create an Email and gets its ID.'
+	ELSE IF @sender IS NULL OR @sender NOT IN (SELECT username FROM Staff_Members)
+		PRINT 'A staff member must send the email'
+	ELSE IF @receiver IS NULL
+		PRINT 'You must send the Email to someone.'
+	ELSE IF @receiver NOT IN (SELECT Sr.username FROM Staff_Members Ss INNER JOIN Staff_Members Sr
+								ON Ss.username = @sender AND Ss.company = Sr.company)
+		PRINT 'You can only send to a Staff Member in your company.'
+	ELSE
+		INSERT INTO Staff_send_Email VALUES (@email_id, @receiver, @sender)
+GO
 
 -- [8] View emails sent to me by other staff members of my company.
 CREATE PROC View_my_inbox_Emails
 @username VARCHAR(50)
 AS SELECT time_stamp, sender_username, subject, body
-	FROM Emails INNER JOIN Staff_send_Email SEND
-	ON Emails.id = SEND.email_id AND SEND.receiver_username = @username
-	WHERE Send.sender_username IN (SELECT SM2.username FROM Staff_Members SM1 INNER JOIN Staff_Members SM2
+	FROM Emails INNER JOIN Staff_send_Email S
+	ON Emails.id = S.email_id AND S.receiver_username = @username
+	WHERE S.sender_username IN (SELECT SM2.username FROM Staff_Members SM1 INNER JOIN Staff_Members SM2
 									ON SM1.company = SM2.company AND SM1.username = @username)
 	ORDER BY Emails.time_stamp DESC
 GO
 
 -- TODO: Test with EXEC after testing [7]
 
--- [9] TODO: Reply to an email sent to me, while the reply would be saved in the database as a new email record.
---CREATE PROC Reply_to_Email
---@email_id INT
+-- [9] Reply to an email sent to me, while the reply would be saved in the database as a new email record.
+CREATE PROC Reply_to_Email
+@orig_email INT, @reply_sender VARCHAR(50), @recipient VARCHAR(50), @subject VARCHAR(50), @body VARCHAR(max)
+AS
+	DECLARE @new_email INT
+	EXEC Create_Email @subject, @recipient, @new_email, @orig_email
+	EXEC Send_Email_in_Company @reply_sender, @recipient, @new_email
+GO
 
 -- [10] View announcements related to my company within the past 20 days.
-CREATE PROC Announcements_of_my_Company
+CREATE PROC Announcements_of_Company
 @username VARCHAR(50), @days INT = 20
 AS
 	IF @username IS NULL
@@ -949,13 +973,69 @@ GO
 
 -- As an HR Employee, I should be able to ..
 
--- TODO: [1] Add a new job that belongs to my department,
+-- [1] Add a new job that belongs to my department,
 -- including all the information needed about the job and its interview questions along with their model answers.
 -- The title of the added job should contain at the beginning the role that will be assigned to the job seeker if he/she was
--- accepted in this job; for example: �Manager - Junior Sales Manager�.
+-- accepted in this job; for example: "Manager - Junior Sales Manager".
+
+-- Add a new Job, without the questions, yet.
+CREATE PROC Add_Job
+@hr_username VARCHAR(50),
+@title VARCHAR(50), @department VARCHAR(50), @company VARCHAR(50),
+@short_desc VARCHAR(100), @detail_desc VARCHAR(max),
+@working_hrs DECIMAL, @min_yrs_exp INT, @salary DECIMAL,
+@deadline DATETIME, @vacancy INT = 1
+AS BEGIN
+	IF @hr_username NOT IN (SELECT username FROM Hr_Employees)
+		PRINT 'You must be an HR Employee to add a new Job.'
+	ELSE IF @hr_username NOT IN (SELECT username FROM Staff_Members WHERE company = @company AND department = @department)
+		PRINT 'You can add new Jobs for your department only.'
+	ELSE IF @working_hrs < 0 OR @working_hrs > 24
+		PRINT 'Please provide valid working hours'
+	ELSE IF @min_yrs_exp < 0
+		PRINT 'Please provide valid minimum years of experience.'
+	ELSE IF @salary < 0
+		PRINT 'Please provide valid salary.'
+	ELSE IF @vacancy < 0
+		PRINT 'Please provide valid number of vacancies for this Job.'
+	ELSE BEGIN
+		INSERT INTO Jobs
+		VALUES (@title, @department, @company, @short_desc, @detail_desc, @working_hrs, @min_yrs_exp, @salary, @vacancy, @deadline)
+
+		INSERT INTO Hr_Employee_creates_Job VALUES (@title, @department, @company, @hr_username)
+	END
+END
+GO
+
+-- Create and store a question that can be reused in different Jobs.
+-- Returns the id of the new question.
+CREATE PROC Create_Question
+@question VARCHAR(100), @answer BIT, @qid INT OUT
+AS
+	IF @question IS NULL
+		PRINT 'Please enter the question as it will be shown to new job applicants.'
+	ELSE BEGIN
+		INSERT INTO Questions VALUES (@question, @answer)
+		SET @qid = SCOPE_IDENTITY();
+	END
+GO
+
+-- Add a question to a Job.
+CREATE PROC Add_Job_Question_to_Job
+@qid VARCHAR(50), @job_title VARCHAR(50), @department VARCHAR(50), @company VARCHAR(50)
+AS
+	IF @qid IS NULL
+		PRINT 'You must not enter the question you want to add to this job.'
+	ELSE IF @qid NOT IN (SELECT id FROM Questions)
+		PRINT 'This question does not exist'
+	ELSE IF @job_title NOT IN (SELECT title FROM Jobs WHERE company = @company AND department = @department)
+		PRINT 'This job is not offered by this department.'
+	ELSE
+		INSERT INTO Job_has_Questions VALUES (@job_title, @department, @company, @qid)
+GO
 
 -- [2] View information about a job in my department.
-CREATE PROC View_Job_in_my_Department
+CREATE PROC View_Job_in_Department
 @hr_username VARCHAR(50), @job_title VARCHAR(50)
 AS
 	IF @hr_username IS NULL OR @job_title IS NULL
@@ -977,34 +1057,71 @@ GO
 --EXEC View_Job_in_my_Department 'Adel', 'Artificial Intelligence Manager'
 --EXEC View_Job_in_my_Department NULL, 'Artificial Intelligence Manager'
 
--- TODO: [3] Edit the information of a job in my department.
+-- NOT SURE: [3] Edit the information of a job in my department.
+CREATE PROC Edit_Job_in_Department
+@hr_username VARCHAR(50), @job_title VARCHAR(50),
+@short_desc VARCHAR(100), @detail_desc VARCHAR(max),
+@working_hrs DECIMAL, @min_yrs_exp INT, @salary DECIMAL,
+@deadline DATETIME, @vacancy INT = 1
+AS BEGIN
+	IF @hr_username IS NULL OR @hr_username NOT IN (SELECT username FROM Hr_Employees)
+		PRINT 'You must be an HR to edit a Job.'
+	ELSE IF @job_title NOT IN (SELECT J.title FROM Staff_Members HR, Jobs J
+								WHERE J.company = HR.company AND J.department = HR.department AND HR.username = @hr_username)
+		PRINT 'This job title is not offered in your department.'
+	ELSE IF @working_hrs < 0 OR @working_hrs > 24
+		PRINT 'Please enter valid working hours.'
+	ELSE IF @min_yrs_exp < 0
+		PRINT 'Please enter valid minimum years of experience.'
+	ELSE IF @salary < 0
+		PRINT 'Please enter valid salary.'
+	ELSE IF @vacancy < 0
+		PRINT 'Number of vacanies cannot be less then 0.'
+	ELSE BEGIN
+		DECLARE @department VARCHAR(50)
+		DECLARE @company VARCHAR(50)
+
+		SELECT @department = department, @company = @company FROM Staff_Members WHERE username = @hr_username
+
+		UPDATE Jobs
+		SET short_description = @short_desc, detailed_description = @detail_desc,
+			working_hours = @working_hrs, min_years_of_experience = @min_yrs_exp, salary = @salary,
+			deadline = @deadline, vacancy = @vacancy
+		WHERE title = @job_title AND company = @company AND department = @department
+
+	END
+END
+GO
 
 -- [4] View new applications for a speci?c job in my department.
 -- For each application, I should be able to check information about the job seeker, job & the score s/he got while applying.
-CREATE PROC View_new_Applications_for_Job_title_in_my_Department
+CREATE PROC View_new_Applications_for_Job_in_Department
 @hr_username VARCHAR(50), @job_title VARCHAR(50)
 AS
 	-- Make sure username is an HR employee
 	IF @hr_username NOT IN (SELECT username FROM Hr_Employees)
 		PRINT 'Sorry, you have to be an HR employee to check the new Job Applications in the department.'
+
 	-- Make sure job title is offered by his/her department
 	ELSE IF @job_title NOT IN (SELECT title FROM Jobs J WHERE EXISTS (SELECT * FROM Staff_Members S WHERE username = @hr_username
 																AND S.company = J.company AND S.department = J.department))
 		PRINT 'That job title is not offered in your department.'
+
 	-- Then, just get the needed info where HR status is PENDING and job title is the one I'm looking for
 	ELSE
 		SELECT J.*, A.id, A.score, JS.username, JS.first_name, JS.middle_name, JS.last_name, JS.email, JS.age, JS.birth_date, JS.years_of_experience
 		FROM Jobs J INNER JOIN Applications A ON A.job_title = J.title AND A.department = J.department AND A.company = J.company
 					INNER JOIN Users JS ON A.app_username = JS.username
-		WHERE A.job_title = @job_title AND A.hr_status = 'PENDING' AND EXISTS (SELECT * FROM Staff_Members S WHERE
-						S.username = @hr_username AND S.company = J.company AND S.department = J.department)
+		WHERE A.job_title = @job_title AND A.hr_status = 'PENDING'
+		AND EXISTS (SELECT * FROM Staff_Members S
+					WHERE S.username = @hr_username AND S.company = J.company AND S.department = J.department)
 GO
 
 -- TODO: Test with some EXEC, needs some fresh Applications
 
 -- [5] Accept or reject applications for jobs in my department.
 -- @accept: 'TRUE' or 1 for ACCEPT. 'FALSE' or 0 for REJECT.
-CREATE PROC Respond_to_Job_Application_in_my_Department
+CREATE PROC Respond_to_Job_Application_HR
 @hr_username VARCHAR(50), @app_id INT, @accept BIT
 AS
 	-- Make sure username is an HR employee
@@ -1028,11 +1145,14 @@ AS
 			PRINT 'Application not changed'
 
 		IF @new_status IS NOT NULL BEGIN
-			UPDATE Applications
-			SET hr_status = @new_status, hr_username = @hr_username, manager_status = 'PENDING'
-			WHERE id = @app_id
-
-			PRINT 'HR Status of the Application is updated. Pending Manager''s response.'
+			IF @new_status = 'ACCEPTED'
+				UPDATE Applications
+				SET hr_status = @new_status, hr_username = @hr_username, manager_status = 'PENDING'
+				WHERE id = @app_id
+			ELSE IF @new_status = 'REJECTED'
+				UPDATE Applications
+				SET hr_status = @new_status, hr_username = @hr_username, manager_status = 'REJECTED'
+				WHERE id = @app_id
 		END
 	END
 GO
@@ -1057,22 +1177,150 @@ GO
 -- TODO: Test with EXEC
 
 -- [7] View requests of staff members working with me in the same department that were approved by a manager only.
-CREATE PROC View_Requests_in_my_Department_approved_by_Manager_only
+CREATE PROC View_Requests_approved_by_Manager_only
 @hr_username VARCHAR(50)
 AS SELECT R.*, MR.manager_status, MR.mang_username FROM Requests R INNER JOIN Staff_Members SM ON R.username = SM.username AND R.hr_status = 'PENDING' AND R.manager_status = 'ACCEPTED'
 							INNER JOIN Staff_Members HR ON HR.username = @hr_username AND HR.department = SM.department AND HR.company = SM.company
 							INNER JOIN Manager_Request_Reviews MR ON MR.username = R.username AND MR.start_date = R.start_date
 GO
 
--- TODO: [8] Accept or reject requests of staff members working with me in the same department that were approved by a manager.
--- My response decides the ?nal status of the request, therefore the annual leaves of the applying staff member should be
+-- [8] Accept or reject requests of staff members working with me in the same department that were approved by a manager.
+-- My response decides the final status of the request, therefore the annual leaves of the applying staff member should be
 -- updated in case the request was accepted.
--- Take into consideration that if the duration of the request includes the staff member�s weekly day-off and/or Friday,
+-- Take into consideration that if the duration of the request includes the staff member's weekly day-off and/or Friday,
 -- they should not be counted as annual leaves.
+
+-- [HELPER] Decrement the annual leaves of a Staff Member by a certain number
+CREATE PROC Dec_annual_leaves_by
+@staff_username VARCHAR(50), @dec_by INT
+AS
+	IF @staff_username IS NULL OR @staff_username NOT IN (SELECT username FROM Staff_Members)
+		PRINT 'Please provide a username of a Staff Member.'
+	ELSE IF @dec_by IS NULL OR @dec_by < 0
+		PRINT 'Please provide the number of days to decrement by'
+	ELSE BEGIN
+		DECLARE @old_annual_lvs INT
+		SELECT @old_annual_lvs = annual_leaves FROM Staff_Members WHERE username = @staff_username
+
+		DECLARE @new_annual_lvs INT
+		SET @new_annual_lvs = @old_annual_lvs - @dec_by
+
+		IF @new_annual_lvs < 0 BEGIN
+			SET @new_annual_lvs = 0
+			PRINT 'annual leaves remaining was less than zero, so raised up to zero.'
+		END
+
+		UPDATE Staff_Members
+		SET annual_leaves = @new_annual_lvs
+		WHERE username = @staff_username
+	END
+GO
+
+-- [HELPER] Compute the number of leave days from start to end dates (inclusive),
+-- but excluding 'Friday' and the staff member's day off from the calculation.
+CREATE FUNCTION Get_leave_days (@start_date DATE, @end_date DATE, @day_off VARCHAR(9)) RETURNS INT
+AS BEGIN
+
+	-- Get the weekday equivelant of the day_off
+	DECLARE @day_off_wk INT
+	IF @day_off = 'Sunday'
+		SET @day_off_wk = 1
+	ELSE IF @day_off = 'Monday'
+		SET @day_off_wk = 2
+	ELSE IF @day_off = 'Tuesday'
+		SET @day_off_wk = 3
+	ELSE IF @day_off = 'Wednesday'
+		SET @day_off_wk = 4
+	ELSE IF @day_off = 'Thursday'
+		SET @day_off_wk = 5
+	ELSE IF @day_off = 'Saturday'
+		SET @day_off_wk = 7
+
+	-- Declare an accumulator to count the days in the range
+	DECLARE @days INT
+	SET @days = 0
+
+	-- Start counting from the start date (till the end_date, inclusive)
+	DECLARE @i_date DATE
+	SET @i_date = @start_date
+
+	-- Declare a variable that will be updated and used inside each iteration to store the weekday value of a DATE
+	DECLARE @wk INT
+
+	-- Start iterating from the start_date to the end_date inclusive, to count only the days that are not Friday or the day_off
+	WHILE @i_date <= @end_date BEGIN
+		
+		-- Get the weekday equivelant of the date considered in this iteration
+		SET @wk = DATEPART(WEEKDAY, @i_date)
+
+		-- Only increment the counted days if the weekday is not Friday (6) or the day_off of the staff member.
+		IF @wk <> 6 AND @wk <> @day_off_wk -- If not Friday or the day_off, count
+			SET @days = @days + 1
+
+		-- Update (increment) the current date to be considered in the next iteration
+		SET @i_date = DATEADD(DAY, 1, @i_date)
+
+	END
+
+	RETURN @days
+END
+GO
+
+--- >>> Accept or Reject a Request that a Manager has accepted.
+CREATE PROC Respond_to_Request_HR
+@hr_username VARCHAR(50), @req_start_date DATE, @req_username VARCHAR(50), @accept BIT
+AS
+	IF @hr_username IS NULL OR @hr_username NOT IN (SELECT username FROM Hr_Employees)
+		PRINT 'The request must be reviewed by an HR employee.'
+	ELSE IF NOT EXISTS (SELECT * FROM Requests WHERE username = @req_username AND start_date = @req_start_date
+												AND manager_status = 'ACCEPTED')
+		PRINT 'This request does not exist or has not been accepted by an HR Employee.'
+	ELSE IF EXISTS (SELECT * FROM Requests WHERE username = @req_username AND start_date = @req_start_date
+					AND hr_username IS NOT NULL)
+		PRINT 'This request has already been accepted.'
+	ELSE BEGIN
+
+		DECLARE @status VARCHAR(50)
+		IF @accept = 1
+			SET @status = 'ACCEPTED'
+		ELSE IF @accept = 0
+			SET @status = 'REJECTED'
+
+		IF @status IS NOT NULL BEGIN
+
+			-- UPDATE the new status and the username of the HR employee who made that response
+			UPDATE Requests
+			SET hr_status = @status, hr_username = @hr_username
+			WHERE username = @req_username AND start_date = @req_start_date
+
+			DECLARE @req_end_date DATE
+			SELECT @req_end_date = end_date FROM Requests
+			WHERE username = @req_username AND start_date = @req_start_date
+
+			DECLARE @staff_day_off VARCHAR(9)
+			SELECT @staff_day_off = day_off FROM Staff_Members WHERE username = @req_username
+
+			DECLARE @leave_days INT
+			SET @leave_days = dbo.Get_leave_days(@req_start_date, @req_end_date, @staff_day_off)
+
+			-- Decrement the annual leaves of this staff member by this number.
+			EXEC Dec_annual_leaves_by @req_username, @leave_days
+		END
+
+	END
+GO
+
+--INSERT INTO Requests (username, request_date, start_date, end_date, manager_status, mang_username)
+--VALUES ('Adel', '2017-11-01', '2017-11-05', '2017-11-19', 'ACCEPTED', 'Mohab')
+
+--EXEC Respond_to_Request_HR 'Sabry', '2017-11-05', 'Adel', 1
+
+--SELECT * FROM Requests
+
+--SELECT * FROM Staff_Members WHERE username = 'Adel'
 
 -- [9] View attendance records of a staff member in my department (check-in time, check-out time, duration, missing hours)
 -- within a certain period of time.
-
 CREATE PROC View_Attendance_of_Staff_Member
 @staff_username VARCHAR(50), @from DATETIME, @to DATETIME, @hr_username VARCHAR(50)
 AS
