@@ -138,7 +138,9 @@ exec viewapplicationstatus 'Maza2'
 --##########################################################--
 --choose a job i got accepted in
 go
-exec chooseajob 2,'Maza2','Hr-Android HR','Android_OS','google.com',sunday
+exec chooseajob 2,'Maza2',sunday--was a jobseeker
+exec chooseajob 3,'Maza2',Monday--became a staff member and chose another job so he is going to be a staff member in it
+
 
 --##########################################################--
 --delete job application

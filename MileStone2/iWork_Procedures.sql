@@ -467,12 +467,30 @@ where a.app_username=@username
 --choose a job i got accepted in
 GO
 create proc chooseajob
-@appid int,@username varchar(50),@jobtitle varchar(50), @dep varchar(50),@comp varchar(50),@dayoff varchar(8) 
+@appid int,@username varchar(50),@dayoff varchar(8) 
 as
+declare @jobtitle varchar(50), @dep varchar(50),@comp varchar(50)
 if(exists(select a.* 
           from Applications a
-		  where a.id= @appid and a.app_username=@username and a.job_title=@jobtitle and a.department=@dep and a.company=@comp and a.manager_status='accepted'))
+		  where a.id= @appid and a.app_username=@username and a.manager_status='accepted'))
 		  begin
+		  if(exists(select * 
+		    from Staff_Members
+			where username=@username))
+			begin
+			delete from Staff_Members 
+			where username=@username;
+			end
+		  set @jobtitle=(select a.job_title
+		                 from Applications a
+						 where a.id=@appid)
+		  set @dep=(select a.department
+		                from Applications a
+		                 where a.id=@appid)
+		   set @comp=(select a.company
+		                 from Applications a
+						 where a.id=@appid)
+
 		  declare @salary decimal
 		  set @salary =(select j.salary
 		               from Jobs j
@@ -599,17 +617,16 @@ print 'you arenot a staff member'
 --do for all days 
 
 
-
 ---########################################################--
 GO
-create proc checkout 
+create  proc checkout 
 @username varchar(50)
 as 
 if(exists(select s.*
             from Staff_Members s
 			where s.username=@username))
 begin
-declare @timestamp datetime ,@date date,@leavetime time ,@day varchar(8),@jobhours int ,@durationhour int,@starttime time,@missinghours decimal,@durationminute decimal ,@duration decimal(4,2)
+declare @timestamp datetime ,@date date,@leavetime time ,@day varchar(8),@jobhours decimal ,@durationhour int,@starttime time,@missinghours decimal,@durationminute decimal ,@duration decimal(4,2)
 set @timestamp =CURRENT_TIMESTAMP
 set @date =dbo.getthedate(@timestamp)
 set @leavetime=dbo.getthetime(@timestamp)
@@ -618,7 +635,13 @@ if(exists(select a.*
             from Attendance_Records a
 			where a.attendance_date=@date and a.username=@username and a.time_of_leave is not null))
 			print 'you can not check out twice a day'
-			else if(@day =(select s.day_off
+			else 
+			if(not exists(select a.*
+            from Attendance_Records a
+			where a.attendance_date=@date and a.username=@username ))
+			print 'you did not check in'
+			else
+			if(@day =(select s.day_off
 			          from Staff_Members s
 					  where s.username=@username) or @day='friday')
 					  print 'you can not check out on your day off'
@@ -630,7 +653,7 @@ if(exists(select a.*
 									 where s.username=@username) --getting the the jobhours of the job the staff is working in
                         set @starttime= (select a.time_of_start
 						                 from Attendance_Records a
-										 where a.username=@username)
+										 where a.username=@username and a.attendance_date=@date)
 						if(datepart(MINUTE,@leavetime)<datepart(MINUTE,@starttime) )--like start 3:45 and end 4:30
 						begin
 						set @durationhour=datepart(hour,@leavetime)-1- datepart(hour,@starttime) --4-1-3=0 as he didnt complete a full hour
@@ -654,7 +677,7 @@ if(exists(select a.*
 						end
 						end
 -- exex checkout 'AmrMKayid'
--- exex checkout  'Adel'
+-- exec checkout  'Adel'
 -- exex checkout  'Adel'
 
 -- create function duration
