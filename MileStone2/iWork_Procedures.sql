@@ -16,7 +16,6 @@ else
 select *
 from Companies 
 where replace(Companies.name,' ','')=replace(@name,' ','' ) --to be able to search without being space sensitive 
-
 select phone
 from Company_Phones
 where Company_Phones.company=replace(@name,' ','' )+'.com'
@@ -66,18 +65,17 @@ from Companies
 --view certain company and its departments
 GO
 create procedure viewcertaincompany
-@name varchar(50)
+@domain varchar(50)
 as
 select c.*
 from Companies c
-where c.name=@name
+where c.domain=@domain
 select p.phone
 from Company_Phones p
-where p.company=replace(@name,' ','')+'.com'
+where p.company=@domain
 select d.code,d.name 
 from Departments d
-where d.company=replace(@name,' ','')+'.com' --making sure no white spaces between letters or words
-
+where d.company=@domain
 --drop proc viewcertaincompany
 
 
@@ -132,7 +130,7 @@ end
 --after registering he will be able to enter his previous jobs or if he is an already registered an wants to add p-jobs
 GO
 create proc previousjobsentery
-@username varchar(50),@pjob varchar(100)
+@username varchar(50),@pjob varchar(50)
 as
 if(exists(select *
    from Users
@@ -163,10 +161,10 @@ where (title like '%'+@word+'%' or @word like '%'+title+'%' or short_description
 GO
 create proc highestavgsalaries
 as
-select c.name, avg(salary)
+select c.name,c.domain, avg(salary) as Avg_salaries
 from Companies c
 Inner join Staff_Members s on c.domain=s.company
-group by c.name
+group by c.name ,c.domain
 order by avg(s.salary) desc
 
 --drop proc highestavgsalaries
@@ -218,7 +216,7 @@ if(exists(select *
 
 --view all user info
 GO
-create proc Viewuserinfo
+create  proc Viewuserinfo
 @username varchar(50)
 as
 if(exists(select *
@@ -228,6 +226,10 @@ if(exists(select *
 		  select *
 		  from Users
 		  where Users.username=@username
+		  
+		  select *
+		  from User_Previous_Job_Titles
+		  where username=@username
 		  end
 else 
 print 'Register or log in'
@@ -375,15 +377,7 @@ if(exists(select *
 	print 'Register or login'
 
 --######################################################################--
---save score
-GO
-create proc savescore --will be used in applyforjob procedure above to provide it with the value of the score 
-@score int ,@scoreout int output  /* I see that the creation of an application record should be done after the score is calculated not before it to avoid the existance of application records whose users for 
-example clicked apply so the interview questions appeared ,however he closed the website and didnt submit his answers , so a reocrd will be saved when it shouldnt be , therefore the scenario i am doing is that 
-when apply is clicked interview questions should appear , then user solves them clicks submit the website calculates the score and calls Apply for job procedure to insert an application record with the score*/
-as
-set @scoreout=@score
-
+/*senario questions will be viewed ,the applicant will answer them ,score will be calculated on website using calculate answer by calling it multiple times and will be saved on website and entered with variable entering in the Apply procedure*/
 --Apply for a job
 GO
 create proc Applyforjob
@@ -417,16 +411,16 @@ if(exists(select *
 		 else
 		 begin
 		 declare @scoreout int
-		 exec savescore @score ,@scoreout output
+	
 		
-        insert into Applications (score,hr_status,manager_status,job_title,department,company,app_username)values(@scoreout,'pending','pending',@jobtitle ,@dep ,@comp,@username);
+        insert into Applications (score,hr_status,manager_status,job_title,department,company,app_username)values(@score,'pending','pending',@jobtitle ,@dep ,@comp,@username);
 
 		 end
 		 end
 		 end
 --view questions
 GO
-create proc viewquestions
+create  proc viewquestions
 @jobtitle varchar(50),@dep varchar(50),@comp varchar(50)
 as 
 select c.question
@@ -434,6 +428,21 @@ from Job_has_Questions q
 inner join Questions c on c.id=q.question
 where q.title=@jobtitle and q.department=@dep and q.company=@comp
 
+--calculating score of one quetion
+Go
+create  proc calculateanswer
+@number int ,@answer bit ,@scoreout int output
+as
+declare @correctanswer bit
+set @correctanswer =(select answer
+                     from Questions
+					 where id=@number)
+if(@answer=@correctanswer)
+set @scoreout=10
+else
+set @scoreout=0
+
+print @scoreout
 
 
 
@@ -472,16 +481,36 @@ if(exists(select a.*
 		  print 'select a day other than Friday'
 		  else
 		  begin
-		   if(exists(select *
-          from Staff_Members
-		  where username=@username))
+		  if(@jobtitle like 'Manager%')
 		  begin
-		  delete from Staff_Members
-		  where username=@username
 		  insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);
-		  end 
+		 declare @jobtitle1 varchar(50)
+         declare @type1 varchar(50)
+         declare @type2 varchar(50)
+         declare @type varchar(50)
+         set @jobtitle1=replace(@jobtitle,' ','')
+		 set @type1= SUBSTRING(@jobtitle1,charindex('Manager-',@jobtitle1) + LEN('Manager-'), LEN(@jobtitle1) ) 
+		 if(@type1 like 'J%')
+		 set @type2= SUBSTRING(@jobtitle1,charindex('Junior',@jobtitle1) + LEN('Junior'), LEN(@jobtitle1) )
+          else
+      set @type2= SUBSTRING(@jobtitle1,charindex('senior',@jobtitle1) + LEN('senior'), LEN(@jobtitle1) )
+         set @type=LEFT(@type2, CHARINDEX('Manager',@type2)-1)
+		  insert into Managers values(@username,@type);
+		  end
 		  else
-		   insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);
+		  if(@jobtitle like 'Hr%')
+		  begin 
+		  insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);
+		  insert into Hr_Employees values(@username);
+		  end
+		  else 
+		  if(@jobtitle like 'Regular%')
+		  begin
+		  insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);
+		  insert into Regular_Employees values(@username);
+		  end
+		  else
+		  insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);--as not all staff members fit in our 3 categoriesS
 
 		  update Jobs
 		  set vacancy=vacancy-1
@@ -489,7 +518,6 @@ if(exists(select a.*
 
 end
 end
-
 -- exex chooseajob 2,'Maza2','Android HR','Android_OS','google.com',sunday
 
 --#######################################################################--
@@ -500,7 +528,7 @@ create proc deletejobapp
 as
 if(exists (select a.*
           from Applications a
-		  where a.id=@id and a.app_username=@username and a.hr_status='pending'))
+		  where a.id=@id and a.app_username=@username and a.hr_status='pending' or a.manager_status='pending'))
 		  begin
 		  DELETE FROM Applications
 		  where id=@id
@@ -1269,8 +1297,6 @@ AS
 		WHERE A.attendance_date BETWEEN @from AND @to
 GO
 
--- TODO: Test with EXEC, needs some Attendance records
-
 -- TODO: [10] View the total number of hours for any staff member in my department in each month of a certain year.
 go
 create proc view_totalhours_of_staff
@@ -1327,15 +1353,13 @@ as
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Shadi END  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 
----- ##### ##### ##### ##### ##### ##### ##### #####  Amr Start  ##### ##### ##### #####  ##### ##### ##### ##### -----
+---- ##### ##### ##### ##### ##### ##### ##### #####  Start of Amr's Procedures  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 
--- “As a regular employee, I should be able to ...”
+-- REGULAR EMPLOYEE: “As a regular employee, I should be able to ...”
 
--- View the Assigned Project for a specific employee 
--- by getting them from Project_Assignments and Projects
-
--- >>>>>> DROP Procedure ChangeTaskStatus
+-- Number 1: View the Assigned Project for a specific employee 
+-- by getting them from Project_Assignments and Projects Tables
 GO
 Create Procedure viewMyAssignedProjects
 (
@@ -1350,6 +1374,8 @@ Begin
 End
 
 
+-- Number 2: View the Assigned Tasks for a specific employee 
+-- by getting them from Tasks and Projects Tables
 GO
 Create Procedure viewMyAssignedTasksInAProject
 (
@@ -1363,6 +1389,9 @@ Begin
            T.project = P.name AND T.company = P.company  -- FOREIGN KEY
 End
 
+-- Number 3: Setting the status of a specific task >to> "Fixed"
+-- as long as it did not pass the deadline.
+-- By checking that the current time less than the deadline
 GO
 Create Procedure FinishedTask
 (
@@ -1378,6 +1407,10 @@ Begin
           AND project = @project
 End
 
+-- Number 4: Changing the status of a specific task >to> "Assigned"
+-- as long as it did not pass the deadline and the manager did not review it yet 
+-- and it's current status is Fixed
+-- By checking that the current time less than the deadline
 GO
 Create Procedure ChangeTaskStatus
 (
@@ -1396,8 +1429,14 @@ End
 
 ---- ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####  ##### ##### ##### ##### -----
 
--- “As a manager, I should be able to ...”
+-- MANAGER: “As a manager, I should be able to ...”
 
+
+-- Number 1: View ALL New Request If he is an HR Manager
+-- otherwise he views ALL new requests EXCEPT HR Requests
+-- By checking first he is a manager and in the same department of the company and 
+-- checking if his type is HR then he views all requests
+-- otherwise we check that the username of the request is not in the Hr_Employee Table
 GO
 Create Procedure ViewNewRequests
 (
@@ -1427,6 +1466,12 @@ Begin
 			END
 End
 
+
+
+-- Number 2: Review a specific Request 
+-- if he accept it and the request from hr then the After the HR REVIEW AND ACCEPTED it then setting 
+-- otherwise we only update the mang_status
+-- BUT if he reject it then the final status is his status and we update both status and He must give a reason
 GO
 Create Procedure ReviewRequest
 (
@@ -1476,7 +1521,7 @@ Begin
 					ELSE IF NOT EXISTS(SELECT * FROM Hr_Employees HR WHERE HR.username = @username)
 					BEGIN
 					UPDATE Requests
-					SET manager_status = @mang_status, mang_username = @manager, reason = @reason
+					SET manager_status = @mang_status, hr_status = @mang_status, mang_username = @manager, reason = @reason
 					WHERE username = @username AND start_date = @start_date AND
 								EXISTS(SELECT * FROM Managers M, Staff_Members S1
 								where M.username = @manager AND S1.username = @manager
@@ -1488,6 +1533,8 @@ END
 
 
 
+-- Number 3: View Applications of a specific Job
+-- by getting it from pplications and Jobs Tables
 GO
 Create Procedure ViewApplication
 (
@@ -1506,6 +1553,9 @@ Begin
 End
 
 
+-- Number 4: Review a specific Application from it's ID 
+-- Checking first he is a manager in the same department of the company
+-- After the HR REVIEW AND ACCEPTED it then updating the manager status after he review it 
 GO
 Create Procedure ReviewApplication
 (
@@ -1527,6 +1577,9 @@ Begin
 		WHERE id = @id AND hr_status = 'ACCEPTED' AND company = @company AND department = @department
 End
 
+-- Number 5: Creating NEW Project
+-- Checking first he is a manager in the same company
+-- Then Inserting new Project with the details from the input of the procedure
 GO
 Create Procedure CreateNewProject
 (
@@ -1543,6 +1596,10 @@ Begin
 End
 
 
+-- Number 6: Adding NEW Employee from my department to the Project
+-- Checking first he is a manager in the same department and company
+-- Then Checking the the employee is not working in more that two projects
+-- After that we Add the Employee with the details from the input of the procedure to the Project
 GO
 Create Procedure AddEmployeeToProject
 (
@@ -1565,6 +1622,11 @@ Begin
     VALUES(@project, @company, @regular_employee, @manager)
 End
 
+
+-- Number 7: Removing an Employee in my department from a Project
+-- Checking first he is a manager in the same department and company
+-- Then Checking the the employee is not having any tasks in this project
+-- After that we remove the Employee from the project
 GO
 Create Procedure RemoveEmployeeFromProject
 (
@@ -1587,8 +1649,10 @@ Begin
           )
 End
 
--- EXEC RemoveEmployeeFromProject 'AmrMKayid', 'First Project', 'Regular2'
-
+-- Number 8: Creating New Task in a Project with Status Open
+-- Checking first he is a manager in the same company
+-- Then Checking That there exist a project related to this manager
+-- After that we Create the task
 GO
 Create Procedure CreateNewTask
 (
@@ -1608,6 +1672,10 @@ Begin
    VALUES (@name, @description, 'Open', @deadline , @project, @company, NULL , @manager)
 End
 
+-- Number 9: Assign Employee in the same project of the task to the task
+-- Checking first he is a manager in the same company
+-- Then Checking That there exist a project related to this manager and the employee assigned to this project
+-- After that We Assign him to the Task
 GO
 Create Procedure AssignTask
 (
@@ -1625,9 +1693,13 @@ Begin
 																			where M.username = @manager AND S1.username = @manager)
    UPDATE Tasks 
 	 SET regular_employee_username = @regular_employee_username, [status] = 'Assigned'
-	 WHERE [name] = @name AND mananger_username = @manager AND project = @project --AND 
+	 WHERE [name] = @name AND mananger_username = @manager AND project = @project
 End
 
+
+-- Number 10: Change The Assigned Employee in the task
+-- Checking first he is a manager in the same company
+-- Then updating the employee having that the task status is Assigned
 GO
 Create Procedure ChangeTaskEmployee
 (
@@ -1642,11 +1714,20 @@ Begin
     SET regular_employee_username = @regular_employee_replacing
     WHERE name = @task 
           AND regular_employee_username = @regular_employee 
+					AND mananger_username = @manager
+					AND project = @project
           AND [status] = 'Assigned'
+					AND @regular_employee_replacing IN(
+							SELECT regular_employee_username FROM Project_Assignments PA
+									where PA.mananger_username = @manager 
+									AND PA.project_name = @project
+									AND PA.regular_employee_username = @regular_employee_replacing
+					)
 End
 
--- EXEC ChangeTaskEmployee 'AmrMKayid', 'First Project', '4th Task', 'Regular2', 'Regular1'
-
+-- Number 11: View the task that the manager created
+-- Checking first he is a manager in the same company
+-- Then selecting all the tasks from Task Table
 GO
 Create Procedure ViewProjectTasks
 (
@@ -1663,8 +1744,10 @@ Begin
            [status] = @status
 End
 
--- EXEC ViewProjectTasks 'AmrMKayid', 'First Project', 'Pending' 
 
+-- Number 12: ReView the task that the manager created
+-- If he Accept it then it will be closed and we update it's status
+-- otherwise it'll be assigned to the same employee with a new deadline
 GO
 Create Procedure ReviewTask
 (
@@ -1692,6 +1775,4 @@ Begin
 
 End
 
--- EXEC ReviewTask 'AmrMKayid', 'First Project', 'First Task', 0, '2017/11/27'
-
----- ##### ##### ##### ##### ##### ##### ##### #####  Amr END  ##### ##### ##### #####  ##### ##### ##### ##### -----
+---- ##### ##### ##### ##### ##### ##### ##### #####  End of Amr's Procedures  ##### ##### ##### #####  ##### ##### ##### ##### -----
