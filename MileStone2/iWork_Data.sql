@@ -36,202 +36,204 @@ INSERT INTO Departments VALUES ('iTV'       , 'apple.com', 'TV_Department')
 ---- ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 -- Google's Jobs
-INSERT INTO Jobs VALUES ('Software Engineering Manager', 'G_Research', 'google.com', ' ', ' ', 12, 3, 25732, 3, '2017/11/20')
-INSERT INTO Jobs VALUES ('Software Engineering HR', 'G_Research', 'google.com', ' ', ' ', 12, 1, 15023, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Manager-Junior Software Engineering Manager', 'G_Research', 'google.com', 'Managing software department ', ' ', 12, 3, 25732, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Hr-Software Engineering HR', 'G_Research', 'google.com', ' ', ' ', 12, 1, 15023, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Regular-Software Engineering', 'G_Research', 'google.com', ' ', ' ', 12, 3, 5732, 3, '2017/11/20')
 
-INSERT INTO Jobs VALUES ('Android Software Manager', 'Android_OS', 'google.com', ' ', ' ', 10, 3, 98430, 3, '2017/11/20')
-INSERT INTO Jobs VALUES ('Android HR', 'Android_OS', 'google.com', ' ', ' ', 10, 1, 11000, 3, '2017/11/20')
 
-INSERT INTO Jobs VALUES ('Web Development Manager', 'Web_Dev', 'google.com', ' ', ' ', 8, 3, 38954, 3, '2017/11/20')
-INSERT INTO Jobs VALUES ('Web Development HR', 'Web_Dev', 'google.com', ' ', ' ', 7, 1, 28543, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Manager-Junior Android Software Manager', 'Android_OS', 'google.com', ' ', ' ', 10, 3, 98430, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Hr-Android HR', 'Android_OS', 'google.com', ' ', ' ', 10, 1, 11000, 3, '2017/11/20')
+
+INSERT INTO Jobs VALUES ('Manager-Junior Web Development Manager', 'Web_Dev', 'google.com', ' ', ' ', 8, 3, 38954, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Hr-Web Development HR', 'Web_Dev', 'google.com', ' ', ' ', 7, 1, 28543, 3, '2017/11/20')
 
 -- Facebook's Jobs
-INSERT INTO Jobs VALUES ('Machine Learning Manager', 'FAIR', 'facebook.com', ' ', ' ', 12, 3, 62043, 3, '2017/11/20')
-INSERT INTO Jobs VALUES ('Artificial Intelligence Manager', 'FAIR', 'facebook.com', ' ', ' ', 12, 3, 12387, 3, '2017/11/20')
-INSERT INTO Jobs VALUES ('Software Engineering HR', 'FAIR', 'facebook.com', ' ', ' ', 12, 1, 17398, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Manager-Junior Machine Learning Manager', 'FAIR', 'facebook.com', ' ', ' ', 12, 3, 62043, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Manager-Junior Artificial Intelligence Manager', 'FAIR', 'facebook.com', ' ', ' ', 12, 3, 12387, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Hr-Software Engineering HR', 'FAIR', 'facebook.com', ' ', ' ', 12, 1, 17398, 3, '2017/11/20')
 
-INSERT INTO Jobs VALUES ('Android Software Manager', 'Mobile_Dev', 'facebook.com', ' ', ' ', 10, 3, 75950, 3, '2017/11/20')
-INSERT INTO Jobs VALUES ('iOS Software Manager', 'Mobile_Dev', 'facebook.com', ' ', ' ', 10, 3, 83645, 3, '2017/11/20')
-INSERT INTO Jobs VALUES ('Android HR', 'Mobile_Dev', 'facebook.com', ' ', ' ', 10, 1, 23839, 3, '2017/11/20')
-INSERT INTO Jobs VALUES ('iOS HR', 'Mobile_Dev', 'facebook.com', ' ', ' ', 10, 1, 45267, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Manager-Junior Android Software Manager', 'Mobile_Dev', 'facebook.com', ' ', ' ', 10, 3, 75950, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Manager-Junior iOS Software Manager', 'Mobile_Dev', 'facebook.com', ' ', ' ', 10, 3, 83645, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Hr-Android HR', 'Mobile_Dev', 'facebook.com', ' ', ' ', 10, 1, 23839, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Hr-iOS HR', 'Mobile_Dev', 'facebook.com', ' ', ' ', 10, 1, 45267, 3, '2017/11/20')
 
-INSERT INTO Jobs VALUES ('Web Development Manager', 'Web_Dev', 'facebook.com', ' ', ' ', 8, 3, 150294, 3, '2017/11/20')
-INSERT INTO Jobs VALUES ('Web Development HR', 'Web_Dev', 'facebook.com', ' ', ' ', 7, 1, 54928, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Manager-Junior Web Development Manager', 'Web_Dev', 'facebook.com', ' ', ' ', 8, 3, 150294, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Hr-Web Development HR', 'Web_Dev', 'facebook.com', ' ', ' ', 7, 1, 54928, 3, '2017/11/20')
 
 
 -- Apple's Jobs
-INSERT INTO Jobs VALUES ('iOS Manager', 'iOS', 'apple.com', ' ', ' ', 12, 3, 346792, 3, '2017/11/20')
-INSERT INTO Jobs VALUES ('iOS HR', 'iOS', 'apple.com', ' ', ' ', 12, 1, 135792, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Manager-Junior iOS Manager', 'iOS', 'apple.com', ' ', ' ', 12, 3, 346792, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Hr-iOS HR', 'iOS', 'apple.com', ' ', ' ', 12, 1, 135792, 3, '2017/11/20')
 
-INSERT INTO Jobs VALUES ('macOS Software Manager', 'macOS', 'apple.com', ' ', ' ', 10, 3, 563846, 3, '2017/11/20')
-INSERT INTO Jobs VALUES ('macOS HR', 'macOS', 'apple.com', ' ', ' ', 10, 1, 579340, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Manager-Junior macOS Software Manager', 'macOS', 'apple.com', ' ', ' ', 10, 3, 563846, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Hr-macOS HR', 'macOS', 'apple.com', ' ', ' ', 10, 1, 579340, 3, '2017/11/20')
 
-INSERT INTO Jobs VALUES ('TV Development Manager', 'iTV', 'apple.com', ' ', ' ', 8, 3, 987123, 3, '2017/11/20')
-INSERT INTO Jobs VALUES ('TV Development HR', 'iTV', 'apple.com', ' ', ' ', 7, 1, 34682, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Manager-Junior TV Development Manager', 'iTV', 'apple.com', ' ', ' ', 8, 3, 987123, 3, '2017/11/20')
+INSERT INTO Jobs VALUES ('Hr-TV Development HR', 'iTV', 'apple.com', ' ', ' ', 7, 1, 34682, 3, '2017/11/20')
 
 ---- ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 -- Google -- => Research_Department
 INSERT INTO Users VALUES ('AmrMKayid'     , 'Hello, World!', 'amr@gmail.com'    , 'Amr'     , 'Mohamed', 'Kayid', '1997/07/10', 3)
-INSERT INTO Staff_Members VALUES ('AmrMKayid'    , 25732   , 'Monday'     , 37, 'Software Engineering Manager', 'G_Research', 'google.com')
-INSERT INTO Managers VALUES('AmrMKayid', 'Senior')
+INSERT INTO Staff_Members VALUES ('AmrMKayid'    , 25732   , 'Monday'     , 37, 'Manager-Junior Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Managers VALUES('AmrMKayid', 'Software Engineering')
 
 INSERT INTO Users VALUES ('YasmeenKhaled' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
-INSERT INTO Staff_Members VALUES ('YasmeenKhaled'     ,  25732   , 'Sunday'     , 47, 'Software Engineering Manager', 'G_Research', 'google.com')
-INSERT INTO Managers VALUES('YasmeenKhaled', 'Senior')
+INSERT INTO Staff_Members VALUES ('YasmeenKhaled'     ,  25732   , 'Sunday'     , 47, 'Manager-Junior Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Managers VALUES('YasmeenKhaled', 'Software Engineering')
 
 INSERT INTO Users VALUES ('Ahmed'         , 'Hello, World3', 'Ahmed@gmail.com'  , 'Ahmed'   , 'Mohamed', 'Ahmed', '1997/01/01', 2)
-INSERT INTO Staff_Members VALUES ('Ahmed'     , 15023   , 'Monday'     , 27, 'Software Engineering HR', 'G_Research', 'google.com')
+INSERT INTO Staff_Members VALUES ('Ahmed'     , 15023   , 'Monday'     , 27, 'Hr-Software Engineering HR', 'G_Research', 'google.com')
 INSERT INTO Hr_Employees VALUES('Ahmed')
 
 INSERT INTO Users VALUES ('Mohamed'       , 'Hello, World4', 'Mohamed@gmail.com', 'Mohamed' , 'Ahmed'  , 'Ali', '1997/02/01', 1)
-INSERT INTO Staff_Members VALUES ('Mohamed'     , 15023   , 'Saturday'     , 55, 'Software Engineering HR', 'G_Research', 'google.com')
+INSERT INTO Staff_Members VALUES ('Mohamed'     , 15023   , 'Saturday'     , 55, 'Hr-Software Engineering HR', 'G_Research', 'google.com')
 INSERT INTO Hr_Employees VALUES('Mohamed')
 
 ------------------------------------------------------------------------------------
 -- Google -- => Android_Department
 INSERT INTO Users VALUES ('ShadiBarghash' , 'Hello, World3', 'shadi@gmail.com'  , 'Shadi'   , 'Ayman'  , 'Barghash', '1997/06/17', 3)
-INSERT INTO Staff_Members VALUES ('ShadiBarghash'    , 98430   , 'Monday'     , 50, 'Android Software Manager', 'Android_OS', 'google.com')
+INSERT INTO Staff_Members VALUES ('ShadiBarghash'    , 98430   , 'Monday'     , 50, 'Manager-Junior Android Software Manager', 'Android_OS', 'google.com')
 INSERT INTO Managers VALUES('ShadiBarghash', 'Senior')
 
 INSERT INTO Users VALUES ('Mahmoud'       , 'Hello, World5', 'Mahmoud@gmail.com', 'Mahmoud' , 'Mohamed', 'Ahmed', '1997/03/10', 1)
-INSERT INTO Staff_Members VALUES ('Mahmoud'     , 98430   , 'Tuesday'     , 34, 'Android Software Manager', 'Android_OS', 'google.com')
+INSERT INTO Staff_Members VALUES ('Mahmoud'     , 98430   , 'Tuesday'     , 34, 'Manager-Junior Android Software Manager', 'Android_OS', 'google.com')
 INSERT INTO Managers VALUES('Mahmoud', 'Junior')
 
 INSERT INTO Users VALUES ('Ali'           , 'Hello, World6', 'Ali@gmail.com'    , 'Ali'     , 'Mohamed', 'Ahmed', '1997/04/10', 5)
-INSERT INTO Staff_Members VALUES ('Ali'    , 11000   , 'Sunday'     , 27, 'Android HR', 'Android_OS', 'google.com')
+INSERT INTO Staff_Members VALUES ('Ali'    , 11000   , 'Sunday'     , 27, 'Hr-Android HR', 'Android_OS', 'google.com')
 INSERT INTO Hr_Employees VALUES('Ali')
 
 INSERT INTO Users VALUES ('Mohsen'        , 'Hello, World7', 'Mohsen@gmail.com' , 'Mohsen'  , 'Mohamed', 'Ahmed', '1997/05/10', 4)
-INSERT INTO Staff_Members VALUES ('Mohsen'     , 11000   , 'Monday'     , 87, 'Android HR', 'Android_OS', 'google.com')
+INSERT INTO Staff_Members VALUES ('Mohsen'     , 11000   , 'Monday'     , 87, 'Hr-Android HR', 'Android_OS', 'google.com')
 INSERT INTO Hr_Employees VALUES('Mohsen')
 
 ------------------------------------------------------------------------------------
 -- Google -- => Web_Department
 INSERT INTO Users VALUES ('Eyad'          , 'Hello, World8', 'Eyad@gmail.com'   , 'Eyad'    , 'Mohamed', 'Ahmed', '1997/06/10', 5)
-INSERT INTO Staff_Members VALUES ('Eyad'     , 38954   , 'Monday'     , 50, 'Web Development Manager', 'Web_Dev', 'google.com')
+INSERT INTO Staff_Members VALUES ('Eyad'     , 38954   , 'Monday'     , 50, 'Manager-Junior Web Development Manager', 'Web_Dev', 'google.com')
 INSERT INTO Managers VALUES('Eyad', 'Junior')
 
 INSERT INTO Users VALUES ('Mohab'         , 'Hello, World9', 'Mohab@gmail.com'  , 'Mohab'   , 'Mohamed', 'Ahmed', '1997/07/10', 6)
-INSERT INTO Staff_Members VALUES ('Mohab'     , 38954   , 'Monday'     , 20, 'Web Development Manager', 'Web_Dev', 'google.com')
+INSERT INTO Staff_Members VALUES ('Mohab'     , 38954   , 'Monday'     , 20, 'Manager-Junior Web Development Manager', 'Web_Dev', 'google.com')
 INSERT INTO Managers VALUES('Mohab', 'Junior')
 
 INSERT INTO Users VALUES ('Adel'          , 'Hello, World0', 'Adel@gmail.com'   , 'Adel'    , 'Mohamed', 'Ahmed', '1997/08/10', 9)
-INSERT INTO Staff_Members VALUES ('Adel'    , 28543   , 'Sunday'     , 15, 'Web Development HR', 'Web_Dev', 'google.com')
+INSERT INTO Staff_Members VALUES ('Adel'    , 28543   , 'Sunday'     , 15, 'Hr-Web Development HR', 'Web_Dev', 'google.com')
 INSERT INTO Hr_Employees VALUES('Adel')
 
 INSERT INTO Users VALUES ('Sabry'         , 'Hello, World*', 'Sabry@gmail.com'  , 'Sabry'   , 'Mohamed', 'Ahmed', '1997/09/10', 10)
-INSERT INTO Staff_Members VALUES ('Sabry'     , 28543   , 'Sunday'     , 80, 'Web Development HR', 'Web_Dev', 'google.com')
+INSERT INTO Staff_Members VALUES ('Sabry'     , 28543   , 'Sunday'     , 80, 'Hr-Web Development HR', 'Web_Dev', 'google.com')
 INSERT INTO Hr_Employees VALUES('Sabry')
 
 ---- ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 -- Facebook -- => Facebook AI Research
 INSERT INTO Users VALUES ('AmrMKayid2'     , 'Hello, World!', 'amr@gmail.com'    , 'Amr'     , 'Mohamed', 'Kayid', '1997/07/10', 3)
-INSERT INTO Staff_Members VALUES ('AmrMKayid2'     , 62043   , 'Monday'     , 37, 'Machine Learning Manager', 'FAIR', 'facebook.com')
+INSERT INTO Staff_Members VALUES ('AmrMKayid2'     , 62043   , 'Monday'     , 37, 'Manager-Junior Machine Learning Manager', 'FAIR', 'facebook.com')
 INSERT INTO Managers VALUES('AmrMKayid2', 'Senior')
 
 INSERT INTO Users VALUES ('YasmeenKhaled2' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
-INSERT INTO Staff_Members VALUES ('YasmeenKhaled2'    , 12387   , 'Sunday'     , 47, 'Artificial Intelligence Manager', 'FAIR', 'facebook.com')
+INSERT INTO Staff_Members VALUES ('YasmeenKhaled2'    , 12387   , 'Sunday'     , 47, 'Manager-Junior Artificial Intelligence Manager', 'FAIR', 'facebook.com')
 INSERT INTO Managers VALUES('YasmeenKhaled2', 'Senior')
 
 INSERT INTO Users VALUES ('Ahmed2'         , 'Hello, World3', 'Ahmed2@gmail.com'  , 'Ahmed2'   , 'Mohamed', 'Ahmed2', '1997/01/01', 2)
-INSERT INTO Staff_Members VALUES ('Ahmed2'    , 17398   , 'Monday'     , 27, 'Software Engineering HR', 'FAIR', 'facebook.com')
+INSERT INTO Staff_Members VALUES ('Ahmed2'    , 17398   , 'Monday'     , 27, 'Hr-Software Engineering HR', 'FAIR', 'facebook.com')
 INSERT INTO Hr_Employees VALUES('Ahmed2')
 
 INSERT INTO Users VALUES ('Mohamed2'       , 'Hello, World4', 'Mohamed2@gmail.com', 'Mohamed2' , 'Ahmed'  , 'Ali', '1997/02/01', 1)
-INSERT INTO Staff_Members VALUES ('Mohamed2'     , 17398   , 'Saturday'     , 55, 'Software Engineering HR', 'FAIR', 'facebook.com')
+INSERT INTO Staff_Members VALUES ('Mohamed2'     , 17398   , 'Saturday'     , 55, 'Hr-Software Engineering HR', 'FAIR', 'facebook.com')
 INSERT INTO Hr_Employees VALUES('Mohamed2')
 
 ------------------------------------------------------------------------------------
 -- Facebook -- => Mobile Development
 INSERT INTO Users VALUES ('ShadiBarghash2' , 'Hello, World3', 'shadi@gmail.com'  , 'Shadi'   , 'Ayman'  , 'Barghash', '1997/06/17', 3)
-INSERT INTO Staff_Members VALUES ('ShadiBarghash2'    , 75950   , 'Monday'     , 50, 'Android Software Manager', 'Mobile_Dev', 'facebook.com')
+INSERT INTO Staff_Members VALUES ('ShadiBarghash2'    , 75950   , 'Monday'     , 50, 'Manager-Junior Android Software Manager', 'Mobile_Dev', 'facebook.com')
 INSERT INTO Managers VALUES('ShadiBarghash2', 'Senior')
 
 INSERT INTO Users VALUES ('Mahmoud2'       , 'Hello, World5', 'Mahmoud2@gmail.com', 'Mahmoud2' , 'Mohamed', 'Ahmed', '1997/03/10', 1)
-INSERT INTO Staff_Members VALUES ('Mahmoud2'    , 83645   , 'Tuesday'     , 34, 'iOS Software Manager', 'Mobile_Dev', 'facebook.com')
+INSERT INTO Staff_Members VALUES ('Mahmoud2'    , 83645   , 'Tuesday'     , 34, 'Manager-Junior iOS Software Manager', 'Mobile_Dev', 'facebook.com')
 INSERT INTO Managers VALUES('Mahmoud2', 'Junior')
 
 INSERT INTO Users VALUES ('Ali2'           , 'Hello, World6', 'Ali2@gmail.com'    , 'Ali2'     , 'Mohamed', 'Ahmed', '1997/04/10', 5)
-INSERT INTO Staff_Members VALUES ('Ali2'    , 23839   , 'Sunday'     , 27, 'Android HR', 'Mobile_Dev', 'facebook.com')
+INSERT INTO Staff_Members VALUES ('Ali2'    , 23839   , 'Sunday'     , 27, 'Hr-Android HR', 'Mobile_Dev', 'facebook.com')
 INSERT INTO Hr_Employees VALUES('Ali2')
 
 INSERT INTO Users VALUES ('Mohsen2'        , 'Hello, World7', 'Mohsen2@gmail.com' , 'Mohsen2'  , 'Mohamed', 'Ahmed', '1997/05/10', 4)
-INSERT INTO Staff_Members VALUES ('Mohsen2'     , 45267   , 'Monday'     , 87, 'iOS HR', 'Mobile_Dev', 'facebook.com')
+INSERT INTO Staff_Members VALUES ('Mohsen2'     , 45267   , 'Monday'     , 87, 'Hr-iOS HR', 'Mobile_Dev', 'facebook.com')
 INSERT INTO Hr_Employees VALUES('Mohsen2')
 
 ------------------------------------------------------------------------------------
 -- Facebook -- => Web_Department
 INSERT INTO Users VALUES ('Eyad2'          , 'Hello, World8', 'Eyad2@gmail.com'   , 'Eyad2'    , 'Mohamed', 'Ahmed', '1997/06/10', 5)
-INSERT INTO Staff_Members VALUES ('Eyad2'     , 150294   , 'Monday'     , 50, 'Web Development Manager', 'Web_Dev', 'facebook.com')
+INSERT INTO Staff_Members VALUES ('Eyad2'     , 150294   , 'Monday'     , 50, 'Manager-Junior Web Development Manager', 'Web_Dev', 'facebook.com')
 INSERT INTO Managers VALUES('Eyad2', 'Junior')
 
 INSERT INTO Users VALUES ('Mohab2'         , 'Hello, World9', 'Mohab2@gmail.com'  , 'Mohab2'   , 'Mohamed', 'Ahmed', '1997/07/10', 6)
-INSERT INTO Staff_Members VALUES ('Mohab2'     , 150294   , 'Monday'     , 20, 'Web Development Manager', 'Web_Dev', 'facebook.com')
+INSERT INTO Staff_Members VALUES ('Mohab2'     , 150294   , 'Monday'     , 20, 'Manager-Junior Web Development Manager', 'Web_Dev', 'facebook.com')
 INSERT INTO Managers VALUES('Mohab2', 'Junior')
 
 INSERT INTO Users VALUES ('Adel2'          , 'Hello, World0', 'Adel2@gmail.com'   , 'Adel2'    , 'Mohamed', 'Ahmed', '1997/08/10', 9)
-INSERT INTO Staff_Members VALUES ('Adel2'    , 54928   , 'Sunday'     , 15, 'Web Development HR', 'Web_Dev', 'facebook.com')
+INSERT INTO Staff_Members VALUES ('Adel2'    , 54928   , 'Sunday'     , 15, 'Hr-Web Development HR', 'Web_Dev', 'facebook.com')
 INSERT INTO Hr_Employees VALUES('Adel2')
 
 INSERT INTO Users VALUES ('Sabry2'         , 'Hello, World*', 'Sabry2@gmail.com'  , 'Sabry2'   , 'Mohamed', 'Ahmed', '1997/09/10', 10)
-INSERT INTO Staff_Members VALUES ('Sabry2'    , 54928   , 'Sunday'     , 80, 'Web Development HR', 'Web_Dev', 'facebook.com')
+INSERT INTO Staff_Members VALUES ('Sabry2'    , 54928   , 'Sunday'     , 80, 'Hr-Web Development HR', 'Web_Dev', 'facebook.com')
 INSERT INTO Hr_Employees VALUES('Sabry2')
 
 ---- ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 -- Apple -- => iOS_Department
 INSERT INTO Users VALUES ('AmrMKayid3'     , 'Hello, World!', 'amr@gmail.com'    , 'Amr'     , 'Mohamed', 'Kayid', '1997/07/10', 3)
-INSERT INTO Staff_Members VALUES ('AmrMKayid3'   , 346792   , 'Monday'     , 37, 'iOS Manager', 'iOS', 'apple.com')
+INSERT INTO Staff_Members VALUES ('AmrMKayid3'   , 346792   , 'Monday'     , 37, 'Manager-Junior iOS Manager', 'iOS', 'apple.com')
 INSERT INTO Managers VALUES('AmrMKayid3', 'Senior')
 
 INSERT INTO Users VALUES ('YasmeenKhaled3' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
-INSERT INTO Staff_Members VALUES ('YasmeenKhaled3'    , 346792   , 'Sunday'     , 47, 'iOS Manager', 'iOS', 'apple.com')
+INSERT INTO Staff_Members VALUES ('YasmeenKhaled3'    , 346792   , 'Sunday'     , 47, 'Manager-Junior iOS Manager', 'iOS', 'apple.com')
 INSERT INTO Managers VALUES('YasmeenKhaled3', 'Senior')
 
 INSERT INTO Users VALUES ('Ahmed3'         , 'Hello, World3', 'Ahmed3@gmail.com'  , 'Ahmed3'   , 'Mohamed', 'Ahmed3', '1997/01/01', 2)
-INSERT INTO Staff_Members VALUES ('Ahmed3'     , 135792   , 'Monday'     , 27, 'iOS HR', 'iOS', 'apple.com')
+INSERT INTO Staff_Members VALUES ('Ahmed3'     , 135792   , 'Monday'     , 27, 'Hr-iOS HR', 'iOS', 'apple.com')
 INSERT INTO Hr_Employees VALUES('Ahmed3')
 
 INSERT INTO Users VALUES ('Mohamed3'       , 'Hello, World4', 'Mohamed3@gmail.com', 'Mohamed3' , 'Ahmed'  , 'Ali', '1997/02/01', 1)
-INSERT INTO Staff_Members VALUES ('Mohamed3'     ,  135792   , 'Saturday'     , 55, 'iOS HR', 'iOS', 'apple.com')
+INSERT INTO Staff_Members VALUES ('Mohamed3'     ,  135792   , 'Saturday'     , 55, 'Hr-iOS HR', 'iOS', 'apple.com')
 INSERT INTO Hr_Employees VALUES('Mohamed3')
 
 ------------------------------------------------------------------------------------
 -- Apple -- => macOS_Department
 INSERT INTO Users VALUES ('ShadiBarghash3' , 'Hello, World3', 'shadi@gmail.com'  , 'Shadi'   , 'Ayman'  , 'Barghash', '1997/06/17', 3)
-INSERT INTO Staff_Members VALUES ('ShadiBarghash3'    , 563846   , 'Monday'     , 50, 'macOS Software Manager', 'macOS', 'apple.com')
+INSERT INTO Staff_Members VALUES ('ShadiBarghash3'    , 563846   , 'Monday'     , 50, 'Manager-Junior macOS Software Manager', 'macOS', 'apple.com')
 INSERT INTO Managers VALUES('ShadiBarghash3', 'Senior')
 
 INSERT INTO Users VALUES ('Mahmoud3'       , 'Hello, World5', 'Mahmoud3@gmail.com', 'Mahmoud3' , 'Mohamed', 'Ahmed', '1997/03/10', 1)
-INSERT INTO Staff_Members VALUES ('Mahmoud3'    , 563846   , 'Tuesday'     , 34, 'macOS Software Manager', 'macOS', 'apple.com')
+INSERT INTO Staff_Members VALUES ('Mahmoud3'    , 563846   , 'Tuesday'     , 34, 'Manager-Junior macOS Software Manager', 'macOS', 'apple.com')
 INSERT INTO Managers VALUES('Mahmoud3', 'Junior')
 
 INSERT INTO Users VALUES ('Ali3'           , 'Hello, World6', 'Ali3@gmail.com'    , 'Ali3'     , 'Mohamed', 'Ahmed', '1997/04/10', 5)
-INSERT INTO Staff_Members VALUES ('Ali3'     , 579340   , 'Sunday'     , 27, 'macOS HR', 'macOS', 'apple.com')
+INSERT INTO Staff_Members VALUES ('Ali3'     , 579340   , 'Sunday'     , 27, 'Hr-macOS HR', 'macOS', 'apple.com')
 INSERT INTO Hr_Employees VALUES('Ali3')
 
 INSERT INTO Users VALUES ('Mohsen3'        , 'Hello, World7', 'Mohsen3@gmail.com' , 'Mohsen3'  , 'Mohamed', 'Ahmed', '1997/05/10', 4)
-INSERT INTO Staff_Members VALUES ('Mohsen3'    , 579340   , 'Monday'     , 87, 'macOS HR', 'macOS', 'apple.com')
+INSERT INTO Staff_Members VALUES ('Mohsen3'    , 579340   , 'Monday'     , 87, 'Hr-macOS HR', 'macOS', 'apple.com')
 INSERT INTO Hr_Employees VALUES('Mohsen3')
 
 ------------------------------------------------------------------------------------
 -- Apple -- => TV_Department
 INSERT INTO Users VALUES ('Eyad3'          , 'Hello, World8', 'Eyad3@gmail.com'   , 'Eyad3'    , 'Mohamed', 'Ahmed', '1997/06/10', 5)
-INSERT INTO Staff_Members VALUES ('Eyad3'     , 987123   , 'Monday'     , 50, 'TV Development Manager', 'iTV', 'apple.com')
+INSERT INTO Staff_Members VALUES ('Eyad3'     , 987123   , 'Monday'     , 50, 'Manager-Junior TV Development Manager', 'iTV', 'apple.com')
 INSERT INTO Managers VALUES('Eyad3', 'Junior')
 
 INSERT INTO Users VALUES ('Mohab3'         , 'Hello, World9', 'Mohab2@gmail.com'  , 'Mohab3'   , 'Mohamed', 'Ahmed', '1997/07/10', 6)
-INSERT INTO Staff_Members VALUES ('Mohab3'    , 987123   , 'Monday'     , 20, 'TV Development Manager', 'iTV', 'apple.com')
+INSERT INTO Staff_Members VALUES ('Mohab3'    , 987123   , 'Monday'     , 20, 'Manager-Junior TV Development Manager', 'iTV', 'apple.com')
 INSERT INTO Managers VALUES('Mohab3', 'Junior')
 
 INSERT INTO Users VALUES ('Adel3'          , 'Hello, World0', 'Adel3@gmail.com'   , 'Adel3'    , 'Mohamed', 'Ahmed', '1997/08/10', 9)
-INSERT INTO Staff_Members VALUES ('Adel3'    , 34682   , 'Sunday'     , 15, 'TV Development HR', 'iTV', 'apple.com')
+INSERT INTO Staff_Members VALUES ('Adel3'    , 34682   , 'Sunday'     , 15, 'Hr-TV Development HR', 'iTV', 'apple.com')
 INSERT INTO Hr_Employees VALUES('Adel3')
 
 INSERT INTO Users VALUES ('Sabry3'         , 'Hello, World*', 'Sabry3@gmail.com'  , 'Sabry3'   , 'Mohamed', 'Ahmed', '1997/09/10', 10)
-INSERT INTO Staff_Members VALUES ('Sabry3'    , 34682   , 'Sunday'     , 80, 'TV Development HR', 'iTV', 'apple.com')
+INSERT INTO Staff_Members VALUES ('Sabry3'    , 34682   , 'Sunday'     , 80, 'Hr-TV Development HR', 'iTV', 'apple.com')
 INSERT INTO Hr_Employees VALUES('Sabry3')
 
 ---- ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####  ##### ##### ##### ##### -----
@@ -256,21 +258,21 @@ Insert into Attendance_Records values('Adel','2017/10/19','03:49:00','05:49:00',
 Insert into Attendance_Records values('Adel','2017/10/20','03:49:00','05:49:00',2,5);
 Insert into Attendance_Records values('Adel','2017/10/21','03:49:00','05:49:00',2,5);
 
-Insert into Applications values(90,'Accepted','Pending','Android HR','Android_OS','google.com','Maza','Mohamed',null);
+Insert into Applications values(90,'Accepted','Pending','Hr-Android HR','Android_OS','google.com','Maza','Mohamed',null);
 
-Insert into Applications values(90,'Accepted','Accepted','Android HR','Android_OS','google.com','Maza2','Mohamed','ShadiBarghash');
-Insert into Applications values(90,'Accepted','Accepted','Android HR','Mobile_Dev','facebook.com','Maza2','Mohsen2','Mahmoud2');
-Insert into Applications values(90,'Accepted','Accepted','iOS HR','iOS','apple.com','Maza2','Mohamed3','AmrMKayid3');
+Insert into Applications values(90,'Accepted','Accepted','Hr-Android HR','Android_OS','google.com','Maza2','Mohamed','ShadiBarghash');
+Insert into Applications values(90,'Accepted','Accepted','Hr-Android HR','Mobile_Dev','facebook.com','Maza2','Mohsen2','Mahmoud2');
+Insert into Applications values(90,'Accepted','Accepted','Hr-iOS HR','iOS','apple.com','Maza2','Mohamed3','AmrMKayid3');
 
-Insert into Applications values(90,'pending','pending','Android HR','Android_OS','google.com','Maza1',null,null);
-Insert into Applications values(90,'Accepted','pending','iOS HR','iOS','apple.com','Maza1','Mohamed3',null);
+Insert into Applications values(90,'pending','pending','Hr-Android HR','Android_OS','google.com','Maza1',null,null);
+Insert into Applications values(90,'Accepted','pending','Hr-iOS HR','iOS','apple.com','Maza1','Mohamed3',null);
 
 
 --- Regular Employee
 --------->>>>>>>>>>>>>>>> Two HR Ahmed & Mohamed ^^^^
 
 INSERT INTO Users VALUES ('Regular1' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
-INSERT INTO Staff_Members VALUES ('Regular1'     ,  175735   , 'Sunday'     , 47, 'Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Staff_Members VALUES ('Regular1'     ,  175735   , 'Sunday'     , 47, 'Regular-Software Engineering', 'G_Research', 'google.com')
 INSERT INTO Regular_Employees VALUES('Regular1')
 
 -- ########################## --
@@ -290,7 +292,7 @@ INSERT INTO Tasks VALUES ('First Task', 'The easy task', 'fixed'   , '2017/11/27
 -- ########################## --
 
 INSERT INTO Users VALUES ('Regular2' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
-INSERT INTO Staff_Members VALUES ('Regular2'     ,  32489670   , 'Monday'     , 47, 'Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Staff_Members VALUES ('Regular2'     ,  32489670   , 'Monday'     , 47, 'Regular-Software Engineering', 'G_Research', 'google.com')
 INSERT INTO Regular_Employees VALUES('Regular2')
 
 -- ########################## --
@@ -306,7 +308,7 @@ INSERT INTO Tasks VALUES ('Second Task', 'The 2nd easy task', 'fixed'   , '2017/
 -- ########################## --
 
 INSERT INTO Users VALUES ('Regular3' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
-INSERT INTO Staff_Members VALUES ('Regular3'     ,  65845   , 'Tuesday'     , 47, 'Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Staff_Members VALUES ('Regular3'     ,  65845   , 'Tuesday'     , 47, 'Regular-Software Engineering', 'G_Research', 'google.com')
 INSERT INTO Regular_Employees VALUES('Regular3')
 
 -- ########################## --
@@ -322,7 +324,7 @@ INSERT INTO Tasks VALUES ('First Task', 'The easy task', 'fixed'   , '2017/11/23
 -- ########################## --
 
 INSERT INTO Users VALUES ('Regular4' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
-INSERT INTO Staff_Members VALUES ('Regular4'     ,  497082   , 'Saturday'     , 47, 'Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Staff_Members VALUES ('Regular4'     ,  497082   , 'Saturday'     , 47, 'Regular-Software Engineering', 'G_Research', 'google.com')
 INSERT INTO Regular_Employees VALUES('Regular4')
 
 -- ########################## --
@@ -341,7 +343,7 @@ INSERT INTO Tasks VALUES ('6th Task', 'The easy task', 'Assigned'   , '2017/11/2
 -- ########################## --
 
 INSERT INTO Users VALUES ('Regular5' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
-INSERT INTO Staff_Members VALUES ('Regular5'     ,  638745   , 'Monday'     , 47, 'Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Staff_Members VALUES ('Regular5'     ,  638745   , 'Monday'     , 47, 'Regular-Software Engineering', 'G_Research', 'google.com')
 INSERT INTO Regular_Employees VALUES('Regular5')
 
 -- ########################## --
@@ -372,7 +374,7 @@ INSERT INTO Tasks VALUES ('8thTask', 'finaltask', 'fixed'   , '2017/10/23' , 'Se
 
 ------ Regular Employee Testing
 INSERT INTO Users VALUES ('Regular7' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
-INSERT INTO Staff_Members VALUES ('Regular7'     ,  175735   , 'Sunday'     , 47, 'Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Staff_Members VALUES ('Regular7'     ,  175735   , 'Sunday'     , 47, 'Regular-Software Engineering', 'G_Research', 'google.com')
 INSERT INTO Regular_Employees VALUES('Regular7')
 
 INSERT INTO Project_Assignments VALUES ('Second Project', 'google.com', 'Regular7' , 'AmrMKayid')
@@ -392,19 +394,19 @@ INSERT INTO Tasks VALUES ('Number4Case3', 'Test FinishedTask', 'Fixed'   , '2017
 
 ---- TOTEST: Number 1
 INSERT INTO Users VALUES ('YasmeenHRTestingAmr'     , 'Hello, World!', 'amr@gmail.com'    , 'Amr'     , 'Mohamed', 'Kayid', '1997/07/10', 3)
-INSERT INTO Staff_Members VALUES ('YasmeenHRTestingAmr'    , 25732   , 'Monday'     , 37, 'Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Staff_Members VALUES ('YasmeenHRTestingAmr'    , 25732   , 'Monday'     , 37, 'Manager-Junior Software Engineering Manager', 'G_Research', 'google.com')
 INSERT INTO Managers VALUES('YasmeenHRTestingAmr', 'HR')
 
 INSERT INTO Users VALUES ('AmrHR'         , 'Hello, World3', 'Ahmed@gmail.com'  , 'Ahmed'   , 'Mohamed', 'Ahmed', '1997/01/01', 2)
-INSERT INTO Staff_Members VALUES ('AmrHR'     , 15023   , 'Monday'     , 27, 'Software Engineering HR', 'G_Research', 'google.com')
+INSERT INTO Staff_Members VALUES ('AmrHR'     , 15023   , 'Monday'     , 27, 'Hr-Software Engineering HR', 'G_Research', 'google.com')
 INSERT INTO Hr_Employees VALUES('AmrHR')
 
 INSERT INTO Users VALUES ('YasmeenNOTHRTestingAmr'     , 'Hello, World!', 'amr@gmail.com'    , 'Amr'     , 'Mohamed', 'Kayid', '1997/07/10', 3)
-INSERT INTO Staff_Members VALUES ('YasmeenNOTHRTestingAmr'    , 25732   , 'Monday'     , 37, 'Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Staff_Members VALUES ('YasmeenNOTHRTestingAmr'    , 25732   , 'Monday'     , 37, 'Manager-Junior Software Engineering Manager', 'G_Research', 'google.com')
 INSERT INTO Managers VALUES('YasmeenNOTHRTestingAmr', '!HR')
 
 INSERT INTO Users VALUES ('AmrNOTHrBUTReg'         , 'Hello, World3', 'Ahmed@gmail.com'  , 'Ahmed'   , 'Mohamed', 'Ahmed', '1997/01/01', 2)
-INSERT INTO Staff_Members VALUES ('AmrNOTHrBUTReg'     , 15023   , 'Monday'     , 27, 'Software Engineering HR', 'G_Research', 'google.com')
+INSERT INTO Staff_Members VALUES ('AmrNOTHrBUTReg'     , 15023   , 'Monday'     , 27, 'Regular-Software Engineering', 'G_Research', 'google.com')
 INSERT INTO Regular_Employees VALUES('AmrNOTHrBUTReg')
 
 ----- New Requests
@@ -421,12 +423,12 @@ INSERT INTO Applicants VALUES('AmrApplicant1')
 INSERT INTO Users VALUES ('AmrApplicant2', 'Hello, World!', 'amr@gmail.com', 'Amr'     , 'Mohamed', 'Kayid', '1997/07/10', 3)
 INSERT INTO Applicants VALUES('AmrApplicant2')
 
-INSERT INTO Applications(job_title, department, company, app_username, score, hr_status) VALUES('Software Engineering Manager', 'G_Research', 'google.com', 'AmrApplicant1', 10, 'ACCEPTED')
-INSERT INTO Applications(job_title, department, company, app_username, score, hr_status) VALUES('Software Engineering Manager', 'G_Research', 'google.com', 'AmrApplicant2', 70, 'ACCEPTED')
+INSERT INTO Applications(job_title, department, company, app_username, score, hr_status) VALUES('Manager-Junior Software Engineering Manager', 'G_Research', 'google.com', 'AmrApplicant1', 10, 'ACCEPTED')
+INSERT INTO Applications(job_title, department, company, app_username, score, hr_status) VALUES('Manager-Junior Software Engineering Manager', 'G_Research', 'google.com', 'AmrApplicant2', 70, 'ACCEPTED')
 
 
 INSERT INTO Users VALUES ('RegEmpWithNoTasks'         , 'Hello, World3', 'Ahmed@gmail.com'  , 'Ahmed'   , 'Mohamed', 'Ahmed', '1997/01/01', 2)
-INSERT INTO Staff_Members VALUES ('RegEmpWithNoTasks'     , 15023   , 'Monday'     , 27, 'Software Engineering HR', 'G_Research', 'google.com')
+INSERT INTO Staff_Members VALUES ('RegEmpWithNoTasks'     , 15023   , 'Monday'     , 27, 'Regular-Software Engineering', 'G_Research', 'google.com')
 INSERT INTO Regular_Employees VALUES('RegEmpWithNoTasks')
 
 INSERT INTO Project_Assignments VALUES ('First Project', 'google.com', 'RegEmpWithNoTasks' , 'YasmeenHRTestingAmr')
@@ -434,7 +436,7 @@ INSERT INTO Project_Assignments VALUES ('First Project', 'google.com', 'RegEmpWi
 
 --- Change Task Employee
 INSERT INTO Users VALUES ('Regular8' , 'Hello, World2', 'yasmeen@gmail.com', 'Yasmeen' , 'Khaled' , 'Abdelmohsen', '1997/04/25', 3)
-INSERT INTO Staff_Members VALUES ('Regular8'     ,  175735   , 'Sunday'     , 47, 'Software Engineering Manager', 'G_Research', 'google.com')
+INSERT INTO Staff_Members VALUES ('Regular8'     ,  175735   , 'Sunday'     , 47, 'Regular-Software Engineering', 'G_Research', 'google.com')
 INSERT INTO Regular_Employees VALUES('Regular8')
 
 

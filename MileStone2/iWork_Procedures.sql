@@ -16,7 +16,6 @@ else
 select *
 from Companies 
 where replace(Companies.name,' ','')=replace(@name,' ','' ) --to be able to search without being space sensitive 
-
 select phone
 from Company_Phones
 where Company_Phones.company=replace(@name,' ','' )+'.com'
@@ -66,18 +65,17 @@ from Companies
 --view certain company and its departments
 GO
 create procedure viewcertaincompany
-@name varchar(50)
+@domain varchar(50)
 as
 select c.*
 from Companies c
-where c.name=@name
+where c.domain=@domain
 select p.phone
 from Company_Phones p
-where p.company=replace(@name,' ','')+'.com'
+where p.company=@domain
 select d.code,d.name 
 from Departments d
-where d.company=replace(@name,' ','')+'.com' --making sure no white spaces between letters or words
-
+where d.company=@domain
 --drop proc viewcertaincompany
 
 
@@ -132,7 +130,7 @@ end
 --after registering he will be able to enter his previous jobs or if he is an already registered an wants to add p-jobs
 GO
 create proc previousjobsentery
-@username varchar(50),@pjob varchar(100)
+@username varchar(50),@pjob varchar(50)
 as
 if(exists(select *
    from Users
@@ -163,10 +161,10 @@ where (title like '%'+@word+'%' or @word like '%'+title+'%' or short_description
 GO
 create proc highestavgsalaries
 as
-select c.name, avg(salary)
+select c.name,c.domain, avg(salary) as Avg_salaries
 from Companies c
 Inner join Staff_Members s on c.domain=s.company
-group by c.name
+group by c.name ,c.domain
 order by avg(s.salary) desc
 
 --drop proc highestavgsalaries
@@ -375,15 +373,7 @@ if(exists(select *
 	print 'Register or login'
 
 --######################################################################--
---save score
-GO
-create proc savescore --will be used in applyforjob procedure above to provide it with the value of the score 
-@score int ,@scoreout int output  /* I see that the creation of an application record should be done after the score is calculated not before it to avoid the existance of application records whose users for 
-example clicked apply so the interview questions appeared ,however he closed the website and didnt submit his answers , so a reocrd will be saved when it shouldnt be , therefore the scenario i am doing is that 
-when apply is clicked interview questions should appear , then user solves them clicks submit the website calculates the score and calls Apply for job procedure to insert an application record with the score*/
-as
-set @scoreout=@score
-
+/*senario questions will be viewed ,the applicant will answer them ,score will be calculated on website using calculate answer by calling it multiple times and will be saved on website and entered with variable entering in the Apply procedure*/
 --Apply for a job
 GO
 create proc Applyforjob
@@ -417,9 +407,9 @@ if(exists(select *
 		 else
 		 begin
 		 declare @scoreout int
-		 exec savescore @score ,@scoreout output
+	
 		
-        insert into Applications (score,hr_status,manager_status,job_title,department,company,app_username)values(@scoreout,'pending','pending',@jobtitle ,@dep ,@comp,@username);
+        insert into Applications (score,hr_status,manager_status,job_title,department,company,app_username)values(@score,'pending','pending',@jobtitle ,@dep ,@comp,@username);
 
 		 end
 		 end
@@ -434,6 +424,19 @@ from Job_has_Questions q
 inner join Questions c on c.id=q.question
 where q.title=@jobtitle and q.department=@dep and q.company=@comp
 
+--calculating score of one quetion
+Go
+create proc calculateanswer
+@number int ,@answer bit ,@scoreout int output
+as
+declare @correctanswer bit
+set @correctanswer =(select answer
+                     from Questions
+					 where id=@number)
+if(@answer=@correctanswer)
+set @scoreout=10
+else
+set @scoreout=0
 
 
 
@@ -472,16 +475,36 @@ if(exists(select a.*
 		  print 'select a day other than Friday'
 		  else
 		  begin
-		   if(exists(select *
-          from Staff_Members
-		  where username=@username))
+		  if(@jobtitle like 'Manager%')
 		  begin
-		  delete from Staff_Members
-		  where username=@username
 		  insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);
-		  end 
+		 declare @jobtitle1 varchar(50)
+         declare @type1 varchar(50)
+         declare @type2 varchar(50)
+         declare @type varchar(50)
+         set @jobtitle1=replace(@jobtitle,' ','')
+		 set @type1= SUBSTRING(@jobtitle1,charindex('Manager-',@jobtitle1) + LEN('Manager-'), LEN(@jobtitle1) ) 
+		 if(@type1 like 'J%')
+		 set @type2= SUBSTRING(@jobtitle1,charindex('Joniour',@jobtitle1) + LEN('Joniour'), LEN(@jobtitle1) )
+          else
+      set @type2= SUBSTRING(@jobtitle1,charindex('senior',@jobtitle1) + LEN('senior'), LEN(@jobtitle1) )
+         set @type=LEFT(@type2, CHARINDEX('Manager',@type2)-1)
+		  insert into Managers values(@username,@type);
+		  end
 		  else
-		   insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);
+		  if(@jobtitle like 'Hr%')
+		  begin 
+		  insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);
+		  insert into Hr_Employees values(@username);
+		  end
+		  else 
+		  if(@jobtitle like 'Regular%')
+		  begin
+		  insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);
+		  insert into Regular_Employees values(@username);
+		  end
+		  else
+		  insert into Staff_Members values(@username,@salary,@dayoff ,30,@jobtitle,@dep, @comp);--as not all staff members fit in our 3 categoriesS
 
 		  update Jobs
 		  set vacancy=vacancy-1
@@ -489,7 +512,6 @@ if(exists(select a.*
 
 end
 end
-
 -- exex chooseajob 2,'Maza2','Android HR','Android_OS','google.com',sunday
 
 --#######################################################################--
@@ -500,7 +522,7 @@ create proc deletejobapp
 as
 if(exists (select a.*
           from Applications a
-		  where a.id=@id and a.app_username=@username and a.hr_status='pending'))
+		  where a.id=@id and a.app_username=@username and a.hr_status='pending' or a.manager_status='pending'))
 		  begin
 		  DELETE FROM Applications
 		  where id=@id

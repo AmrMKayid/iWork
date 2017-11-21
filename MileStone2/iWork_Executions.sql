@@ -1,5 +1,181 @@
 GO
 USE iWork;
+--search by company name
+go
+exec searchbyCname 'go Ogle' --exists
+go
+exec searchbyCname 'k'       --doesnt exist
+
+
+--search by addresss
+go
+exec searchbyCaddress 'seattle'
+go
+exec searchbyCaddress 'california'
+
+
+--search by type
+go
+exec searchbyCtype 'National'
+go
+exec searchbyCtype 'International'
+
+--#############################################################--
+
+--view all companies
+go
+exec viewallcompanies
+
+--############################################################--
+--view certain company and its departments
+go
+exec viewcertaincompany 'google.com'
+
+--###########################################################--
+
+--view departments of comapnies with jobs that have vacancies in it
+go
+exec viewcertaindepartment 'google.com','Android_OS'
+
+--#########################################################--
+
+--registering and entering previous job entries after he register
+go
+exec register @username='balabizo',@password='5679',@birthdate='1998/07/10',@firstname='sameh',@lastname='wagih'--to test it sets default values
+go
+exec register @username='balabizo',@password='5679',@birthdate='1998/07/10',@firstname='sameh',@lastname='wagih' --prints username already in use 
+go
+exec previousjobsentery @pjob='software engineer at ibm',@username='balabizo' --enters a record for a perivious job tittle of balabizo
+go
+exec previousjobsentery @pjob='software engineer at ibm',@username='balabizo' --prints you already entered this job tittle
+go
+exec previousjobsentery @pjob='ceo of ggg',@username='balabizo' --enters a record for a perivious job tittle of balabizo
+
+--#########################################################--
+
+--search for jobs that have vacancies in them with string contained in their tittle or short desc
+go
+exec searchforjob 'hr'
+go
+exec searchforjob 'software'
+--new insertions for vacancy 0 and short description
+
+--#########################################################--
+go
+exec highestavgsalaries
+
+--#########################################################--
+--login
+go
+exec loginweb 'AmrMKayid','Hello, World!' --registed manager
+go
+exec loginweb 'AmrMKayid25','Hello, World!'--wrong username
+go
+exec loginweb 'AmrMKayid','Hello, World!25'--correct user name wrong password
+go
+exec loginweb 'Maza','Hello, World*' --registered job seeker
+go
+exec loginweb 'Adel','Hello, World0'--registered hr
+
+--add an execution for regular employees
+
+--#########################################################--
+--view all user info
+go
+exec Viewuserinfo 'Adel'
+go
+exec Viewuserinfo 'Sabry'
+go
+exec Viewuserinfo null --register or login message
+
+--#########################################################--
+--user info editing
+go
+exec editusername 'editingtrial','Adel' --Adel is the name of another registered user so username in use will be displayed
+go
+exec editusername 'editingtrial','crazy'--successfully changed
+go
+exec edituserpassword 'crazy','heyyou'
+go
+exec edituseremail 'crazy','crazy@yahoo.com'
+go
+exec edituserfn 'crazy','crazy'
+go
+exec editusermn 'crazy','crazy'
+go
+exec edituserln 'crazy','crazy'
+go
+exec edituserbd 'crazy','1968/8/8'
+go
+exec edituseryofe 'crazy',25 --years of experience
+
+--##########################################################--
+--Apply for job
+go
+exec Applyforjob 'Maza','Hr-Android HR','Android_OS','google.com',30 --first time to apply for a job
+go
+exec Applyforjob 'Maza','Hr-Android HR','Android_OS','google.com',30 --still in reviewing process
+go
+exec Applyforjob 'Maza2','Hr-Android HR','Android_OS','google.com',90 --already applied before and got accepted
+
+--save score
+
+--questions 
+--##########################################################--
+--view my job applications status
+go
+exec viewapplicationstatus 'Maza'
+go
+exec viewapplicationstatus 'Maza2'
+
+--##########################################################--
+--choose a job i got accepted in
+go
+exec chooseajob 2,'Maza2','Hr-Android HR','Android_OS','google.com',sunday
+
+--##########################################################--
+--delete job application
+go
+exec deletejobapp 5,'Maza1' --will be deleted ie in pending at hr
+go
+exec deletejobapp 6,'Maza1' -- accepted by hr but manager pending
+
+--###########################################################--
+--check in proc the takes user name and the current time stamp from website
+go
+exec checkin 'Adel' --dayoff sunday
+go
+exec checkin 'AmrMKayid'
+
+--############################################################--
+-- a function to extract the date from date time
+go
+select dbo.getthedate(CURRENT_TIMESTAMP)  
+
+--############################################################--
+
+--a function to extract the time from date time
+go
+select dbo.getthetime(CURRENT_TIMESTAMP)
+
+--############################################################--
+--check out execution
+go
+exec checkout 'AmrMKayid'
+go
+exec checkout  'Adel'
+go
+exec checkout  'Adel'
+
+
+
+--###########################################################--
+--user checks attendance 
+go
+exec checkmyattendance 'Adel' ,'2017/10/18','2017/10/20'
+
+--###########################################################--
+--##############################################################yasmeen's end######################################################--
 
 
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Start of Amr's Executions  ##### ##### ##### #####  ##### ##### ##### ##### -----
@@ -67,7 +243,7 @@ EXEC ReviewRequest 'YasmeenHRTestingAmr', '2018-01-01', 'AmrHR', 1, ''
 ---- Number 3
 
 GO
-EXEC ViewApplication 'YasmeenHRTestingAmr', 'Software Engineering Manager'
+EXEC ViewApplication 'YasmeenHRTestingAmr', 'Manager-Software Engineering Manager'
 
 ---- Number 4
 GO
