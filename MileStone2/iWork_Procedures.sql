@@ -1185,7 +1185,7 @@ AS SELECT R.*, MR.manager_status, MR.mang_username FROM Requests R INNER JOIN St
 GO
 
 -- [8] Accept or reject requests of staff members working with me in the same department that were approved by a manager.
--- My response decides the final status of the request, therefore the annual leaves of the applying staff member should be
+-- My response decides the After the HR REVIEW AND ACCEPTED it then setting 
 -- updated in case the request was accepted.
 -- Take into consideration that if the duration of the request includes the staff member's weekly day-off and/or Friday,
 -- they should not be counted as annual leaves.
@@ -1398,15 +1398,13 @@ as
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Shadi END  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 
----- ##### ##### ##### ##### ##### ##### ##### #####  Amr Start  ##### ##### ##### #####  ##### ##### ##### ##### -----
+---- ##### ##### ##### ##### ##### ##### ##### #####  Start of Amr's Procedures  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 
--- “As a regular employee, I should be able to ...”
+-- REGULAR EMPLOYEE: “As a regular employee, I should be able to ...”
 
--- View the Assigned Project for a specific employee 
--- by getting them from Project_Assignments and Projects
-
--- >>>>>> DROP Procedure ChangeTaskStatus
+-- Number 1: View the Assigned Project for a specific employee 
+-- by getting them from Project_Assignments and Projects Tables
 GO
 Create Procedure viewMyAssignedProjects
 (
@@ -1421,6 +1419,8 @@ Begin
 End
 
 
+-- Number 2: View the Assigned Tasks for a specific employee 
+-- by getting them from Tasks and Projects Tables
 GO
 Create Procedure viewMyAssignedTasksInAProject
 (
@@ -1434,6 +1434,9 @@ Begin
            T.project = P.name AND T.company = P.company  -- FOREIGN KEY
 End
 
+-- Number 3: Setting the status of a specific task >to> "Fixed"
+-- as long as it did not pass the deadline.
+-- By checking that the current time less than the deadline
 GO
 Create Procedure FinishedTask
 (
@@ -1449,6 +1452,10 @@ Begin
           AND project = @project
 End
 
+-- Number 4: Changing the status of a specific task >to> "Assigned"
+-- as long as it did not pass the deadline and the manager did not review it yet 
+-- and it's current status is Fixed
+-- By checking that the current time less than the deadline
 GO
 Create Procedure ChangeTaskStatus
 (
@@ -1467,8 +1474,14 @@ End
 
 ---- ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####  ##### ##### ##### ##### -----
 
--- “As a manager, I should be able to ...”
+-- MANAGER: “As a manager, I should be able to ...”
 
+
+-- Number 1: View ALL New Request If he is an HR Manager
+-- otherwise he views ALL new requests EXCEPT HR Requests
+-- By checking first he is a manager and in the same department of the company and 
+-- checking if his type is HR then he views all requests
+-- otherwise we check that the username of the request is not in the Hr_Employee Table
 GO
 Create Procedure ViewNewRequests
 (
@@ -1498,6 +1511,12 @@ Begin
 			END
 End
 
+
+
+-- Number 2: Review a specific Request 
+-- if he accept it and the request from hr then the After the HR REVIEW AND ACCEPTED it then setting 
+-- otherwise we only update the mang_status
+-- BUT if he reject it then the final status is his status and we update both status and He must give a reason
 GO
 Create Procedure ReviewRequest
 (
@@ -1559,6 +1578,8 @@ END
 
 
 
+-- Number 3: View Applications of a specific Job
+-- by getting it from pplications and Jobs Tables
 GO
 Create Procedure ViewApplication
 (
@@ -1577,6 +1598,9 @@ Begin
 End
 
 
+-- Number 4: Review a specific Application from it's ID 
+-- Checking first he is a manager in the same department of the company
+-- After the HR REVIEW AND ACCEPTED it then updating the manager status after he review it 
 GO
 Create Procedure ReviewApplication
 (
@@ -1598,6 +1622,9 @@ Begin
 		WHERE id = @id AND hr_status = 'ACCEPTED' AND company = @company AND department = @department
 End
 
+-- Number 5: Creating NEW Project
+-- Checking first he is a manager in the same company
+-- Then Inserting new Project with the details from the input of the procedure
 GO
 Create Procedure CreateNewProject
 (
@@ -1614,6 +1641,10 @@ Begin
 End
 
 
+-- Number 6: Adding NEW Employee from my department to the Project
+-- Checking first he is a manager in the same department and company
+-- Then Checking the the employee is not working in more that two projects
+-- After that we Add the Employee with the details from the input of the procedure to the Project
 GO
 Create Procedure AddEmployeeToProject
 (
@@ -1636,6 +1667,11 @@ Begin
     VALUES(@project, @company, @regular_employee, @manager)
 End
 
+
+-- Number 7: Removing an Employee in my department from a Project
+-- Checking first he is a manager in the same department and company
+-- Then Checking the the employee is not having any tasks in this project
+-- After that we remove the Employee from the project
 GO
 Create Procedure RemoveEmployeeFromProject
 (
@@ -1658,6 +1694,10 @@ Begin
           )
 End
 
+-- Number 8: Creating New Task in a Project with Status Open
+-- Checking first he is a manager in the same company
+-- Then Checking That there exist a project related to this manager
+-- After that we Create the task
 GO
 Create Procedure CreateNewTask
 (
@@ -1677,6 +1717,10 @@ Begin
    VALUES (@name, @description, 'Open', @deadline , @project, @company, NULL , @manager)
 End
 
+-- Number 9: Assign Employee in the same project of the task to the task
+-- Checking first he is a manager in the same company
+-- Then Checking That there exist a project related to this manager and the employee assigned to this project
+-- After that We Assign him to the Task
 GO
 Create Procedure AssignTask
 (
@@ -1697,6 +1741,10 @@ Begin
 	 WHERE [name] = @name AND mananger_username = @manager AND project = @project
 End
 
+
+-- Number 10: Change The Assigned Employee in the task
+-- Checking first he is a manager in the same company
+-- Then updating the employee having that the task status is Assigned
 GO
 Create Procedure ChangeTaskEmployee
 (
@@ -1722,6 +1770,9 @@ Begin
 					)
 End
 
+-- Number 11: View the task that the manager created
+-- Checking first he is a manager in the same company
+-- Then selecting all the tasks from Task Table
 GO
 Create Procedure ViewProjectTasks
 (
@@ -1738,6 +1789,10 @@ Begin
            [status] = @status
 End
 
+
+-- Number 12: ReView the task that the manager created
+-- If he Accept it then it will be closed and we update it's status
+-- otherwise it'll be assigned to the same employee with a new deadline
 GO
 Create Procedure ReviewTask
 (
@@ -1765,4 +1820,4 @@ Begin
 
 End
 
----- ##### ##### ##### ##### ##### ##### ##### #####  Amr END  ##### ##### ##### #####  ##### ##### ##### ##### -----
+---- ##### ##### ##### ##### ##### ##### ##### #####  End of Amr's Procedures  ##### ##### ##### #####  ##### ##### ##### ##### -----

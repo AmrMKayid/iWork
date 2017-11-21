@@ -365,6 +365,7 @@ INSERT INTO Tasks VALUES ('8thTask', 'finaltask', 'fixed'   , '2017/10/23' , 'Se
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Yasmeen Data  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 
+
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Amr Data  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 -- INSERT INTO Project_Assignments VALUES ('Second Project', 'google.com', 'Regular1' , 'AmrMKayid') -- Testing Amr
@@ -438,23 +439,3 @@ INSERT INTO Regular_Employees VALUES('Regular8')
 
 
 -- ---- ##### ##### ##### ##### ##### ##### ##### #####  Amr Data  ##### ##### ##### #####  ##### ##### ##### ##### -----
-
-
-
--- INSERT INTO Users VALUES ('Regular'         , 'Hello, World*', 'Sabry3@gmail.com'  , 'Sabry3'   , 'Mohamed', 'Ahmed', '1997/09/10', 10)
--- INSERT INTO Staff_Members VALUES ('Regular', 17246   , 'Sunday'     , 80, 'TV Development HR', 'iTV', 'apple.com')
--- INSERT INTO Regular_Employees VALUES('Regular')
-
--- INSERT INTO Users VALUES ('Regular2'         , 'Hello, World*', 'Sabry3@gmail.com'  , 'Sabry3'   , 'Mohamed', 'Ahmed', '1997/09/10', 10)
--- INSERT INTO Staff_Members VALUES ('Regular2', 17246   , 'Sunday'     , 80, 'TV Development HR', 'iTV', 'apple.com')
--- INSERT INTO Regular_Employees VALUES('Regular2')
--- Projects
-
--- INSERT INTO Projects VALUES ('First Project', 'apple.com', '2017/11/15'   , '2017/11/17' , 'Eyad3')
--- INSERT INTO Project_Assignments VALUES ('First Project', 'apple.com', 'Regular' , 'Eyad3')
--- INSERT INTO Project_Assignments VALUES ('First Project', 'apple.com', 'Regular2' , 'Eyad3')
-
-
--- -- Tasks
--- INSERT INTO Tasks VALUES ('First Task', 'The easy task', 'Pending'   , '2017/11/17' , 'First Project', 'apple.com', 'Regular' , 'Eyad3')
--- INSERT INTO Tasks VALUES ('Assigned Task', 'The easy task', 'Assigned'   , '2017/11/17' , 'First Project', 'apple.com', 'Regular' , 'Eyad3')

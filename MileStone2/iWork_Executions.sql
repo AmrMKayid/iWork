@@ -1,7 +1,8 @@
 GO
 USE iWork;
 
----- ##### ##### ##### ##### ##### ##### ##### #####  Amr Start  ##### ##### ##### #####  ##### ##### ##### ##### -----
+
+---- ##### ##### ##### ##### ##### ##### ##### #####  Start of Amr's Executions  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 ---- “As a regular employee, I should be able to ...”
 
@@ -146,3 +147,5 @@ GO
 EXEC FinishedTask 'Regular8', '11th Task', 'Creating third new Project'
 GO
 EXEC ReviewTask 'YasmeenHRTestingAmr', 'Creating third new Project', '11th Task', 0, '2018/01/01'
+
+---- ##### ##### ##### ##### ##### ##### ##### ##### End of Amr's Executions  ##### ##### ##### #####  ##### ##### ##### ##### -----
