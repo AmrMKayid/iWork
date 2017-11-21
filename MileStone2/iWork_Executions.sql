@@ -1,6 +1,7 @@
 GO
 USE iWork;
 --search by company name
+--registered 1
 go
 exec searchbyCname 'go Ogle' --exists
 go
@@ -23,6 +24,7 @@ exec searchbyCtype 'International'
 --#############################################################--
 
 --view all companies
+--2
 go
 exec viewallcompanies
 
@@ -58,7 +60,6 @@ go
 exec searchforjob 'hr'
 go
 exec searchforjob 'software'
---new insertions for vacancy 0 and short description
 
 --#########################################################--
 go
@@ -77,14 +78,15 @@ exec loginweb 'Maza','Hello, World*' --registered job seeker
 go
 exec loginweb 'Adel','Hello, World0'--registered hr
 
---add an execution for regular employees
+go
+exec loginweb 'Regular1','Hello, World2'--registered Regular
 
 --#########################################################--
 --view all user info
 go
 exec Viewuserinfo 'Adel'
 go
-exec Viewuserinfo 'Sabry'
+exec Viewuserinfo 'shadi.barghash'
 go
 exec Viewuserinfo null --register or login message
 
@@ -112,7 +114,8 @@ exec edituseryofe 'crazy',25 --years of experience
 --##########################################################--
 --Apply for job
 go
-exec Applyforjob 'Maza','Hr-Android HR','Android_OS','google.com',30 --first time to apply for a job
+exec Applyforjob 'Maza7','Hr-Android HR','Android_OS','google.com',30 --first time to apply for a job
+
 go
 exec Applyforjob 'Maza','Hr-Android HR','Android_OS','google.com',30 --still in reviewing process
 go
@@ -121,6 +124,10 @@ exec Applyforjob 'Maza2','Hr-Android HR','Android_OS','google.com',90 --already 
 --save score
 
 --questions 
+Exec viewquestions 'Hr-Web Development HR', 'Web_Dev', 'facebook.com'
+--
+declare @scoreout int
+Exec calculateanswer 1,1,@scoreout output
 --##########################################################--
 --view my job applications status
 go
@@ -176,7 +183,110 @@ exec checkmyattendance 'Adel' ,'2017/10/18','2017/10/20'
 
 --###########################################################--
 --##############################################################yasmeen's end######################################################--
+-- As a staff member, I should be able to ..
 
+-- [4] Apply for requests of both types: leave requests or business trip requests.
+
+-- Leave request
+EXEC Apply_for_Leave_Request 'danial.ashraf', 'shadi.barghash', '2017-11-21', '2017-11-22', 'sick'
+EXEC Apply_for_Leave_Request 'shadi.barghash', 'danial.ashraf', '2017-11-23', '2017-11-24', 'sick'
+EXEC Apply_for_Leave_Request 'shadi.barghash', 'danial.ashraf', '2018-06-05', '2018-06-28', 'annual'
+
+-- Business Trip
+EXEC Apply_for_Business_Trip 'shadi.barghash', 'danial.ashraf', '2018-01-04', '2018-01-08', 'Cairo, Egypt', 'Microsoft Dev Conf'
+
+-- [5] View the status of all requests I applied for before (HR employee and manager responses)
+EXEC Show_my_Requests 'shadi.barghash'
+
+-- [6] Delete any request I applied for as long as it is still in the review process.
+EXEC Delete_my_Pending_Requests 'danial.ashraf'
+
+-- [7] Send emails to staff members in my company.
+DECLARE @email1_id INT
+EXEC Create_Email 'Finished my part', 'I''ve just finished my part from Windows-iOS P2P comm.', @email1_id OUT
+EXEC Send_Email_in_Company 'shadi.barghash', 'nesrine.anwarr', @email1_id
+EXEC Send_Email_in_Company 'shadi.barghash', 'danial.ashraf', @email1_id
+
+DECLARE @email2_id INT
+EXEC Create_Email 'Finished my part, too', 'I''ve just finished my part from Windows-iOS P2P comm.', @email2_id OUT
+EXEC Send_Email_in_Company 'danial.ashraf', 'nesrine.anwarr', @email2_id
+
+DECLARE @email3_id INT
+EXEC Create_Email 'Summer Vacation', 'Please approve the leave request for my annual summer vacation.', @email3_id OUT
+EXEC Send_Email_in_Company 'shadi.barghash', 'nourAli', @email3_id
+
+DECLARE @email4_id INT
+EXEC Create_Email 'Shadi requested Vacation', 'Shadi asked me to accept his summer vacation.', @email4_id OUT
+EXEC Send_Email_in_Company 'nourAli', 'nesrine.anwarr', @email4_id
+
+-- [8] View emails sent to me by other staff members of my company.
+EXEC View_my_inbox_Emails 'nesrine.anwarr'
+
+-- [9] Reply to an email sent to me, while the reply would be saved in the database as a new email record.
+EXEC Reply_to_Email 1, 'nesrine.anwarr', 'shadi.barghash', 'Bravo!', 'Bravo ya Amar :)'
+
+-- [10] View announcements related to my company within the past 20 days.
+EXEC Announcements_of_Company 'danial.ashraf'
+
+-- As an HR Employee, I should be able to ..
+
+-- [1] Add a new job that belongs to my department.
+
+-- [HELPER] Add questions first
+DECLARE @question1 INT
+EXEC Create_Question 'The Capital of Egypt is Cairo.', 1, @question1 OUT
+DECLARE @question2 INT
+EXEC Create_Question 'The Capital of Saudi Arabia is Riyadh.', 1, @question2 OUT
+
+-- >>> Add Job
+EXEC Add_Job 'nourAli', 'Regular Employee - Android Programmer', 'AppDev', 'runtastic.com',
+			'Program the Andorid App.', 'Program the Android App bardo :D', 5, 4, 3000, '2017-12-21', 2
+
+-- Add questions to Job
+EXEC Add_Job_Question_to_Job 2, 'Regular Employee - Android Programmer', 'AppDev', 'runtastic.com'
+EXEC Add_Job_Question_to_Job 1, 'Regular Employee - Android Programmer', 'AppDev', 'runtastic.com'
+
+-- [2] View information about a job in my department.
+EXEC View_Job_in_Department 'nourAli', 'Regular Employee - Windows App Programmer'
+
+-- NOT SURE: [3] Edit the information of a job in my department.
+
+-- [HELPER] Get unchanged data from old job
+DECLARE @short_desc VARCHAR(100)
+DECLARE @detail_desc VARCHAR(max)
+DECLARE @deadline DATETIME
+
+SELECT @short_desc = short_description, @detail_desc = detailed_description, @deadline = deadline FROM Jobs
+WHERE title = 'Regular Employee - Android Programmer' AND company = 'runtastic.com' AND department = 'AppDev'
+
+-- >>> Edit the job, with some new data and some copied from the original entry. In the end, the whole job is updated.
+EXEC Edit_Job_in_Department 'nourAli', 'Regular Employee - Android Programmer', @short_desc, @detail_desc,
+							4, 6, 4000, @deadline, 1
+
+-- [4] View new applications for a specific job in my department.
+EXEC View_new_Applications_for_Job_in_Department 'shadwa-barghash', 'HR Employee - Motivation'
+
+-- [5] Accept or reject applications for jobs in my department.
+EXEC Respond_to_Job_Application_HR 'shadwa-barghash', 9, 'TRUE' -- TODO: Make sure it is the correct ID
+EXEC Respond_to_Job_Application_HR 'shadwa-barghash', 10, 'FALSE' -- TODO: Make sure it is the correct ID
+
+-- [6] Post announcements related to my company to inform staff members about new updates.
+EXEC Post_Announcement 'shadwa-barghash', 'Employee Birthday', 'Surprise birthday', 'As you all know, Shadi is my twin brother, and one of the best programmers in Runtastic, so we want to make him a surprise birthday party. Please join, he''s Gemini and he''ll like it.'
+
+-- [7] View requests of staff members working with me in the same department that were approved by a manager only.
+EXEC View_Requests_approved_by_Manager_only 'nourAli'
+
+-- [8] Accept or reject requests of staff members working with me in the same department that were approved by a manager.
+EXEC Respond_to_Request_HR 'nourAli', '2018-01-01', 'danial.ashraf', 'TRUE'
+EXEC Respond_to_Request_HR 'nourAli', '2018-01-20', 'shadi.barghash', 'FALSE'
+
+-- [9] View attendance records of a staff member in my department
+EXEC View_Attendance_of_Staff_Member 'Regular1', '2017-11-22', '2017-11-24', 'Ahmed'
+
+--[10]
+exec  view_totalhours_of_staff @hr='Ahmed',@staff='Regular1',@year=2017
+--[11]
+exec top_3_achievers 'Ahmed' , 11,2017
 
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Start of Amr's Executions  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
@@ -243,7 +353,7 @@ EXEC ReviewRequest 'YasmeenHRTestingAmr', '2018-01-01', 'AmrHR', 1, ''
 ---- Number 3
 
 GO
-EXEC ViewApplication 'YasmeenHRTestingAmr', 'Manager-Software Engineering Manager'
+EXEC ViewApplication 'YasmeenHRTestingAmr', 'Manager-Junior Software Engineering Manager'
 
 ---- Number 4
 GO
