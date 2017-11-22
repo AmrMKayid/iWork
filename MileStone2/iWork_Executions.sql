@@ -1,124 +1,121 @@
-GO
 USE iWork;
+
 --search by company name
 --registered 1
-go
 exec searchbyCname 'go Ogle' --exists
-go
+
 exec searchbyCname 'k'       --doesnt exist
 
 
 --search by addresss
-go
+
 exec searchbyCaddress 'seattle'
-go
+
 exec searchbyCaddress 'california'
 
 
 --search by type
-go
+
 exec searchbyCtype 'National'
-go
+
 exec searchbyCtype 'International'
 
 --#############################################################--
 
 --view all companies
 --2
-go
+
 exec viewallcompanies
 
 --############################################################--
 --view certain company and its departments
-go
+
 exec viewcertaincompany 'google.com'
 
 --###########################################################--
 
 --view departments of comapnies with jobs that have vacancies in it
-go
+
 exec viewcertaindepartment 'google.com','Android_OS'
 
 --#########################################################--
 
 --registering and entering previous job entries after he register
-go
+
 exec register @username='balabizo',@password='5679',@birthdate='1998/07/10',@firstname='sameh',@lastname='wagih'--to test it sets default values
-go
+
 exec register @username='balabizo',@password='5679',@birthdate='1998/07/10',@firstname='sameh',@lastname='wagih' --prints username already in use 
-go
+
 exec previousjobsentery @pjob='software engineer at ibm',@username='balabizo' --enters a record for a perivious job tittle of balabizo
-go
+
 exec previousjobsentery @pjob='software engineer at ibm',@username='balabizo' --prints you already entered this job tittle
-go
+
 exec previousjobsentery @pjob='ceo of ggg',@username='balabizo' --enters a record for a perivious job tittle of balabizo
 
 --#########################################################--
 
 --search for jobs that have vacancies in them with string contained in their tittle or short desc
-go
+
 exec searchforjob 'hr'
-go
+
 exec searchforjob 'software'
 
 --#########################################################--
-go
+
 exec highestavgsalaries
 
 --#########################################################--
 --login
-go
+
 exec loginweb 'AmrMKayid','Hello, World!' --registed manager
-go
+
 exec loginweb 'AmrMKayid25','Hello, World!'--wrong username
-go
+
 exec loginweb 'AmrMKayid','Hello, World!25'--correct user name wrong password
-go
+
 exec loginweb 'Maza','Hello, World*' --registered job seeker
-go
+
 exec loginweb 'Adel','Hello, World0'--registered hr
 
-go
 exec loginweb 'Regular1','Hello, World2'--registered Regular
 
 --#########################################################--
 --view all user info
-go
+
 exec Viewuserinfo 'Adel'
-go
+
 exec Viewuserinfo 'shadi.barghash'
-go
+
 exec Viewuserinfo null --register or login message
 
 --#########################################################--
 --user info editing
-go
+
 exec editusername 'editingtrial','Adel' --Adel is the name of another registered user so username in use will be displayed
-go
+
 exec editusername 'editingtrial','crazy'--successfully changed
-go
+
 exec edituserpassword 'crazy','heyyou'
-go
+
 exec edituseremail 'crazy','crazy@yahoo.com'
-go
+
 exec edituserfn 'crazy','crazy'
-go
+
 exec editusermn 'crazy','crazy'
-go
+
 exec edituserln 'crazy','crazy'
-go
+
 exec edituserbd 'crazy','1968/8/8'
-go
+
 exec edituseryofe 'crazy',25 --years of experience
 
 --##########################################################--
 --Apply for job
-go
+
 exec Applyforjob 'Maza7','Hr-Android HR','Android_OS','google.com',30 --first time to apply for a job
 
-go
 exec Applyforjob 'Maza','Hr-Android HR','Android_OS','google.com',30 --still in reviewing process
-go
+
 exec Applyforjob 'Maza2','Hr-Android HR','Android_OS','google.com',90 --already applied before and got accepted
 
 --save score
@@ -130,30 +127,30 @@ declare @scoreout int
 Exec calculateanswer 1,1,@scoreout output
 --##########################################################--
 --view my job applications status
-go
+
 exec viewapplicationstatus 'Maza'
-go
+
 exec viewapplicationstatus 'Maza2'
 
 --##########################################################--
 --choose a job i got accepted in
-go
+
 exec chooseajob 2,'Maza2',sunday--was a jobseeker
 exec chooseajob 3,'Maza2',Monday--became a staff member and chose another job so he is going to be a staff member in it
 
 
 --##########################################################--
 --delete job application
-go
+
 exec deletejobapp 5,'Maza1' --will be deleted ie in pending at hr
-go
+
 exec deletejobapp 6,'Maza1' -- accepted by hr but manager pending
 
 --###########################################################--
 --check in proc the takes user name and the current time stamp from website
-go
+
 exec checkin 'Adel' --dayoff sunday
-go
+
 exec checkin 'AmrMKayid'
 
 --############################################################--
@@ -171,16 +168,15 @@ select dbo.getthetime(CURRENT_TIMESTAMP)
 --check out execution
 go
 exec checkout 'AmrMKayid'
-go
-exec checkout  'Adel'
-go
+
 exec checkout  'Adel'
 
+exec checkout  'Adel'
 
 
 --###########################################################--
 --user checks attendance 
-go
+
 exec checkmyattendance 'Adel' ,'2017/10/18','2017/10/20'
 
 --###########################################################--
@@ -205,21 +201,8 @@ EXEC Delete_my_Pending_Requests 'danial.ashraf'
 
 -- [7] Send emails to staff members in my company.
 DECLARE @email1_id INT
-EXEC Create_Email 'Finished my part', 'I''ve just finished my part from Windows-iOS P2P comm.', @email1_id OUT
-EXEC Send_Email_in_Company 'shadi.barghash', 'nesrine.anwarr', @email1_id
-EXEC Send_Email_in_Company 'shadi.barghash', 'danial.ashraf', @email1_id
-
-DECLARE @email2_id INT
-EXEC Create_Email 'Finished my part, too', 'I''ve just finished my part from Windows-iOS P2P comm.', @email2_id OUT
-EXEC Send_Email_in_Company 'danial.ashraf', 'nesrine.anwarr', @email2_id
-
-DECLARE @email3_id INT
-EXEC Create_Email 'Summer Vacation', 'Please approve the leave request for my annual summer vacation.', @email3_id OUT
-EXEC Send_Email_in_Company 'shadi.barghash', 'nourAli', @email3_id
-
-DECLARE @email4_id INT
-EXEC Create_Email 'Shadi requested Vacation', 'Shadi asked me to accept his summer vacation.', @email4_id OUT
-EXEC Send_Email_in_Company 'nourAli', 'nesrine.anwarr', @email4_id
+EXEC Create_Email 'Finished my part, too.', 'I''ve just finished my part from Windows-iOS P2P comm.', @email1_id OUT
+EXEC Send_Email_in_Company 'danial.ashraf', 'nesrine.anwarr', @email1_id
 
 -- [8] View emails sent to me by other staff members of my company.
 EXEC View_my_inbox_Emails 'nesrine.anwarr'
@@ -253,24 +236,17 @@ EXEC View_Job_in_Department 'nourAli', 'Regular Employee - Windows App Programme
 
 -- NOT SURE: [3] Edit the information of a job in my department.
 
--- [HELPER] Get unchanged data from old job
-DECLARE @short_desc VARCHAR(100)
-DECLARE @detail_desc VARCHAR(max)
-DECLARE @deadline DATETIME
-
-SELECT @short_desc = short_description, @detail_desc = detailed_description, @deadline = deadline FROM Jobs
-WHERE title = 'Regular Employee - Android Programmer' AND company = 'runtastic.com' AND department = 'AppDev'
-
 -- >>> Edit the job, with some new data and some copied from the original entry. In the end, the whole job is updated.
-EXEC Edit_Job_in_Department 'nourAli', 'Regular Employee - Android Programmer', @short_desc, @detail_desc,
-							4, 6, 4000, @deadline, 1
+EXEC Edit_Job_in_Department 'nourAli', 'Regular Employee - Android Programmer',
+							'Program the Andorid App.', 'Program the Android App bardo :D',
+							4, 6, 4000, '2017-12-21', 1
 
 -- [4] View new applications for a specific job in my department.
 EXEC View_new_Applications_for_Job_in_Department 'shadwa-barghash', 'HR Employee - Motivation'
 
 -- [5] Accept or reject applications for jobs in my department.
-EXEC Respond_to_Job_Application_HR 'shadwa-barghash', 9, 'TRUE' -- TODO: Make sure it is the correct ID
-EXEC Respond_to_Job_Application_HR 'shadwa-barghash', 10, 'FALSE' -- TODO: Make sure it is the correct ID
+EXEC Respond_to_Job_Application_HR 'shadwa-barghash', 9, 'TRUE'
+EXEC Respond_to_Job_Application_HR 'shadwa-barghash', 10, 'FALSE'
 
 -- [6] Post announcements related to my company to inform staff members about new updates.
 EXEC Post_Announcement 'shadwa-barghash', 'Employee Birthday', 'Surprise birthday', 'As you all know, Shadi is my twin brother, and one of the best programmers in Runtastic, so we want to make him a surprise birthday party. Please join, he''s Gemini and he''ll like it.'
@@ -285,9 +261,12 @@ EXEC Respond_to_Request_HR 'nourAli', '2018-01-20', 'shadi.barghash', 'FALSE'
 -- [9] View attendance records of a staff member in my department
 EXEC View_Attendance_of_Staff_Member 'Regular1', '2017-11-22', '2017-11-24', 'Ahmed'
 
---[10]
+-- [10] View the total number of hours for any staﬀ member in my department in each month of a certain year.
 exec  view_totalhours_of_staff @hr='Ahmed',@staff='Regular1',@year=2017
---[11]
+
+-- [11] View names of the top 3 high achievers in my department.
+-- A high achiever is a regular employee who stayed the longest hours in the company for a certain month
+-- and all tasks assigned to him/her with deadline within this month are fixed.
 exec top_3_achievers 'Ahmed' , 11,2017
 
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Start of Amr's Executions  ##### ##### ##### #####  ##### ##### ##### ##### -----

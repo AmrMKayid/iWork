@@ -728,17 +728,16 @@ GO
 
 -- As a staff member, I should be able to ..
 
--- [4]
--- Apply for requests of both types: leave requests or business trip requests,
+-- [4] Apply for requests of both types: leave requests or business trip requests,
 -- by supplying all the needed information for the request.
 -- As a staff member, I can not apply for a leave if I exceeded the number of annual leaves allowed.
 -- If I am a manager applying for a request, the request does not need to be approved, but it only needs to be kept track of.
--- Also, I can not apply for a request when it�s applied period overlaps with another request.
+-- Also, I can not apply for a request when its applied period overlaps with another request.
 
 -- [HELPER] Apply_for_Request_CHECKS :
 -- Checks and validates the parameters needed to make a data entry in any of the request tables.
 -- However, this does not create a new entry. It just returns two outputs:
--- @valid BIT OUTPUT: Indicates whether the input is valid according to this Procedures
+-- @valid BIT OUT: Indicates whether the input is valid according to this Procedures
 -- @staff_category VARCHAR(10) OUTPUT: Returns 'HR', 'Mang' or 'RegE' to indicate the category of (both) staff members.
 CREATE PROC Apply_for_Request_CHECKS
 @staff_username VARCHAR(50), @username_replacing VARCHAR(50), @start_date DATE, @end_date DATE, @valid BIT OUT, @staff_category VARCHAR(10) OUT
