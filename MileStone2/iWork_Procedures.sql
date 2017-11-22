@@ -1,6 +1,11 @@
 USE iWork;
 
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Yasmeen Start  ##### ##### ##### #####  ##### ##### ##### ##### -----
+
+-- As an registered/unregistered user, I should be able to ..
+
+-- [1] Search for any company by its name or address or its type (national/international).
+
 --search by company name
 GO
 create proc searchbyCname
@@ -20,9 +25,6 @@ select phone
 from Company_Phones
 where Company_Phones.company=replace(@name,' ','' )+'.com'
 
---drop proc searchbyCname
-
-
 --search by addresss
 GO
 create proc searchbyCaddress
@@ -31,7 +33,6 @@ as
 select*
 from Companies
 where address like '%'+@address+'%'
-
 
 --search by type
 GO
@@ -51,18 +52,16 @@ where Companies.type=@type
 
 
 --####################################################--
---view all companies
+-- [2] view all companies
 GO
 create proc viewallcompanies
 as
 Select *
 from Companies
 
-
-
 --####################################################--
 
---view certain company and its departments
+-- [3] view certain company and its departments
 GO
 create procedure viewcertaincompany
 @domain varchar(50)
@@ -76,12 +75,10 @@ where p.company=@domain
 select d.code,d.name 
 from Departments d
 where d.company=@domain
---drop proc viewcertaincompany
-
 
 --######################################################--
 
---view departments of comapnies with jobs that have vacancies in it
+-- [4] view departments of comapnies with jobs that have vacancies in it
 GO
 create proc viewcertaindepartment
 @domain varchar(50),@code  varchar(50)
@@ -94,10 +91,8 @@ select j.*
 from Jobs j
 where j.company=@domain and  j.department=@code and j.vacancy>0
 
-
-
 --###################################################--
---register
+-- [5] register
 GO
 create proc register
 @username varchar(50)  ,@password varchar(50) ,@email varchar(50)='N/A'  ,@firstname varchar(50) ,@middlename varchar(50)='N/A',@lastname varchar(50) ,@birthdate date ,@yearsofexp int =0 
@@ -125,9 +120,7 @@ insert into Users values(@username,@password,@email,@firstname,@middlename,@last
 insert into Applicants values(@username);
 end
 
---drop proc register
-
---after registering he will be able to enter his previous jobs or if he is an already registered an wants to add p-jobs
+--after registering he will be able to enter his previous jobs or if he is an already registered and wants to add p-jobs
 GO
 create proc previousjobsentery
 @username varchar(50),@pjob varchar(50)
@@ -143,11 +136,10 @@ if(exists(select *
    else
    insert into User_Previous_Job_Titles values(@pjob,@username)
    end
---drop proc previousjobsentery
 
 --####################################################################--
 
---search for jobs that have vacancies in them with string contained in their tittle or short desc
+-- [6] search for jobs that have vacancies in them with string contained in their title or short desc
 GO
 create proc searchforjob
 @word varchar(max)
@@ -156,8 +148,9 @@ select *
 from Jobs
 where (title like '%'+@word+'%' or @word like '%'+title+'%' or short_description like '%'+@word+'%' ) and vacancy>0
 
-
 --#####################################################################--
+-- [7] View companies in the order of having the highest average salaries
+
 GO
 create proc highestavgsalaries
 as
@@ -167,10 +160,13 @@ Inner join Staff_Members s on c.domain=s.company
 group by c.name ,c.domain
 order by avg(s.salary) desc
 
---drop proc highestavgsalaries
-
-
 --#####################################################################--
+
+-- As a registered user, I should be able to ..
+
+-- [1] Login to the website using my username and password which checks that I am an existing user,
+-- and whether i am job seeker, HR employee, Regular employee or Manager.
+
 GO
 create proc loginweb
 @username varchar(50),@password varchar(50)
@@ -211,12 +207,11 @@ if(exists(select *
 			end
 			else print 'wrong username'
 
-
 --#########################################################################--
 
---view all user info
+-- [2] view all user info
 GO
-create  proc Viewuserinfo
+create proc Viewuserinfo
 @username varchar(50)
 as
 if(exists(select *
@@ -233,12 +228,10 @@ if(exists(select *
 		  end
 else 
 print 'Register or log in'
---drop proc Viewuserinfo
-
-
 
 --##########################################################################--
--- edit info
+-- [3] edit info
+
 GO
 create proc editusername
 @username varchar(50),@newusername varchar(50)
@@ -261,7 +254,6 @@ if(exists(select *
 		  end
 	else
 	print 'Register or login'
---drop proc editusername
 
 GO
 create proc edituserpassword
@@ -278,7 +270,6 @@ if(exists(select *
 		  end
 	else
 	print 'Register or login'
-
 
 GO
 create proc edituseremail
@@ -377,8 +368,11 @@ if(exists(select *
 	print 'Register or login'
 
 --######################################################################--
+
+-- As a job seeker, I should be able to ..
+
 /*senario questions will be viewed ,the applicant will answer them ,score will be calculated on website using calculate answer by calling it multiple times and will be saved on website and entered with variable entering in the Apply procedure*/
---Apply for a job
+-- [1] Apply for a job
 GO
 create proc Applyforjob
 @username varchar(50),@jobtitle varchar(50) ,@dep varchar(50),@comp varchar(50),@score int
@@ -418,7 +412,8 @@ if(exists(select *
 		 end
 		 end
 		 end
---view questions
+
+-- [2] view questions
 GO
 create  proc viewquestions
 @jobtitle varchar(50),@dep varchar(50),@comp varchar(50)
@@ -445,11 +440,9 @@ set @scoreout=0
 print @scoreout
 
 
-
-
 --#################################################################--
 
---view my job applications status
+-- [4] view my job applications status
 GO
 create proc viewapplicationstatus
 @username varchar(50)
@@ -461,10 +454,9 @@ where a.app_username=@username
 -- exex viewapplicationstatus 'Maza'
 -- exex viewapplicationstatus 'Maza2'
 
-
 --##################################################################--
 
---choose a job i got accepted in
+-- [5] choose a job I got accepted in
 GO
 create proc chooseajob
 @appid int,@username varchar(50),@dayoff varchar(8) 
@@ -539,7 +531,7 @@ end
 -- exex chooseajob 2,'Maza2','Android HR','Android_OS','google.com',sunday
 
 --#######################################################################--
---delete job application
+-- [6] delete job application
 GO
 create proc deletejobapp
 @id int ,@username varchar(50)
@@ -556,8 +548,13 @@ print'you can not delete this application'
 
 -- exex deletejobapp 5,'Maza1' --will be deleted ie in pending at hr
 -- exex deletejobapp 6,'Maza1' --connot be deleted as it got accepted by hr
+
 --#######################################################################--
---check in proc the takes user name and the current time stamp from website
+
+-- -- As a staff member, I should be able to ..
+
+-- [1] Check-in once I arrive each day.
+-- check in proc the takes user name and the current time stamp from website
 
 -- a function to extract the date from date time
 GO
@@ -611,13 +608,13 @@ end
 else 
 print 'you arenot a staff member'
 
-
 -- exex checkin 'Adel' --dayoff sunday
 -- exex checkin 'AmrMKayid'
 --do for all days 
 
-
 ---########################################################--
+
+-- [2] Check-out before I leave each day.
 GO
 create  proc checkout 
 @username varchar(50)
@@ -707,7 +704,8 @@ if(exists(select a.*
 -- end
 
 --##############################################################--
---user checks attendance 
+
+-- [3] user checks attendance 
 
 GO
 create proc checkmyattendance
@@ -721,12 +719,9 @@ where username=@username and attendance_date between @startdate and @enddate
 
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Yasmeen END  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
-
----- ##### ##### ##### ##### ##### ##### ##### #####  Shadi Start  ##### ##### ##### #####  ##### ##### ##### ##### -----
 GO
 
-
--- As a staff member, I should be able to ..
+---- ##### ##### ##### ##### ##### ##### ##### #####  Shadi Start  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
 -- [4] Apply for requests of both types: leave requests or business trip requests,
 -- by supplying all the needed information for the request.
@@ -1320,7 +1315,7 @@ AS
 		WHERE A.attendance_date BETWEEN @from AND @to
 GO
 
--- TODO: [10] View the total number of hours for any staff member in my department in each month of a certain year.
+-- [10] View the total number of hours for any staff member in my department in each month of a certain year.
 go
 create proc view_totalhours_of_staff
 @hr varchar(50) ,@staff varchar(50) ,@year int
@@ -1341,11 +1336,12 @@ if(exists(select *
 		  order by month_num
 		  end
 		  end
-		
 
--- TODO: [11] View names of the top 3 high achievers in my department.
+
+-- [11] View names of the top 3 high achievers in my department.
+-- A high achiever is a regular employee who stayed the longest hours in the company for a certain month
+-- and all tasks assigned to him/her with deadline within this month are fixed.
 go
-
 create proc top_3_achievers
 @hr varchar(50),@month int,@year int
 as
@@ -1367,11 +1363,6 @@ as
                                                where status<>'fixed') and DATEPART(MONTH,a.attendance_date) >= @month and DATEPART(year,t.deadline)=@year )and DATepart(month,a.attendance_date)=@month and DATEPART(year,a.attendance_date)=@year
   group by a.username, DATENAME(month,a.attendance_date)
   order by sum(a.duration) desc
-
-
-
--- A high achiever is a regular employee who stayed the longest hours in the company for a certain month
--- and all tasks assigned to him/her with deadline within this month are fixed.
 
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Shadi END  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
