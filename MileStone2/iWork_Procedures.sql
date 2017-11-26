@@ -169,7 +169,7 @@ order by avg(s.salary) desc
 
 GO
 create proc loginweb
-@username varchar(50),@password varchar(50)
+@username varchar(50),@password varchar(50),@user_type varchar(50) output,@error_message varchar(50) output
 as
 if(exists(select *
         from Users 
@@ -185,27 +185,30 @@ if(exists(select *
                      from Applicants 
 		             where Applicants.username=@username
 		             ))
-					 print 'Job Seeker'
+					 set @user_type='Job Seeker'
 					 else if(exists(select *
                      from Regular_Employees 
 		             where Regular_Employees.username=@username
 		             )) 
-					 print 'Regular Employee'
+					 set @user_type='Regular Employee'
 					 else if(exists(select *
                      from Hr_Employees 
 		             where Hr_Employees.username=@username
 		             )) 
-					 print 'HR Employee'
+					 set @user_type= 'HR Employee'
 					  else if(exists(select *
                      from Managers 
 		             where Managers.username=@username
 		             ))
-					 print 'Manager'
+					 set @user_type= 'Manager'
 					 end
 					 else
-					 print 'wrong password'
+					 set @error_message= 'wrong password'
 			end
-			else print 'wrong username'
+			else set @error_message= 'wrong username'
+
+
+		
 
 --#########################################################################--
 
