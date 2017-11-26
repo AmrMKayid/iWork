@@ -168,7 +168,7 @@ order by avg(s.salary) desc
 -- and whether i am job seeker, HR employee, Regular employee or Manager.
 
 GO
-create proc loginweb
+create  proc loginweb
 @username varchar(50),@password varchar(50),@user_type varchar(50) output,@error_message varchar(50) output
 as
 if(exists(select *
@@ -182,11 +182,6 @@ if(exists(select *
 					 ))
 					 begin
 					 if(exists(select *
-                     from Applicants 
-		             where Applicants.username=@username
-		             ))
-					 set @user_type='Job Seeker'
-					 else if(exists(select *
                      from Regular_Employees 
 		             where Regular_Employees.username=@username
 		             )) 
@@ -201,6 +196,12 @@ if(exists(select *
 		             where Managers.username=@username
 		             ))
 					 set @user_type= 'Manager'
+					  else if(exists(select *
+                     from Applicants 
+		             where Applicants.username=@username
+		             ))
+					 set @user_type='Job Seeker'
+					 
 					 end
 					 else
 					 set @error_message= 'wrong password'
