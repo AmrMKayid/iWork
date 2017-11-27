@@ -6,6 +6,5 @@
 # MileStones:
 
 - [x] MileStone 1: EERD and Relational Schema
-- [ ] MileStone 2: Database & SQL files
+- [x] MileStone 2: Database & SQL files
 - [ ] MileStone 3:
-- [ ] MileStone 4:
