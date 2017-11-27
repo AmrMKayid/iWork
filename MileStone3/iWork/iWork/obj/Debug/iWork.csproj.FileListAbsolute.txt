@@ -2,7 +2,6 @@
 /Volumes/Life/GUC/3DataBase I/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.csproj.CoreCompileInputs.cache
 /Volumes/Life/GUC/3DataBase I/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.dll
 /Volumes/Life/GUC/3DataBase I/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.pdb
-/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.csprojResolveAssemblyReference.cache
 /Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.csproj.CoreCompileInputs.cache
 /Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.dll
 /Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.pdb

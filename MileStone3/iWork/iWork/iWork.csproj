@@ -156,6 +156,11 @@
     <Content Include="Web.config" />
     <Content Include="Default.aspx" />
     <Content Include="packages.config" />
+    <Content Include="Login.aspx" />
+    <Content Include="Job_Seeker.aspx" />
+    <Content Include="HR_Employee.aspx" />
+    <Content Include="Manager.aspx" />
+    <Content Include="Regular_Employee.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -166,6 +171,36 @@
     </Compile>
     <Compile Include="Default.aspx.designer.cs">
       <DependentUpon>Default.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Job_Seeker.aspx.cs">
+      <DependentUpon>Job_Seeker.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Job_Seeker.aspx.designer.cs">
+      <DependentUpon>Job_Seeker.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR_Employee.aspx.cs">
+      <DependentUpon>HR_Employee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="HR_Employee.aspx.designer.cs">
+      <DependentUpon>HR_Employee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager.aspx.cs">
+      <DependentUpon>Manager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager.aspx.designer.cs">
+      <DependentUpon>Manager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Regular_Employee.aspx.cs">
+      <DependentUpon>Regular_Employee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Regular_Employee.aspx.designer.cs">
+      <DependentUpon>Regular_Employee.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
