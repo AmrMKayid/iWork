@@ -2,9 +2,10 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="iWork/Login.aspx">
     <Files>
       <File FileName="iWork/Default.aspx" Line="1" Column="1" />
-      <File FileName="iWork/Login.aspx.cs" Line="56" Column="53" />
       <File FileName="iWork/Login.aspx" Line="1" Column="1" />
-      <File FileName="iWork/Job_Seeker.aspx" Line="1" Column="1" />
+      <File FileName="iWork/Job_Seeker/Job_Seeker.aspx" Line="1" Column="1" />
+      <File FileName="iWork/Web.config" Line="16" Column="5" />
+      <File FileName="iWork/Global.asax" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

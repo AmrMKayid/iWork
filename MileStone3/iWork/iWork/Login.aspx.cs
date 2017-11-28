@@ -16,6 +16,7 @@ namespace iWork
 
         protected void login(object sender, EventArgs e)
         {
+            // ======> Team Windows 
             //string connStr = ConfigurationManager.ConnectionStrings["MyDbConn"].ToString();
             //SqlConnection conn = new SqlConnection(connStr);
 
@@ -45,29 +46,29 @@ namespace iWork
             {
                 Session["Username"] = username;
                 Response.Write("Passed");
-                Response.Redirect("Job_Seeker", true);
+                Response.Redirect("Job_Seeker/Job_Seeker.aspx", true);
             }
             else if (user_type.Value.Equals("Regular Employee"))
             {
                 Session["Username"] = username;
                 Response.Write("Passed");
-                Response.Redirect("Regular_Employee", true);
+                Response.Redirect("Regular_Employee/Regular_Employee.aspx", true);
             }
-            else if (user_type.Value.Equals("M"))
+            else if (user_type.Value.ToString().Equals("Manager"))
             {
                 Session["Username"] = username;
                 Response.Write("Passed");
-                Response.Redirect("Manager", true);
+                Response.Redirect("Manager/Manager.aspx", true);
             }
             else if (user_type.Value.Equals("HR Employee"))
             {
                 Session["Username"] = username;
                 Response.Write("Passed");
-                Response.Redirect("HR_Employee", true);
+                Response.Redirect("HR_Employee/HR_Employee.aspx", true);
             }
             else
             {
-                Response.Write("" + username + password + user_type.Value + error.Value);
+                Response.Write("" + username + password + user_type.Value + error.Value); // TO SEE What is the Error!!!
                 Response.Write("Failed: " + error.Value);
             }
         }
