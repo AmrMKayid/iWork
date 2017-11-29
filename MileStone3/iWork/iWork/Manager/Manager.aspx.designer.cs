@@ -18,5 +18,13 @@ namespace iWork {
 		protected System.Web.UI.WebControls.Button NewRequests;
 		
 		protected System.Web.UI.WebControls.GridView grdloadproperties;
+		
+		protected System.Web.UI.WebControls.GridView GridView1;
+		
+		protected System.Web.UI.WebControls.Button Accept;
+		
+		protected System.Web.UI.WebControls.Button Reject;
+		
+		protected System.Web.UI.WebControls.Button NewApplications;
 	}
 }

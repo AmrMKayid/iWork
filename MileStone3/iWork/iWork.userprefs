@@ -1,10 +1,11 @@
 ﻿<Properties StartupConfiguration="{45BEC29E-B0A1-4668-B530-80EB7CF04061}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="iWork/Manager/Manager.aspx.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="iWork/Manager/Manager.aspx">
     <Files>
-      <File FileName="iWork/Login.aspx" Line="19" Column="21" />
-      <File FileName="iWork/Manager/Manager.aspx" Line="12" Column="98" />
-      <File FileName="iWork/Login.aspx.cs" Line="47" Column="36" />
-      <File FileName="iWork/Manager/Manager.aspx.cs" Line="27" Column="13" />
+      <File FileName="iWork/Login.aspx" Line="15" Column="4" />
+      <File FileName="iWork/Manager/Manager.aspx" Line="14" Column="6" />
+      <File FileName="iWork/Manager/Manager.aspx.cs" Line="35" Column="55" />
+      <File FileName="iWork/Default.aspx" Line="15" Column="119" />
+      <File FileName="iWork/Models/User.cs" Line="3" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
