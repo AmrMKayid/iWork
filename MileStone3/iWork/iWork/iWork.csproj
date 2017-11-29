@@ -150,6 +150,8 @@
     <Reference Include="Microsoft.EntityFrameworkCore.SqlServer.Design">
       <HintPath>..\packages\Microsoft.EntityFrameworkCore.SqlServer.Design.1.1.4\lib\net451\Microsoft.EntityFrameworkCore.SqlServer.Design.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Configuration.Install" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />

@@ -22,6 +22,7 @@ namespace iWork
 
             SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
 
+
             SqlCommand cmd = new SqlCommand("loginweb", conn);
             cmd.CommandType = CommandType.StoredProcedure;
             string username = txt_username.Text;
@@ -41,7 +42,6 @@ namespace iWork
             cmd.ExecuteReader();
             conn.Close();
 
-
             if (user_type.Value.Equals("Job Seeker"))
             {
                 Session["Username"] = username;
@@ -54,7 +54,7 @@ namespace iWork
                 Response.Write("Passed");
                 Response.Redirect("Regular_Employee/Regular_Employee.aspx", true);
             }
-            else if (user_type.Value.ToString().Equals("Manager"))
+            else if (user_type.Value.Equals("M"))
             {
                 Session["Username"] = username;
                 Response.Write("Passed");
@@ -68,7 +68,7 @@ namespace iWork
             }
             else
             {
-                Response.Write("" + username + password + user_type.Value + error.Value); // TO SEE What is the Error!!!
+                Response.Write(username + " " + password + " " + user_type.Value + " " + error.Value); // TO SEE What is the Error!!!
                 Response.Write("Failed: " + error.Value);
             }
         }

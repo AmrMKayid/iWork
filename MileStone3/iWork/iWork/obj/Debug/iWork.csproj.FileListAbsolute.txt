@@ -143,3 +143,4 @@
 /Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.EntityFrameworkCore.SqlServer.xml
 /Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.EntityFrameworkCore.Relational.Design.xml
 /Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.EntityFrameworkCore.SqlServer.Design.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.csprojResolveAssemblyReference.cache
