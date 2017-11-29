@@ -32,10 +32,6 @@ namespace iWork
             SqlDataAdapter objAdp = new SqlDataAdapter(cmd);
             objAdp.Fill(ds);
 
-            //BoundField test = new BoundField();
-            //test.DataField = "New DATAfield Name";
-            //test.HeaderText = "New Header";
-            //grdloadproperties.Columns.Add(test);
             GridView1.DataSource = ds;
 
 
@@ -65,28 +61,37 @@ namespace iWork
             SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
 
 
-            SqlCommand cmd = new SqlCommand("ViewNewRequests", conn);
+            SqlCommand cmd = new SqlCommand("ViewApplication", conn);
             cmd.CommandType = CommandType.StoredProcedure;
 
             cmd.Parameters.Add(new SqlParameter("@manager", Session["Username"]));
+
+            cmd.Parameters.Add(new SqlParameter("@job_title", "Manager-Junior Software Engineering Manager"));
 
             conn.Open();
 
             DataSet ds = new DataSet();
             SqlDataAdapter objAdp = new SqlDataAdapter(cmd);
+
             objAdp.Fill(ds);
 
-            //BoundField test = new BoundField();
-            //test.DataField = "New DATAfield Name";
-            //test.HeaderText = "New Header";
-            //grdloadproperties.Columns.Add(test);
-            GridView1.DataSource = ds;
+            ApplicationGridView.DataSource = ds;
 
-
-            GridView1.DataBind();
+            ApplicationGridView.DataBind();
 
             conn.Close();
 
         }
+
+        protected void AcceptApplication(object sender, EventArgs e)
+        {
+            // TODO
+        }
+
+        protected void RejectApplication(object sender, EventArgs e)
+        {
+            // TODO
+        }
+       
     }
 }

@@ -17,8 +17,6 @@
 
              <asp:Button runat="server" ID="NewRequests" Text="Requests" onclick="ViewNewRequests" type="submit" class="btn btn-info"></asp:Button>
 
-			<asp:GridView ID="grdloadproperties" runat="server"></asp:GridView>
-
 			<div>  
             <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="There are no data records to display.">
                 <Columns>  
@@ -43,12 +41,48 @@
 							
                 </Columns>  
             </asp:GridView>  
-            </div> 
+        </div> 
 
 
-			<asp:Button runat="server" ID="NewApplications" Text="Applications" onclick="ViewNewApplications" type="submit" class="btn btn-info"></asp:Button>	
-				
-        </div>
+		<div>
+			<asp:Button runat="server" ID="NewApplications" Text="Applications" onclick="ViewNewApplications" type="submit" class="btn btn-info"></asp:Button>
+
+           <div>
+                <asp:GridView ID="ApplicationGridView" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="There are no data records to display.">
+
+                    <Columns>  
+                        <asp:BoundField DataField="id" HeaderText="id" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
+                        <asp:BoundField DataField="job_title" HeaderText="Title" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
+                        <asp:BoundField DataField="app_username" HeaderText="Applicant" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
+                        <asp:BoundField DataField="score" HeaderText="Score" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
+						<asp:BoundField DataField="short_description" HeaderText="Description" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
+					    <asp:BoundField DataField="working_hours" HeaderText="W. Hours" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
+						<asp:BoundField DataField="vacancy" HeaderText="Vacancy" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
+                        <asp:BoundField DataField="deadline" HeaderText="Deadline" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
+						<asp:BoundField DataField="min_years_of_experience" HeaderText="minYearsOfExp" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
+                        <asp:BoundField DataField="hr_username" HeaderText="HR" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
+                        <asp:BoundField DataField="manager_status" HeaderText="Final Status" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
+
+						<asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
+                            <ItemTemplate>
+                                <asp:Button runat="server" HeaderText="Accept" id="Accept" CommandName="LoanItem" Text="Accept" OnClick="AcceptApplication" type="submit" class="btn btn-info"></asp:Button>    
+                            </ItemTemplate>
+                        </asp:TemplateField>
+
+                        <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
+                            <ItemTemplate>
+                                <asp:Button runat="server" HeaderText="Reject" id="Reject" CommandName="LoanItem" Text="Reject" OnClick="RejectApplication" type="submit" class="btn btn-info"></asp:Button>    
+                            </ItemTemplate>
+                        </asp:TemplateField>
+						
+                    </Columns>
+                </asp:GridView>  
+           </div>
+                
+		
+		</div>
+
+		</div>
 	</form>
 </body>
 </html>
