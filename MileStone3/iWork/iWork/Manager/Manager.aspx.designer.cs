@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace iWork {
+namespace iWork.Manager {
     
     
     public partial class Manager {
@@ -17,14 +17,34 @@ namespace iWork {
         
         protected System.Web.UI.WebControls.Button NewRequests;
         
-        protected System.Web.UI.WebControls.GridView GridView1;
+        protected System.Web.UI.WebControls.GridView RequestsGridView;
         
         protected System.Web.UI.WebControls.Button Accept;
         
         protected System.Web.UI.WebControls.Button Reject;
-        
-        protected System.Web.UI.WebControls.Button NewApplications;
-        
+
         protected System.Web.UI.WebControls.GridView ApplicationGridView;
+
+        protected System.Web.UI.WebControls.Button NewProject;
+
+        protected System.Web.UI.WebControls.Label ProjectNamelbl;
+
+        protected System.Web.UI.WebControls.TextBox ProjectNametxt;
+
+        protected System.Web.UI.WebControls.Button CreateProject;
+
+        protected System.Web.UI.WebControls.Calendar Calendar1;
+
+        protected System.Web.UI.WebControls.LinkButton LinkButton1;
+
+        protected System.Web.UI.WebControls.TextBox TextBox1;
+
+        protected System.Web.UI.WebControls.Calendar Calendar2;
+
+        protected System.Web.UI.WebControls.LinkButton LinkButton2;
+
+        protected System.Web.UI.WebControls.TextBox TextBox2;
+
+
     }
 }
