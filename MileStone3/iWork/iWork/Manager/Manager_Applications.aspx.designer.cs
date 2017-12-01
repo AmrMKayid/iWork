@@ -11,14 +11,14 @@
 namespace iWork.Manager {
 	
 	
-	public partial class Manager {
+	public partial class Manager_Applications {
 		
-		protected System.Web.UI.HtmlControls.HtmlForm form1;
+		protected System.Web.UI.HtmlControls.HtmlForm ApplicationGridForm;
 		
-		protected System.Web.UI.WebControls.Button NewRequests;
+		protected System.Web.UI.WebControls.GridView ApplicationGridView;
 		
-		protected System.Web.UI.WebControls.Button NewApplications;
+		protected System.Web.UI.WebControls.Button Accept;
 		
-		protected System.Web.UI.WebControls.Button NewProject;
+		protected System.Web.UI.WebControls.Button Reject;
 	}
 }

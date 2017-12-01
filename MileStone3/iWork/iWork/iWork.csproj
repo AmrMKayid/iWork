@@ -175,6 +175,9 @@
     <Content Include="Regular_Employee\Regular_Employee.aspx" />
     <Content Include="HR_Employee\HR_Employee.aspx" />
     <Content Include="Manager\Manager.aspx" />
+    <Content Include="Manager\Manager_Requests.aspx" />
+    <Content Include="Manager\Manager_Applications.aspx" />
+    <Content Include="Manager\Manager_Projects.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -216,6 +219,24 @@
     </Compile>
     <Compile Include="Manager\Manager.aspx.designer.cs">
       <DependentUpon>Manager.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Manager_Requests.aspx.cs">
+      <DependentUpon>Manager_Requests.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Manager_Requests.aspx.designer.cs">
+      <DependentUpon>Manager_Requests.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Manager_Applications.aspx.cs">
+      <DependentUpon>Manager_Applications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Manager_Applications.aspx.designer.cs">
+      <DependentUpon>Manager_Applications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Manager_Projects.aspx.cs">
+      <DependentUpon>Manager_Projects.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Manager_Projects.aspx.designer.cs">
+      <DependentUpon>Manager_Projects.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
