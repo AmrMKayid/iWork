@@ -537,19 +537,19 @@ end
 --#######################################################################--
 -- [6] delete job application
 GO
-create proc deletejobapp
-@id int ,@username varchar(50)
+create  proc deletejobapp
+@id int ,@username varchar(50),@error_message varchar(50) output
 as
 if(exists (select a.*
           from Applications a
-		  where a.id=@id and a.app_username=@username and a.hr_status='pending' or a.manager_status='pending'))
+		  where a.id=@id and a.app_username=@username and  a.manager_status='pending'))
 		  begin
 		  DELETE FROM Applications
 		  where id=@id
+		  set @error_message='';
 		  end
 else 
-print'you can not delete this application'
-
+set @error_message='you can not delete this application'
 -- exex deletejobapp 5,'Maza1' --will be deleted ie in pending at hr
 -- exex deletejobapp 6,'Maza1' --connot be deleted as it got accepted by hr
 
