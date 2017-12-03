@@ -14,7 +14,7 @@ namespace iWork.Manager
     public partial class Manager : System.Web.UI.Page
     {
 
-        protected void ViewNewRequests(object sender, EventArgs e)
+        protected void ViewNewRequests_Clicked(object sender, EventArgs e)
         {
 
             //TODO: Redirect to New Page for REQUESTS
@@ -23,7 +23,7 @@ namespace iWork.Manager
 
        //########################################################################################//
 
-        protected void ViewNewApplications(object sender, EventArgs e)
+        protected void ViewNewApplications_Clicked(object sender, EventArgs e)
         {
 
             //TODO: Redirect to New Page for Application
@@ -35,12 +35,18 @@ namespace iWork.Manager
 
         //########################################################################################//
        
-        protected void NewProjectClicked(object sender, EventArgs e)
+        protected void NewProject_Clicked(object sender, EventArgs e)
         {
             // TODO
             Response.Redirect("Manager_Projects.aspx");
         }
 
         //########################################################################################//
+
+        protected void AssignEmpToProject_Clicked(object sender, EventArgs e)
+        {
+            // TODO
+            Response.Redirect("Manager_Project_Assignment.aspx");
+        }
     }
 }

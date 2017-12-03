@@ -1794,3 +1794,22 @@ Begin
 End
 
 ---- ##### ##### ##### ##### ##### ##### ##### #####  End of Amr's Procedures  ##### ##### ##### #####  ##### ##### ##### ##### -----
+
+
+GO
+CREATE PROCEDURE viewRegEmp2Projects
+(
+	@manager VARCHAR(50)
+)
+AS
+BEGIN
+	SELECT E.username, count(PA.regular_employee_username) AS Projects 
+	FROM Managers M, Regular_Employees E, Staff_Members S1, Staff_Members S2, Project_Assignments PA
+	WHERE M.username = @manager AND S1.username = @manager
+					AND S2.username = E.username
+					AND S2.department = S1.department 
+					AND S2.company = S1.company
+					AND PA.regular_employee_username = E.username
+	GROUP BY E.username
+	HAVING (count(PA.regular_employee_username) < 2)
+END

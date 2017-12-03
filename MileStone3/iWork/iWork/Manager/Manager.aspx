@@ -19,19 +19,22 @@
         <!--################################## Requests ################################################-->    
 
 		<div>
-           <asp:Button runat="server" ID="NewRequests" Text="Requests" onclick="ViewNewRequests" type="submit" class="btn btn-info"></asp:Button>				
+           <asp:Button runat="server" ID="NewRequests" Text="Requests" onclick="ViewNewRequests_Clicked" type="submit" class="btn btn-info"></asp:Button>				
         </div>
 
 			
 		<!--################################## Applications ################################################-->
 
         <div>
-            <asp:Button runat="server" ID="NewApplications" Text="Applications" onclick="ViewNewApplications" type="submit" class="btn btn-info"></asp:Button>
+            <asp:Button runat="server" ID="NewApplications" Text="Applications" onclick="ViewNewApplications_Clicked" type="submit" class="btn btn-info"></asp:Button>
         </div>
 
 		<!--################################## Projects ################################################-->
 
-        <asp:Button runat="server" ID="NewProject" Text="New Project" onclick="NewProjectClicked" type="submit" class="btn btn-info"></asp:Button>
+        <asp:Button runat="server" ID="NewProject" Text="New Project" onclick="NewProject_Clicked" type="submit" class="btn btn-info"></asp:Button>
+
+
+		<asp:Button runat="server" ID="AssignEmpToProject" Text="Assign Employee" onclick="AssignEmpToProject_Clicked" type="submit" class="btn btn-info"></asp:Button>
 
 		
 	</form>
