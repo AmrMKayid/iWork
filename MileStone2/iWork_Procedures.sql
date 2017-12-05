@@ -448,10 +448,10 @@ print @scoreout
 
 -- [4] view my job applications status
 GO
-create proc viewapplicationstatus
+create  proc viewapplicationstatus
 @username varchar(50)
 as
-select a.company,a.department,a.job_title,a.manager_status,a.score
+select a.id, a.company,a.department,a.job_title,a.manager_status,a.score
 from Applications a
 where a.app_username=@username
 
@@ -462,8 +462,8 @@ where a.app_username=@username
 
 -- [5] choose a job I got accepted in
 GO
-create proc chooseajob
-@appid int,@username varchar(50),@dayoff varchar(8) 
+create  proc chooseajob
+@appid int,@username varchar(50),@dayoff varchar(8) ,@success varchar(100) output
 as
 declare @jobtitle varchar(50), @dep varchar(50),@comp varchar(50)
 if(exists(select a.* 
@@ -530,8 +530,12 @@ if(exists(select a.*
 		  set vacancy=vacancy-1
 		  where title=@jobtitle and department=@dep and company=@comp
 
+		  set @success='Congratulations'
 end
 end
+else
+set @success='error'
+
 -- exex chooseajob 2,'Maza2','Android HR','Android_OS','google.com',sunday
 
 --#######################################################################--
