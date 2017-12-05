@@ -58,7 +58,8 @@ namespace iWork
             {
                 Session["Username"] = username;
                 Response.Write("Passed");
-                Response.Redirect("Manager/Manager.aspx", true);
+                //Response.Redirect("Manager/Manager.aspx", true);
+                Response.Redirect("Manager/Profile/templates/Manager_Projects.aspx");
             }
             else if (user_type.Value.Equals("HR Employee"))
             {

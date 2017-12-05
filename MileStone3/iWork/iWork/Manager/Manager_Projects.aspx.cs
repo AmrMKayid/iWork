@@ -15,7 +15,7 @@ namespace iWork.Manager
     {
         protected void CreateNewProject(object sender, EventArgs e)
         {
-            // TODO
+            // DONE in AspProject
             SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
 
 
