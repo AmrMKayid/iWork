@@ -2,10 +2,10 @@
   <MonoDevelop.Ide.Workbench ActiveDocument="iWork/Manager/Profile/templates/Manager_Selected_Project.aspx.designer.cs">
     <Files>
       <File FileName="iWork/Manager/Profile/templates/Manager_Selected_Project.aspx" Line="554" Column="7" />
-      <File FileName="iWork/Manager/Profile/templates/Manager_Selected_Project.aspx.cs" Line="257" Column="13" />
+      <File FileName="iWork/Manager/Profile/templates/Manager_Selected_Project.aspx.cs" Line="242" Column="1" />
       <File FileName="iWork/Manager/Profile/templates/Manager_Projects.aspx" Line="25" Column="1" />
       <File FileName="iWork/Manager/Profile/templates/Manager_Projects.aspx.cs" Line="41" Column="13" />
-      <File FileName="iWork/Manager/Profile/templates/Manager_Selected_Project.aspx.designer.cs" Line="45" Column="15" />
+      <File FileName="iWork/Manager/Profile/templates/Manager_Selected_Project.aspx.designer.cs" Line="45" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

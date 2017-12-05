@@ -1664,7 +1664,7 @@ Begin
           AND @regular_employee NOT IN (
             SELECT regular_employee_username
             FROM Tasks
-						WHERE mananger_username = @manager
+						WHERE mananger_username = @manager AND regular_employee_username = @regular_employee
           )
 End
 
