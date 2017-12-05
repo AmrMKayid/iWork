@@ -381,7 +381,7 @@
                               <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Project Name <span class="required">*</span>
                               </label>
                               <div class="col-md-6 col-sm-6 col-xs-12">
-                                <asp:TextBox ID="ProjectNametxt" runat="server" type="text" class="form-control col-md-7 col-xs-12" required="required" ></asp:TextBox>																		
+                                <asp:TextBox ID="ProjectNametxt" runat="server" type="text" class="form-control col-md-7 col-xs-12" ></asp:TextBox>																		
                               </div>
                             </div>
                             <div class="form-group">
@@ -390,7 +390,7 @@
                               <div class="form-group">
                                 <div class="input-group date" id="datetimepicker6" style="width: 50%;">
 <!--                                    <input type="text" class="form-control">-->
-									<asp:TextBox ID="TextBox1" runat="server" required="required" class="form-control col-md-7 col-xs-12"></asp:TextBox>
+									<asp:TextBox ID="TextBox1" runat="server" class="form-control col-md-7 col-xs-12"></asp:TextBox>
                                     <span class="input-group-addon">
                                        <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -403,7 +403,7 @@
                               <div class="form-group">
                                 <div class="input-group date" id="datetimepicker7" style="width: 50%;">
 <!--                                    <input type="text" class="form-control">-->
-                                     <asp:TextBox ID="TextBox2" runat="server" required="required" class="form-control col-md-7 col-xs-12"></asp:TextBox>                                       
+                                     <asp:TextBox ID="TextBox2" runat="server" class="form-control col-md-7 col-xs-12"></asp:TextBox>                                       
                                     <span class="input-group-addon">
                                        <span class="glyphicon glyphicon-calendar"></span>
                                     </span>

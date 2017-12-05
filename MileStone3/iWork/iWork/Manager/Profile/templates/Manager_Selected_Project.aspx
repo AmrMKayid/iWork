@@ -1,4 +1,6 @@
-﻿<%@ Page Language="C#" Inherits="iWork.Manager.Profile.templates.Manager_Selected_Project" %>
+﻿<%@ Page Language="C#" Inherits="iWork.Manager.Profile.templates.Manager_Selected_Project" EnableEventValidation="false" %>
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+
 <!DOCTYPE html>
 <html lang="en">
   <head runat="server">
@@ -22,6 +24,19 @@
     <!-- Custom Theme Style -->
     <link href="../build/css/custom.min.css" rel="stylesheet">
 
+     <!-- bootstrap-daterangepicker -->
+    <link href="../vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+    <!-- bootstrap-datetimepicker -->
+    <link href="../vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
+    <!-- Ion.RangeSlider -->
+    <link href="../vendors/normalize-css/normalize.css" rel="stylesheet">
+    <link href="../vendors/ion.rangeSlider/css/ion.rangeSlider.css" rel="stylesheet">
+    <link href="../vendors/ion.rangeSlider/css/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+    <!-- Bootstrap Colorpicker -->
+    <link href="../vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+
+    <link href="../vendors/cropper/dist/cropper.min.css" rel="stylesheet">
+   
   </head>
 
   <body class="nav-md">
@@ -320,18 +335,54 @@
 
                     <!-- start project list -->
 
-                    <div>
+				<!--Assign regular employees-->
+                 <div>
                 <asp:GridView ID="RegEmpView" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="There are no data records to display.">
                     <Columns>
                         <asp:BoundField DataField="username" HeaderText="username" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
-                        <asp:BoundField DataField="Projects" HeaderText="Request Date" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                        <asp:BoundField DataField="Projects" HeaderText="# of Projects" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
 
                         <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
                             <ItemTemplate>
                                 <asp:Button runat="server" id="AddToProject" CommandArgument='<%# Container.DataItemIndex %>' OnCommand="AddToProject_Clicked" Text="Add" type="submit" class="btn btn-success"></asp:Button>
                             </ItemTemplate>
                         </asp:TemplateField>
+                      
+                    </Columns>
+                </asp:GridView>
+             </div>
 
+             <!--Delete regular employees-->
+			<div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Project's Employees</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <p>Regular Employees in This Project</p>
+			<div>
+                <asp:GridView ID="DeleteRegEmpView" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="There are no data records to display.">
+                    <Columns>
+                        <asp:BoundField DataField="regular_employee_username" HeaderText="username" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+					
                         <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
                             <ItemTemplate>
                                 <asp:Button runat="server" id="RemoveFromProject" CommandArgument='<%# Container.DataItemIndex %>' OnCommand="RemoveFromProject_Clicked" Text="Remove" type="submit" class="btn btn-danger"></asp:Button>
@@ -340,11 +391,156 @@
 
                     </Columns>
                 </asp:GridView>
-       </div>
+             </div>
 
 
+              </div>
+            </div>
+          </div>
+        </div>
 
 
+                    <!-- Create New Task -->
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="x_panel">
+                        <div class="x_title">
+                          <h2>New Task</h2>
+                          <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                              <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Settings 1</a>
+                                </li>
+                                <li><a href="#">Settings 2</a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                          </ul>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                          <br>
+                          <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+      
+                            <div class="form-group">
+                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Task Name <span class="required">*</span>
+                              </label>
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                <asp:TextBox ID="TaskNametxt" runat="server" type="text" class="form-control col-md-7 col-xs-12" ></asp:TextBox>                                                                     
+                              </div>
+                            </div>
+																
+							<div class="form-group">
+                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Description<span class="required">*</span>
+                              </label>
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                <asp:TextBox ID="descriptiontxt" runat="server" type="text" class="form-control col-md-7 col-xs-12" ></asp:TextBox>                                                                     
+                              </div>
+                            </div>									
+
+                            <div class="form-group">
+                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Deadline <span class="required">*</span>
+                              </label>
+                              <div class="form-group">
+                                <div class="input-group date" id="datetimepicker6">
+<!--                                    <input type="text" class="form-control">-->
+                                     <asp:TextBox ID="deadline" runat="server" class="form-control col-md-7 col-xs-12"></asp:TextBox>                                       
+                                    <span class="input-group-addon">
+                                       <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                              <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <button class="btn btn-primary" type="button">Cancel</button>
+                                <button class="btn btn-primary" type="reset">Reset</button>
+                                <asp:Button runat="server" ID="CreateTask" Text="Create Task" onclick="CreateNewTask" type="submit" class="btn btn-info"></asp:Button>
+                              </div>
+                            </div>
+      
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                        											
+
+		<div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Project: Tasks</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                      <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a href="#">Settings 1</a>
+                          </li>
+                          <li><a href="#">Settings 2</a>
+                          </li>
+                        </ul>
+                      </li>
+                      <li><a class="close-link"><i class="fa fa-close"></i></a>
+                      </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <p>Tasks you have created</p>
+									
+        <div>
+          <asp:GridView ID="MyTasksView" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="There are no data records to display.">
+                  <Columns>
+                <asp:BoundField DataField="project" HeaderText="Project" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                  <asp:BoundField DataField="name" HeaderText="Task" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                <asp:BoundField DataField="regular_employee_username" HeaderText="Employee" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                <asp:BoundField DataField="status" HeaderText="Status" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                  <asp:BoundField DataField="deadline" HeaderText="Deadline" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                <asp:BoundField DataField="description" HeaderText="Description" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+
+			<asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
+                  <ItemTemplate>
+                    <asp:TextBox ID="AssignEmptxt" HeaderText="Assign Employee" runat="server" class="form-control col-md-7 col-xs-12"></asp:TextBox> 
+                       
+                  </ItemTemplate>
+              </asp:TemplateField>	
+																		
+              <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
+                  <ItemTemplate>
+                      <asp:Button runat="server" id="AssignEmp" CommandArgument='<%# Container.DataItemIndex %>' OnCommand="AssignEmp_Clicked" Text="Assign Employee" type="submit" class="btn btn-success"></asp:Button>
+				</ItemTemplate>
+              </asp:TemplateField>
+
+                <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
+                  <ItemTemplate>
+						<asp:TextBox ID="ChangeEmptxt" runat="server" class="form-control col-md-7 col-xs-12"></asp:TextBox> 
+                      <asp:Button runat="server" id="ChangeEmp" CommandArgument='<%# Container.DataItemIndex %>' OnCommand="ChangeEmp_Clicked" Text="Change Employee" type="submit" class="btn btn-success"></asp:Button>
+                  </ItemTemplate>
+              </asp:TemplateField>
+																		
+                  </Columns>
+          </asp:GridView>
+        </div>	
+
+	     </div>
+            </div>
+          </div>
+        </div>		
+
+                                       
                     <!-- Create New Project -->
                   
                                         
@@ -382,6 +578,65 @@
 
     <!-- Custom Theme Scripts -->
     <script src="../build/js/custom.min.js"></script>
+
+     <!-- jQuery -->
+     <script src="../vendors/jquery/dist/jquery.min.js"></script>
+     <!-- Bootstrap -->
+     <script src="../vendors/bootstrap/dist/js/bootstrap.min.js"></script>
+     <!-- FastClick -->
+     <script src="../vendors/fastclick/lib/fastclick.js"></script>
+     <!-- NProgress -->
+     <script src="../vendors/nprogress/nprogress.js"></script>
+     <!-- bootstrap-daterangepicker -->
+     <script src="../vendors/moment/min/moment.min.js"></script>
+     <script src="../vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+     <!-- bootstrap-datetimepicker -->    
+     <script src="../vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+     <!-- Ion.RangeSlider -->
+     <script src="../vendors/ion.rangeSlider/js/ion.rangeSlider.min.js"></script>
+     <!-- Bootstrap Colorpicker -->
+     <script src="../vendors/mjolnic-bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min.js"></script>
+     <!-- jquery.inputmask -->
+     <script src="../vendors/jquery.inputmask/dist/min/jquery.inputmask.bundle.min.js"></script>
+     <!-- jQuery Knob -->
+     <script src="../vendors/jquery-knob/dist/jquery.knob.min.js"></script>
+     <!-- Cropper -->
+     <script src="../vendors/cropper/dist/cropper.min.js"></script>
+ 
+     <!-- Custom Theme Scripts -->
+     <script src="../build/js/custom.min.js"></script>
+     
+     <!-- Initialize datetimepicker -->
+ <script>
+     $('#myDatepicker').datetimepicker();
+     
+     $('#myDatepicker2').datetimepicker({
+         format: 'DD.MM.YYYY'
+     });
+     
+     $('#myDatepicker3').datetimepicker({
+         format: 'hh:mm A'
+     });
+     
+     $('#myDatepicker4').datetimepicker({
+         ignoreReadonly: true,
+         allowInputToggle: true
+     });
+ 
+     $('#datetimepicker6').datetimepicker();
+     
+     $('#datetimepicker7').datetimepicker({
+         useCurrent: false
+     });
+     
+     $("#datetimepicker6").on("dp.change", function(e) {
+         $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+     });
+     
+     $("#datetimepicker7").on("dp.change", function(e) {
+         $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+     });
+ </script>
 
     </form>
   </body>

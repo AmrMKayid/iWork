@@ -9,22 +9,22 @@
 //------------------------------------------------------------------------------
 
 namespace iWork.Manager.Profile.templates {
-    
-    
-    public partial class Manager_Projects {
-        
-        protected System.Web.UI.HtmlControls.HtmlForm ProjectsForm;
-        
-        protected System.Web.UI.WebControls.GridView MyProjectsView;
-        
-        protected System.Web.UI.WebControls.Button SelectProject;
-        
-        protected System.Web.UI.WebControls.TextBox ProjectNametxt;
-        
-        protected System.Web.UI.WebControls.TextBox TextBox1;
-        
-        protected System.Web.UI.WebControls.TextBox TextBox2;
-        
-        protected System.Web.UI.WebControls.Button CreateProject;
-    }
+	
+	
+	public partial class Manager_Projects {
+		
+		protected System.Web.UI.HtmlControls.HtmlForm ProjectsForm;
+		
+		protected System.Web.UI.WebControls.GridView MyProjectsView;
+		
+		protected System.Web.UI.WebControls.Button SelectProject;
+		
+		protected System.Web.UI.WebControls.TextBox ProjectNametxt;
+		
+		protected System.Web.UI.WebControls.TextBox TextBox1;
+		
+		protected System.Web.UI.WebControls.TextBox TextBox2;
+		
+		protected System.Web.UI.WebControls.Button CreateProject;
+	}
 }
