@@ -73,11 +73,8 @@ namespace iWork.Manager.Profile.templates
            try
             {
                 int index = Convert.ToInt32(e.CommandArgument);
-                //index = (index < 0) ? 0 : (index >= RegEmpView.Rows.Count) ? index - 1 : index;
+                index = (index < 0) ? 0 : (index >= RegEmpView.Rows.Count) ? index - 1 : index;
                 string username = RegEmpView.Rows[index].Cells[0].Text;
-
-                //SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
-
 
                 SqlCommand cmd = new SqlCommand("AddEmployeeToProject", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -105,11 +102,8 @@ namespace iWork.Manager.Profile.templates
             try
             {
                 int index = Convert.ToInt32(e.CommandArgument);
-                //index = (index < 0) ? 0 : (index >= DeleteRegEmpView.Rows.Count) ? index - 1 : index;
+                index = (index < 0) ? 0 : (index >= DeleteRegEmpView.Rows.Count) ? index - 1 : index;
                 string username = DeleteRegEmpView.Rows[index].Cells[0].Text;
-
-                //SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
-
 
                 SqlCommand cmd = new SqlCommand("RemoveEmployeeFromProject", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
@@ -134,9 +128,7 @@ namespace iWork.Manager.Profile.templates
 
         protected void CreateNewTask(object sender, EventArgs e)
         {
-            // TODO
-            //SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
-
+            
             try
             {
                 SqlCommand cmd = new SqlCommand("CreateNewTask", conn);
@@ -168,74 +160,14 @@ namespace iWork.Manager.Profile.templates
             }
         }
 
-        protected void AssignEmp_Clicked(object sender, CommandEventArgs e) 
+        protected void SelectTask_Clicked(object sender, CommandEventArgs e) 
         {
-            try
-            {
-                TextBox AssignEmpT = (TextBox) MyTasksView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[7].FindControl("AssignEmptxt");
-                string SelectedTask = MyTasksView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[1].Text;
-
-                SqlCommand cmd = new SqlCommand("AssignTask", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add(new SqlParameter("@manager", Session["Username"]));
-
-                cmd.Parameters.Add(new SqlParameter("@name", SelectedTask));
-
-                cmd.Parameters.Add(new SqlParameter("@regular_employee_username", AssignEmpT.Text));
-
-                cmd.Parameters.Add(new SqlParameter("@project", Session["SelectedProject"]));
-
-                conn.Open();
-
-                cmd.ExecuteReader();
-
-                conn.Close();
-
-                string script = "alert('" + "You Assigned (" + AssignEmptxt.Text + ")" + "');";
-                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
-            }
-            catch (SqlException ee)
-            {
-                string script = "alert('" + ee.Message + "');";
-                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
-            }
+            string SelectedTask = MyTasksView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[1].Text;
+            Session["SelectedTask"] = SelectedTask;
+            //TODO: Redirect to project details
+            Response.Redirect("Manager_Selected_Task.aspx");
         }
 
-        protected void ChangeEmp_Clicked(object sender, CommandEventArgs e)
-        {
-            try
-            {
-                string AssignedEmp = MyTasksView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[2].Text;
-                string SelectedTask = MyTasksView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[1].Text;
-
-                SqlCommand cmd = new SqlCommand("ChangeTaskEmployee", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add(new SqlParameter("@manager", Session["Username"]));
-
-                cmd.Parameters.Add(new SqlParameter("@task", SelectedTask));
-
-                cmd.Parameters.Add(new SqlParameter("@regular_employee", AssignedEmp));
-
-                cmd.Parameters.Add(new SqlParameter("@regular_employee_replacing", ChangeEmptxt.Text));
-
-                cmd.Parameters.Add(new SqlParameter("@project", Session["SelectedProject"]));
-
-                conn.Open();
-
-                cmd.ExecuteReader();
-
-                conn.Close();
-
-                string script = "alert('" + "You Changed the Task to (" + ChangeEmptxt.Text + ")" + "');";
-                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
-            }
-            catch (SqlException ee)
-            {
-                string script = "alert('" + ee.Message + "');";
-                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
-            }
-        }
+     
     }
 }

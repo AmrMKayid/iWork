@@ -33,12 +33,6 @@ namespace iWork.Manager.Profile.templates {
         
         protected System.Web.UI.WebControls.GridView MyTasksView;
         
-        protected System.Web.UI.WebControls.TextBox AssignEmptxt;
-        
-        protected System.Web.UI.WebControls.Button AssignEmp;
-        
-        protected System.Web.UI.WebControls.TextBox ChangeEmptxt;
-        
-        protected System.Web.UI.WebControls.Button ChangeEmp;
+        protected System.Web.UI.WebControls.Button SelectTask;
     }
 }

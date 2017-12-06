@@ -208,7 +208,6 @@
     <Content Include="Manager\Profile\src\scss\._daterangepicker.scss" />
     <Content Include="Manager\Profile\src\scss\custom.scss" />
     <Content Include="Manager\Profile\src\scss\daterangepicker.scss" />
-    <Content Include="Manager\Profile\templates\._projects.html" />
     <Content Include="Manager\Profile\templates\projects.html" />
     <Content Include="Manager\Profile\templates\css\maps\._jquery-jvectormap-2.0.3.css" />
     <Content Include="Manager\Profile\templates\css\maps\jquery-jvectormap-2.0.3.css" />
@@ -7575,6 +7574,7 @@
     <Content Include="Manager\Profile\vendors\validator\validator.js" />
     <Content Include="Manager\Profile\templates\Manager_Projects.aspx" />
     <Content Include="Manager\Profile\templates\Manager_Selected_Project.aspx" />
+    <Content Include="Manager\Profile\templates\Manager_Selected_Task.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -7647,6 +7647,12 @@
     <Compile Include="Manager\Profile\templates\Manager_Selected_Project.aspx.designer.cs">
       <DependentUpon>Manager_Selected_Project.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Manager\Profile\templates\Manager_Selected_Task.aspx.cs">
+      <DependentUpon>Manager_Selected_Task.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Profile\templates\Manager_Selected_Task.aspx.designer.cs">
+      <DependentUpon>Manager_Selected_Task.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Manager\" />
@@ -7656,11 +7662,6 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Manager\Profile\.DS_Store" />
-    <None Include="Manager\Profile\._.DS_Store" />
-    <None Include="Manager\Profile\._build" />
-    <None Include="Manager\Profile\._src" />
-    <None Include="Manager\Profile\._vendors" />
     <None Include="Manager\Profile\build\.DS_Store" />
     <None Include="Manager\Profile\build\._.DS_Store" />
     <None Include="Manager\Profile\build\._css" />
@@ -7671,11 +7672,6 @@
     <None Include="Manager\Profile\src\._js" />
     <None Include="Manager\Profile\src\._scss" />
     <None Include="Manager\Profile\src\js\._helpers" />
-    <None Include="Manager\Profile\templates\.DS_Store" />
-    <None Include="Manager\Profile\templates\._.DS_Store" />
-    <None Include="Manager\Profile\templates\._css" />
-    <None Include="Manager\Profile\templates\._images" />
-    <None Include="Manager\Profile\templates\._js" />
     <None Include="Manager\Profile\templates\css\._maps" />
     <None Include="Manager\Profile\templates\images\.DS_Store" />
     <None Include="Manager\Profile\templates\images\._.DS_Store" />
