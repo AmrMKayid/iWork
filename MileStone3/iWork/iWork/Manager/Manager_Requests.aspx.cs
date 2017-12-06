@@ -38,33 +38,17 @@ namespace iWork.Manager
             conn.Close();
         }
 
-        protected void AcceptRequest(object sender, CommandEventArgs e)
+        protected void SelectRequest_Clicked(object sender, CommandEventArgs e)
         {
             string username = RequestsGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[0].Text;
             string start_date = RequestsGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[2].Text;
 
-            SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
+            Session["SelectedRequest_Username"] = username;
+            Session["SelectedRequest_start_date"] = start_date;
 
+            Response.Redirect("Manager_Requests_Review.aspx");
 
-            SqlCommand cmd = new SqlCommand("ReviewRequest", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.Add(new SqlParameter("@manager", Session["Username"]));
-            cmd.Parameters.Add(new SqlParameter("@start_date", start_date));
-            cmd.Parameters.Add(new SqlParameter("@username", username));
-            cmd.Parameters.Add(new SqlParameter("@isAccepted", 1));
-            cmd.Parameters.Add(new SqlParameter("@reason", null));
-
-            conn.Open();
-            cmd.ExecuteReader();
-            conn.Close();
-
-            RequestsGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[6].Text = "Accepted";
         }
 
-        protected void RejectRequest(object sender, CommandEventArgs e)
-        {
-            // TODO
-        }
     }
 }

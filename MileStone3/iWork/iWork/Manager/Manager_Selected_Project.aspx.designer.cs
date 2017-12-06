@@ -36,5 +36,13 @@ namespace iWork.Manager.Profile.templates {
 		protected System.Web.UI.WebControls.GridView MyTasksView;
 		
 		protected System.Web.UI.WebControls.Button SelectTask;
+		
+		protected System.Web.UI.WebControls.TextBox projectNameforTaskTxt;
+		
+		protected System.Web.UI.WebControls.TextBox statusTxt;
+		
+		protected System.Web.UI.WebControls.Button SearchForTask;
+		
+		protected System.Web.UI.WebControls.GridView SearchForTaskView;
 	}
 }

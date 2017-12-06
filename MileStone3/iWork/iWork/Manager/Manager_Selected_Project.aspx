@@ -71,6 +71,7 @@
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="../Default.aspx">Main</a></li>
+                        <li><a href="Manager.aspx">Profile</a></li>												
                     </ul>
                   </li>
                 </ul>
@@ -152,71 +153,7 @@
                   </ul>
                 </li>
 
-                <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
-                  </a>
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="text-center">
-                        <a>
-                          <strong>See All Alerts</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
+             </ul>
             </nav>
           </div>
         </div>
@@ -419,7 +356,64 @@
 	     </div>
             </div>
           </div>
-        </div>		
+        </div>	
+
+		 <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Search for Tasks</h2>
+
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <p>Search for specific task in certain project</p>
+															
+						<div>
+                            <form class="form-inline">
+                              <div class="form-group">
+                                <label for="email" style="margin-left: 250px;">Project Name: </label>
+								<asp:TextBox ID="projectNameforTaskTxt" runat="server" class="form-control"></asp:TextBox> 
+                                </div>
+
+								<div class="form-group">
+                                <label for="pwd" style="margin-left: 50px;">Status: </label>
+                                <asp:TextBox ID="statusTxt" runat="server" class="form-control"></asp:TextBox> 
+							</div>
+
+                                <asp:Button runat="server" ID="SearchForTask" Text="Search" onclick="SearchForTask_Clicked" type="submit" class="btn btn-info"></asp:Button>
+                            </form>
+						</div>
+
+                         <div>
+
+						<asp:GridView ID="SearchForTaskView" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="There are no data records to display.">
+                                  <Columns>
+                                <asp:BoundField DataField="project" HeaderText="Project" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                  <asp:BoundField DataField="name" HeaderText="Task" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                <asp:BoundField DataField="regular_employee_username" HeaderText="Employee" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                <asp:BoundField DataField="status" HeaderText="Status" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                  <asp:BoundField DataField="deadline" HeaderText="Deadline" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                <asp:BoundField DataField="description" HeaderText="Description" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                                                                    
+
+                                <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
+                                  <ItemTemplate>
+                                      <asp:Button runat="server" id="SelectTask" CommandArgument='<%# Container.DataItemIndex %>' OnCommand="SelectTask_Clicked" Text="Select" type="submit" class="btn btn-success"></asp:Button>
+                                  </ItemTemplate>
+                              </asp:TemplateField>
+                                                                                        
+                                  </Columns>
+                          </asp:GridView>
+                        </div>  
+ 															
+    			</div>
+            </div>
+          </div>
+        </div>
 
                                        
                     <!-- Create New Project -->

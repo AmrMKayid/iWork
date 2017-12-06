@@ -19,8 +19,6 @@ namespace iWork.Manager {
 		
 		protected System.Web.UI.WebControls.GridView RequestsGridView;
 		
-		protected System.Web.UI.WebControls.Button Accept;
-		
-		protected System.Web.UI.WebControls.Button Reject;
+		protected System.Web.UI.WebControls.Button SelectRequest;
 	}
 }

@@ -70,6 +70,7 @@
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="../Default.aspx">Main</a></li>
+                      <li><a href="Manager.aspx">Profile</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -151,71 +152,7 @@
                   </ul>
                 </li>
 
-                <li role="presentation" class="dropdown">
-                  <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
-                    <i class="fa fa-envelope-o"></i>
-                    <span class="badge bg-green">6</span>
-                  </a>
-                  <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <a>
-                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
-                        <span>
-                          <span>John Smith</span>
-                          <span class="time">3 mins ago</span>
-                        </span>
-                        <span class="message">
-                          Film festivals used to be do-or-die moments for movie makers. They were where...
-                        </span>
-                      </a>
-                    </li>
-                    <li>
-                      <div class="text-center">
-                        <a>
-                          <strong>See All Alerts</strong>
-                          <i class="fa fa-angle-right"></i>
-                        </a>
-                      </div>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
+               </ul>
             </nav>
           </div>
         </div>
@@ -280,19 +217,15 @@
                             <asp:BoundField DataField="end_date" HeaderText="End Date" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
                             <asp:BoundField DataField="leave_days" HeaderText="Leave Days" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
                             <asp:BoundField DataField="hr_status" HeaderText="HR Status" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/> 
-                            <asp:BoundField DataField="manager_status" HeaderText="Final Status" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
+                            <asp:BoundField DataField="manager_status" HeaderText="Final Status" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/> 
+							<asp:BoundField DataField="reason" HeaderText="Reason for Rejection" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/> 
 
                             <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
                                 <ItemTemplate> 
-                                    <asp:Button runat="server" HeaderText="Accept" id="Accept" CommandArgument='<%# Container.DataItemIndex %>' OnCommand="AcceptRequest" Text="Accept" type="submit" class="btn btn-success"></asp:Button>    
+                                    <asp:Button runat="server" id="SelectRequest" CommandArgument='<%# Container.DataItemIndex %>' OnCommand="SelectRequest_Clicked" Text="Select" type="submit" class="btn btn-success"></asp:Button>    
                                 </ItemTemplate>
                             </asp:TemplateField>
 
-                            <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
-                                <ItemTemplate>
-                                    <asp:Button runat="server" HeaderText="Reject" id="Reject" CommandArgument='<%# Container.DataItemIndex %>' OnCommand="RejectRequest" Text="Reject" type="submit" class="btn btn-danger"></asp:Button>    
-                                </ItemTemplate>
-                            </asp:TemplateField>
                                     
                         </Columns>  
                     </asp:GridView>  
