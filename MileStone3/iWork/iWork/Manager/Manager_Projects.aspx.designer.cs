@@ -8,41 +8,25 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace iWork.Manager {
+namespace iWork.Manager.Profile.templates {
 	
 	
 	public partial class Manager_Projects {
 		
 		protected System.Web.UI.HtmlControls.HtmlForm ProjectsForm;
 		
-		protected System.Web.UI.WebControls.TextBox ProjectNametxt;
-		
-		protected System.Web.UI.WebControls.Calendar Calendar1;
-		
-		protected System.Web.UI.WebControls.LinkButton LinkButton1;
-		
-		protected System.Web.UI.WebControls.TextBox TextBox1;
-		
-		protected System.Web.UI.WebControls.Calendar Calendar2;
-		
-		protected System.Web.UI.WebControls.LinkButton LinkButton2;
-		
-		protected System.Web.UI.WebControls.TextBox TextBox2;
-		
-		protected System.Web.UI.WebControls.Button CreateProject;
-		
-		protected System.Web.UI.WebControls.Button viewMyProjects;
+		protected System.Web.UI.WebControls.Label usernameLbl;
 		
 		protected System.Web.UI.WebControls.GridView MyProjectsView;
 		
 		protected System.Web.UI.WebControls.Button SelectProject;
 		
-		protected System.Web.UI.WebControls.Button viewRegularEmp;
+		protected System.Web.UI.WebControls.TextBox ProjectNametxt;
 		
-		protected System.Web.UI.WebControls.GridView RegEmpView;
+		protected System.Web.UI.WebControls.TextBox TextBox1;
 		
-		protected System.Web.UI.WebControls.Button AddToProject;
+		protected System.Web.UI.WebControls.TextBox TextBox2;
 		
-		protected System.Web.UI.WebControls.Button RemoveFromProject;
+		protected System.Web.UI.WebControls.Button CreateProject;
 	}
 }

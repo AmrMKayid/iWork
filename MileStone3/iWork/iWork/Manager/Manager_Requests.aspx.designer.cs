@@ -13,7 +13,9 @@ namespace iWork.Manager {
 	
 	public partial class Manager_Requests {
 		
-		protected System.Web.UI.HtmlControls.HtmlForm RequestsGridForm;
+		protected System.Web.UI.HtmlControls.HtmlForm ProjectsForm;
+		
+		protected System.Web.UI.WebControls.Label usernameLbl;
 		
 		protected System.Web.UI.WebControls.GridView RequestsGridView;
 		

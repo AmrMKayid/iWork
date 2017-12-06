@@ -11,20 +11,18 @@
 namespace iWork.Manager.Profile.templates {
 	
 	
-	public partial class Manager_Projects {
+	public partial class Manager_Selected_Task {
 		
 		protected System.Web.UI.HtmlControls.HtmlForm ProjectsForm;
 		
-		protected System.Web.UI.WebControls.GridView MyProjectsView;
+		protected System.Web.UI.WebControls.Label usernameLbl;
 		
-		protected System.Web.UI.WebControls.Button SelectProject;
+		protected System.Web.UI.WebControls.GridView RegEmpView;
 		
-		protected System.Web.UI.WebControls.TextBox ProjectNametxt;
+		protected System.Web.UI.WebControls.Button AssignToTask;
 		
-		protected System.Web.UI.WebControls.TextBox TextBox1;
+		protected System.Web.UI.WebControls.Button SelectEmp;
 		
-		protected System.Web.UI.WebControls.TextBox TextBox2;
-		
-		protected System.Web.UI.WebControls.Button CreateProject;
+		protected System.Web.UI.WebControls.Button ReAssignToTask;
 	}
 }

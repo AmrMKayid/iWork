@@ -13,7 +13,9 @@ namespace iWork.Manager {
 	
 	public partial class Manager_Applications {
 		
-		protected System.Web.UI.HtmlControls.HtmlForm ApplicationGridForm;
+		protected System.Web.UI.HtmlControls.HtmlForm ProjectsForm;
+		
+		protected System.Web.UI.WebControls.Label usernameLbl;
 		
 		protected System.Web.UI.WebControls.GridView ApplicationGridView;
 		

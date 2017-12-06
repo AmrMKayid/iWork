@@ -9,18 +9,12 @@
 //------------------------------------------------------------------------------
 
 namespace iWork.Manager {
-    
-    
-    public partial class Manager {
-        
-        protected System.Web.UI.HtmlControls.HtmlForm form1;
-        
-        protected System.Web.UI.WebControls.Button NewRequests;
-        
-        protected System.Web.UI.WebControls.Button NewApplications;
-        
-        protected System.Web.UI.WebControls.Button NewProject;
-        
-        protected System.Web.UI.WebControls.Button AssignEmpToProject;
-    }
+	
+	
+	public partial class Manager {
+		
+		protected System.Web.UI.HtmlControls.HtmlForm ProjectsForm;
+		
+		protected System.Web.UI.WebControls.Label usernameLbl;
+	}
 }
