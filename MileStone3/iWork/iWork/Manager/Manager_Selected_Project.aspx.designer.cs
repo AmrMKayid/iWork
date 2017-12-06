@@ -24,25 +24,5 @@ namespace iWork.Manager.Profile.templates {
 		protected System.Web.UI.WebControls.GridView DeleteRegEmpView;
 		
 		protected System.Web.UI.WebControls.Button RemoveFromProject;
-		
-		protected System.Web.UI.WebControls.TextBox TaskNametxt;
-		
-		protected System.Web.UI.WebControls.TextBox descriptiontxt;
-		
-		protected System.Web.UI.WebControls.TextBox deadline;
-		
-		protected System.Web.UI.WebControls.Button CreateTask;
-		
-		protected System.Web.UI.WebControls.GridView MyTasksView;
-		
-		protected System.Web.UI.WebControls.Button SelectTask;
-		
-		protected System.Web.UI.WebControls.TextBox projectNameforTaskTxt;
-		
-		protected System.Web.UI.WebControls.TextBox statusTxt;
-		
-		protected System.Web.UI.WebControls.Button SearchForTask;
-		
-		protected System.Web.UI.WebControls.GridView SearchForTaskView;
 	}
 }

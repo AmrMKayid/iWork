@@ -7574,6 +7574,7 @@
     <Content Include="Style\vendors\validator\multifield.js" />
     <Content Include="Style\vendors\validator\validator.js" />
     <Content Include="Manager\Manager_Requests_Review.aspx" />
+    <Content Include="Manager\Manager_Project_Task.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -7650,6 +7651,12 @@
     </Compile>
     <Compile Include="Manager\Manager_Requests_Review.aspx.designer.cs">
       <DependentUpon>Manager_Requests_Review.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Manager_Project_Task.aspx.cs">
+      <DependentUpon>Manager_Project_Task.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Manager\Manager_Project_Task.aspx.designer.cs">
+      <DependentUpon>Manager_Project_Task.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

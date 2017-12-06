@@ -1,14 +1,5 @@
 ﻿<Properties StartupConfiguration="{45BEC29E-B0A1-4668-B530-80EB7CF04061}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="iWork/Manager/Manager_Selected_Project.aspx.cs">
-    <Files>
-      <File FileName="iWork/Manager/Manager_Applications.aspx" Line="63" Column="19" />
-      <File FileName="iWork/Manager/Manager_Projects.aspx" Line="73" Column="66" />
-      <File FileName="iWork/Manager/Manager_Requests.aspx" Line="73" Column="66" />
-      <File FileName="iWork/Manager/Manager_Requests_Review.aspx" Line="73" Column="66" />
-      <File FileName="iWork/Manager/Manager_Selected_Project.aspx" Line="387" Column="85" />
-      <File FileName="iWork/Manager/Manager_Selected_Project.aspx.cs" Line="171" Column="70" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

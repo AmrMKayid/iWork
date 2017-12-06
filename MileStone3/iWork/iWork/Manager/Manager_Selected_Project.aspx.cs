@@ -33,10 +33,10 @@ namespace iWork.Manager.Profile.templates
 
             SqlCommand removeRegCmd = new SqlCommand(sqlSelect, conn);
 
-            // View Tasks
-            string viewTasks = "SELECT project, name, regular_employee_username, status, deadline, description from Tasks where mananger_username =\'" + 
-                                Session["Username"] + "\' AND " + "project =\'" + Session["SelectedProject"] + "\'";
-            SqlCommand viewTasksCmd = new SqlCommand(viewTasks, conn);  
+            //// View Tasks
+            //string viewTasks = "SELECT project, name, regular_employee_username, status, deadline, description from Tasks where mananger_username =\'" + 
+            //                    Session["Username"] + "\' AND " + "project =\'" + Session["SelectedProject"] + "\'";
+            //SqlCommand viewTasksCmd = new SqlCommand(viewTasks, conn);  
 
             conn.Open();
 
@@ -55,14 +55,6 @@ namespace iWork.Manager.Profile.templates
 
             DeleteRegEmpView.DataSource = ds2;
             DeleteRegEmpView.DataBind();
-
-            // View Tasks
-            DataSet ds3 = new DataSet();
-            SqlDataAdapter objAdp3 = new SqlDataAdapter(viewTasksCmd);
-            objAdp3.Fill(ds3);
-
-            MyTasksView.DataSource = ds3;
-            MyTasksView.DataBind();
 
             conn.Close();
 
@@ -126,71 +118,6 @@ namespace iWork.Manager.Profile.templates
 
         //#########################################################################
 
-        protected void CreateNewTask(object sender, EventArgs e)
-        {
-            
-            try
-            {
-                SqlCommand cmd = new SqlCommand("CreateNewTask", conn);
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                cmd.Parameters.Add(new SqlParameter("@manager", Session["Username"]));
-
-                cmd.Parameters.Add(new SqlParameter("@name", TaskNametxt.Text));
-
-                cmd.Parameters.Add(new SqlParameter("@description", descriptiontxt.Text));
-
-                cmd.Parameters.Add(new SqlParameter("@deadline", deadline.Text));
-
-                cmd.Parameters.Add(new SqlParameter("@project", Session["SelectedProject"]));
-
-                conn.Open();
-
-                cmd.ExecuteReader();
-
-                conn.Close();
-
-                string script = "alert('" + "Task (" + TaskNametxt.Text + ") Created" + "');";
-                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
-            }
-            catch(SqlException ee) 
-            {
-                string script = "alert('" + ee.Message + "');";
-                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
-            }
-        }
-
-        protected void SelectTask_Clicked(object sender, CommandEventArgs e) 
-        {
-            string SelectedTask = MyTasksView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[1].Text;
-            Session["SelectedTask"] = SelectedTask;
-            //TODO: Redirect to project details
-            Response.Redirect("Manager_Selected_Task.aspx");
-        }
-
-        protected void SearchForTask_Clicked(object sender, EventArgs e)
-        {
-            string viewTasks = "SELECT project, name, regular_employee_username, status, deadline, description from Tasks where mananger_username =\'" + 
-                Session["Username"] + "\' AND " + "project =\'" + projectNameforTaskTxt.Text + "\'" + "\' AND " + "status =\'" + statusTxt.Text + "\'";
-            SqlCommand viewTasksCmd = new SqlCommand(viewTasks, conn);  
-
-
-            conn.Open();
-
-            // View Tasks
-            DataSet ds3 = new DataSet();
-            SqlDataAdapter objAdp3 = new SqlDataAdapter(viewTasksCmd);
-            objAdp3.Fill(ds3);
-
-            SearchForTaskView.DataSource = ds3;
-            SearchForTaskView.DataBind();
-
-            conn.Close();
-
-        }
-
-
-
-     
+           
     }
 }

@@ -96,6 +96,7 @@
                     <ul class="nav child_menu">
                       <li><a href="Manager_Projects.aspx">Projects</a></li>
                       <li><a href="Manager_Selected_Project.aspx">Project Details</a></li>
+                      <li><a href="Manager_Project_Task.aspx">Project's Tasks</a></li>
                       <li><a href="Manager_Selected_Task.aspx">Task Details</a></li>
                     </ul>
                   </li>

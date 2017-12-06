@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Inherits="iWork.Manager.Manager_Applications" %>
+﻿<%@ Page Language="C#" Inherits="iWork.Manager.Manager_Project_Task" EnableEventValidation="false"  %>
 <!DOCTYPE html>
 <html lang="en">
   <head runat="server">
@@ -34,10 +34,11 @@
     <link href="../Style/vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 
     <link href="../Style/vendors/cropper/dist/cropper.min.css" rel="stylesheet">
+
   </head>
 
   <body class="nav-md">
-    <form id="ProjectsForm" runat="server">
+    <form id="TasksForm" runat="server">
     <div class="container body">
       <div class="main_container">
         <div class="col-md-3 left_col">
@@ -96,7 +97,7 @@
                     <ul class="nav child_menu">
                       <li><a href="Manager_Projects.aspx">Projects</a></li>
                       <li><a href="Manager_Selected_Project.aspx">Project Details</a></li>
-                      <li><a href="Manager_Project_Task.aspx">Project's Tasks</a></li>
+					    <li><a href="Manager_Project_Task.aspx">Project's Tasks</a></li>
                       <li><a href="Manager_Selected_Task.aspx">Task Details</a></li>
                     </ul>
                   </li>
@@ -153,6 +154,7 @@
                   </ul>
                 </li>
 
+               
               </ul>
             </nav>
           </div>
@@ -164,7 +166,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Applications <small>Dashboard</small></h3>
+                <h3>Task <small>Dashboard</small></h3>
               </div>
 
               <div class="title_right">
@@ -180,75 +182,190 @@
             </div>
 
             <div class="clearfix"></div>
+           
+                    <!-- start project list -->
+
+                                    <!-- Create New Task -->
+                  <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="x_panel">
+                        <div class="x_title">
+                          <h2>New Task</h2>
+                          <ul class="nav navbar-right panel_toolbox">
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+                            <li class="dropdown">
+                              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                              <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Settings 1</a>
+                                </li>
+                                <li><a href="#">Settings 2</a>
+                                </li>
+                              </ul>
+                            </li>
+                            <li><a class="close-link"><i class="fa fa-close"></i></a>
+                            </li>
+                          </ul>
+                          <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                          <br>
+                          <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
+      
+                            <div class="form-group">
+                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Task Name <span class="required">*</span>
+                              </label>
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                <asp:TextBox ID="TaskNametxt" runat="server" type="text" class="form-control col-md-7 col-xs-12" ></asp:TextBox>                                                                     
+                              </div>
+                            </div>
+                                                                
+                            <div class="form-group">
+                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Description<span class="required">*</span>
+                              </label>
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                <asp:TextBox ID="descriptiontxt" runat="server" type="text" class="form-control col-md-7 col-xs-12" ></asp:TextBox>                                                                     
+                              </div>
+                            </div>                                  
+
+                            <div class="form-group">
+                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Deadline <span class="required">*</span>
+                              </label>
+                              <div class="form-group">
+                                <div class="input-group date" id="datetimepicker6">
+<!--                                    <input type="text" class="form-control">-->
+                                     <asp:TextBox ID="deadline" runat="server" class="form-control col-md-7 col-xs-12"></asp:TextBox>                                       
+                                    <span class="input-group-addon">
+                                       <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                              </div>
+                            </div>
+                            
+                            <div class="ln_solid"></div>
+                            <div class="form-group">
+                              <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
+                                <button class="btn btn-primary" type="button">Cancel</button>
+                                <button class="btn btn-primary" type="reset">Reset</button>
+                                <asp:Button runat="server" ID="CreateTask" Text="Create Task" onclick="CreateNewTask" type="submit" class="btn btn-info"></asp:Button>
+                              </div>
+                            </div>
+      
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                                                                    
+
+        <div class="clearfix"></div>
 
             <div class="row">
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Applications</h2>
-                    <ul class="nav navbar-right panel_toolbox">
-                      <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                        </li>
-                      <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                        <ul class="dropdown-menu" role="menu">
-                          <li><a href="#">Settings 1</a>
-                          </li>
-                          <li><a href="#">Settings 2</a>
-                          </li>
-                        </ul>
-                      </li>
-                      <li><a class="close-link"><i class="fa fa-close"></i></a>
-                      </li>
-                    </ul>
+                    <h2>Project: Tasks</h2>
+
                     <div class="clearfix"></div>
                   </div>
                   <div class="x_content">
 
-                    <p>View & Review Applications</p>
+                    <p>Tasks you have created</p>
+                                    
+        <div>
+          <asp:GridView ID="MyTasksView" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="There are no data records to display.">
+                  <Columns>
+                <asp:BoundField DataField="project" HeaderText="Project" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                  <asp:BoundField DataField="name" HeaderText="Task" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                <asp:BoundField DataField="regular_employee_username" HeaderText="Employee" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                <asp:BoundField DataField="status" HeaderText="Status" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                  <asp:BoundField DataField="deadline" HeaderText="Deadline" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                <asp:BoundField DataField="description" HeaderText="Description" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                                                    
 
-                    <!-- start project list -->
+                <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
+                  <ItemTemplate>
+                      <asp:Button runat="server" id="SelectTask" CommandArgument='<%# Container.DataItemIndex %>' OnCommand="SelectTask_Clicked" Text="Select" type="submit" class="btn btn-success"></asp:Button>
+                  </ItemTemplate>
+              </asp:TemplateField>
+                                                                        
+                  </Columns>
+          </asp:GridView>
+        </div>  
 
-                    <div>
-                        <asp:GridView ID="ApplicationGridView" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="There are no data records to display.">
+         </div>
+            </div>
+          </div>
+        </div>  
 
-                            <Columns>  
-                                <asp:BoundField DataField="id" HeaderText="id" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
-                                <asp:BoundField DataField="job_title" HeaderText="Title" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
-                                <asp:BoundField DataField="app_username" HeaderText="Applicant" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
-                                <asp:BoundField DataField="score" HeaderText="Score" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
-                                <asp:BoundField DataField="short_description" HeaderText="Description" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
-                                <asp:BoundField DataField="working_hours" HeaderText="W. Hours" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
-                                <asp:BoundField DataField="vacancy" HeaderText="Vacancy" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
-                                <asp:BoundField DataField="deadline" HeaderText="Deadline" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
-                                <asp:BoundField DataField="min_years_of_experience" HeaderText="minYearsOfExp" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
-                                <asp:BoundField DataField="hr_username" HeaderText="HR" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
-                                <asp:BoundField DataField="manager_status" HeaderText="Final Status" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
+         <div class="clearfix"></div>
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="x_panel">
+                  <div class="x_title">
+                    <h2>Search for Tasks</h2>
+
+                    <div class="clearfix"></div>
+                  </div>
+                  <div class="x_content">
+
+                    <p>Search for specific task in certain project</p>
+                                                            
+                        <div>
+                            <form class="form-inline">
+                              <div class="form-group">
+                                <label for="email" style="margin-left: 250px;">Project Name: </label>
+                                <asp:TextBox ID="projectNameforTaskTxt" runat="server" class="form-control"></asp:TextBox> 
+                                </div>
+
+                                <div class="form-group">
+                                <label for="pwd" style="margin-left: 50px;">Status: </label>
+                                <asp:TextBox ID="statusTxt" runat="server" class="form-control"></asp:TextBox> 
+                            </div>
+
+                                <asp:Button runat="server" ID="SearchForTask" Text="Search" onclick="SearchForTask_Clicked" type="submit" class="btn btn-info"></asp:Button>
+                            </form>
+                        </div>
+
+                         <div>
+
+                        <asp:GridView ID="SearchForTaskView" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="There are no data records to display.">
+                                  <Columns>
+                                <asp:BoundField DataField="project" HeaderText="Project" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                  <asp:BoundField DataField="name" HeaderText="Task" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                <asp:BoundField DataField="regular_employee_username" HeaderText="Employee" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                <asp:BoundField DataField="status" HeaderText="Status" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                  <asp:BoundField DataField="deadline" HeaderText="Deadline" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                <asp:BoundField DataField="description" HeaderText="Description" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                                                                    
 
                                 <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
-                                    <ItemTemplate>
-                                        <asp:Button runat="server" HeaderText="Accept" id="Accept" CommandArgument='<%# Container.DataItemIndex %>' OnCommand="AcceptApplication" Text="Accept" type="submit" class="btn btn-success"></asp:Button>    
-                                    </ItemTemplate>
-                                </asp:TemplateField>
+                                  <ItemTemplate>
+                                      <asp:Button runat="server" id="SelectTask" CommandArgument='<%# Container.DataItemIndex %>' OnCommand="SelectTask_Clicked" Text="Select" type="submit" class="btn btn-success"></asp:Button>
+                                  </ItemTemplate>
+                              </asp:TemplateField>
+                                                                                        
+                                  </Columns>
+                          </asp:GridView>
+                        </div>  
+                                                            
+                </div>
+            </div>
+          </div>
+        </div>
 
-                                <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
-                                    <ItemTemplate>
-                                        <asp:Button runat="server" HeaderText="Reject" id="Reject" CommandArgument='<%# Container.DataItemIndex %>' OnCommand="RejectApplication" Text="Reject" type="submit" class="btn btn-danger"></asp:Button>    
-                                    </ItemTemplate>
-                                </asp:TemplateField>
-                                
-                            </Columns>
-                        </asp:GridView>  
-                    </div>   
-
-
+                                       
+                    <!-- Create New Project -->
                   
+                                        
+                  <!-- end project list -->
+
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
+
         <!-- /page content -->
 
         <!-- footer content -->
@@ -259,8 +376,6 @@
           <div class="clearfix"></div>
         </footer>
         <!-- /footer content -->
-      </div>
-    </div>
 
     <!-- jQuery -->
     <script src="../Style/vendors/jquery/dist/jquery.min.js"></script>
@@ -292,6 +407,7 @@
      <!-- Custom Theme Scripts -->
      <script src="../Style/build/js/custom.min.js"></script>
      
+ 
      <!-- Initialize datetimepicker -->
  <script>
      $('#myDatepicker').datetimepicker();
@@ -323,6 +439,7 @@
          $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
      });
  </script>
+
     </form>
   </body>
 </html>
