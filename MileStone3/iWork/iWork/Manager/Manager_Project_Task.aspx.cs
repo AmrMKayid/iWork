@@ -79,30 +79,6 @@ namespace iWork.Manager
             Response.Redirect("Manager_Selected_Task.aspx");
         }
 
-        protected void SearchForTask_Clicked(object sender, EventArgs e)
-        {
-            string viewTasks = "SELECT project, name, regular_employee_username, status, deadline, description from Tasks where mananger_username =\'" +
-                Session["Username"] + "\' AND " + "project =\'" + projectNameforTaskTxt.Text + "\'" + " AND " + "status =\'" + statusTxt.Text + "\'";
 
-
-            string script = "alert('" + projectNameforTaskTxt.Text +  statusTxt.Text + "');";
-            ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
-
-            SqlCommand viewTasksCmd = new SqlCommand(viewTasks, conn);
-
-
-            conn.Open();
-
-            // View Tasks
-            DataSet ds3 = new DataSet();
-            SqlDataAdapter objAdp3 = new SqlDataAdapter(viewTasksCmd);
-            objAdp3.Fill(ds3);
-
-            SearchForTaskView2.DataSource = ds3;
-            SearchForTaskView2.DataBind();
-
-            conn.Close();
-
-        }
     }
 }

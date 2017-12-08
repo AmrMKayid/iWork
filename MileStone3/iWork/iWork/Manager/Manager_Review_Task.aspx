@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Inherits="iWork.Manager.Manager" %>
+﻿<%@ Page Language="C#" Inherits="iWork.Manager.Manager_Review_Task" %>
 <!DOCTYPE html>
 <html lang="en">
   <head runat="server">
@@ -34,6 +34,7 @@
     <link href="../Style/vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 
     <link href="../Style/vendors/cropper/dist/cropper.min.css" rel="stylesheet">
+ 
   </head>
 
   <body class="nav-md">
@@ -43,7 +44,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-laptop"></i> <span>iWork!</span></a>
+              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>iWork!</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -70,6 +71,7 @@
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="../Default.aspx">Main</a></li>
+                      <li><a href="Manager.aspx">Profile</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -95,10 +97,9 @@
                     <ul class="nav child_menu">
                       <li><a href="Manager_Projects.aspx">Projects</a></li>
                       <li><a href="Manager_Selected_Project.aspx">Project Details</a></li>
-					  <li><a href="Manager_Project_Task.aspx">Project's Tasks</a></li>
-                      <li><a href="Manager_Review_Task.aspx">View & Review Tasks</a></li>							
-    				  <li><a href="Manager_Selected_Task.aspx">Task Details</a></li>
-					
+                      <li><a href="Manager_Project_Task.aspx">Project's Tasks</a></li>
+                      <li><a href="Manager_Review_Task.aspx">View & Review Tasks</a></li>                           
+                      <li><a href="Manager_Selected_Task.aspx">Task Details</a></li>
                     </ul>
                   </li>
 
@@ -154,7 +155,6 @@
                   </ul>
                 </li>
 
-             
               </ul>
             </nav>
           </div>
@@ -166,7 +166,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Profile <small>Dashboard</small></h3>
+                <h3>Applications <small>Dashboard</small></h3>
               </div>
 
               <div class="title_right">
@@ -187,7 +187,7 @@
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Profile</h2>
+                    <h2>Applications</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -207,8 +207,51 @@
                   </div>
                   <div class="x_content">
 
-                    <p>Welcome to your Profile</p>
+                  <p>Search for Specific Task</p>
+				<div class="input-group">
+				    <label>Project Name: </label>
+                    <asp:TextBox ID="projectNameforTaskTxt" runat="server" class="form-control"></asp:TextBox>                                                       
+                  </div>
+                  <div class="input-group">
+					<label>Task Status: </label>
+                    <asp:TextBox ID="statusTxt" runat="server" class="form-control"></asp:TextBox>                                         
+                    <span class="input-group-btn">
+                        <asp:Button runat="server" id="SearchForTask" onclick="SearchForTask_Clicked" Text="Search!" type="submit" class="btn btn-primary" style="margin-top: 23px;"></asp:Button>                         
+                    </span>
+                  </div>
+                                                    
+                    <p>View & Review <strong>Fixed</strong> Tasks</p>
 
+                    <!-- start project list -->
+
+                    <div>
+                        <asp:GridView ID="SearchForTaskView" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="There are no data records to display.">
+                                  <Columns>
+                                <asp:BoundField DataField="project" HeaderText="Project" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                  <asp:BoundField DataField="name" HeaderText="Task" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                <asp:BoundField DataField="regular_employee_username" HeaderText="Employee" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                <asp:BoundField DataField="status" HeaderText="Status" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                  <asp:BoundField DataField="deadline" HeaderText="Deadline" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                <asp:BoundField DataField="description" HeaderText="Description" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                                                                                    
+
+                                <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
+                                  <ItemTemplate>
+                                      <asp:Button runat="server" id="AcceptTask" CommandArgument='<%# Container.DataItemIndex %>' OnCommand="AcceptTask_Clicked" Text="Accept" type="submit" class="btn btn-success"></asp:Button>
+                                  </ItemTemplate>
+                                </asp:TemplateField>
+
+							    <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
+                                  <ItemTemplate>
+                                      <asp:Button runat="server" id="RejectTask" CommandArgument='<%# Container.DataItemIndex %>' OnCommand="RejectTask_Clicked" Text="Reject" type="submit" class="btn btn-danger"></asp:Button>
+                                     
+                                  </ItemTemplate>
+                                </asp:TemplateField>
+                                                                                       
+                                  </Columns>
+                          </asp:GridView>
+                    </div>   
+                 
                   </div>
                 </div>
               </div>

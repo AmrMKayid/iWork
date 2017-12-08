@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" Inherits="iWork.Manager.Manager" %>
+﻿<%@ Page Language="C#" Inherits="iWork.Manager.Manager_Review_Task_Reject" %>
 <!DOCTYPE html>
 <html lang="en">
   <head runat="server">
@@ -34,6 +34,7 @@
     <link href="../Style/vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 
     <link href="../Style/vendors/cropper/dist/cropper.min.css" rel="stylesheet">
+ 
   </head>
 
   <body class="nav-md">
@@ -43,7 +44,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-laptop"></i> <span>iWork!</span></a>
+              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>iWork!</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -70,6 +71,7 @@
                   <li><a><i class="fa fa-home"></i> Home <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
                       <li><a href="../Default.aspx">Main</a></li>
+                      <li><a href="Manager.aspx">Profile</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -95,10 +97,9 @@
                     <ul class="nav child_menu">
                       <li><a href="Manager_Projects.aspx">Projects</a></li>
                       <li><a href="Manager_Selected_Project.aspx">Project Details</a></li>
-					  <li><a href="Manager_Project_Task.aspx">Project's Tasks</a></li>
-                      <li><a href="Manager_Review_Task.aspx">View & Review Tasks</a></li>							
-    				  <li><a href="Manager_Selected_Task.aspx">Task Details</a></li>
-					
+                      <li><a href="Manager_Project_Task.aspx">Project's Tasks</a></li>
+                      <li><a href="Manager_Review_Task.aspx">View & Review Tasks</a></li>                           
+                      <li><a href="Manager_Selected_Task.aspx">Task Details</a></li>
                     </ul>
                   </li>
 
@@ -154,7 +155,6 @@
                   </ul>
                 </li>
 
-             
               </ul>
             </nav>
           </div>
@@ -166,7 +166,7 @@
           <div class="">
             <div class="page-title">
               <div class="title_left">
-                <h3>Profile <small>Dashboard</small></h3>
+                <h3>Applications <small>Dashboard</small></h3>
               </div>
 
               <div class="title_right">
@@ -187,7 +187,7 @@
               <div class="col-md-12">
                 <div class="x_panel">
                   <div class="x_title">
-                    <h2>Profile</h2>
+                    <h2>Applications</h2>
                     <ul class="nav navbar-right panel_toolbox">
                       <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -207,7 +207,27 @@
                   </div>
                   <div class="x_content">
 
-                    <p>Welcome to your Profile</p>
+                  <p>New Deadline for <strong>REJECTED</strong> Tasks</p>
+                <div class="input-group">
+                    <div class="form-group">
+                      <label class="control-label">New Deadline <span class="required">*</span></label>
+                      <div class="form-group">
+                        <div class="input-group date" id="datetimepicker7">
+                             <asp:TextBox ID="NewDeadline" runat="server" class="form-control col-md-7 col-xs-12"></asp:TextBox>                                       
+                            <span class="input-group-addon">
+                               <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                        </div>
+                      </div>
+                    </div>
+
+					<asp:Button runat="server" id="RejectTask" OnClick="RejectTask_Clicked" Text="Reject" type="submit" class="btn btn-danger"></asp:Button>
+                  </div>
+                                                    
+                    
+
+                    <!-- start project list -->
+
 
                   </div>
                 </div>

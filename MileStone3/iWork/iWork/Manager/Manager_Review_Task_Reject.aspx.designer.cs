@@ -11,22 +11,14 @@
 namespace iWork.Manager {
 	
 	
-	public partial class Manager_Project_Task {
+	public partial class Manager_Review_Task_Reject {
 		
-		protected System.Web.UI.HtmlControls.HtmlForm TasksForm;
+		protected System.Web.UI.HtmlControls.HtmlForm ProjectsForm;
 		
 		protected System.Web.UI.WebControls.Label usernameLbl;
 		
-		protected System.Web.UI.WebControls.TextBox TaskNametxt;
+		protected System.Web.UI.WebControls.TextBox NewDeadline;
 		
-		protected System.Web.UI.WebControls.TextBox descriptiontxt;
-		
-		protected System.Web.UI.WebControls.TextBox deadline;
-		
-		protected System.Web.UI.WebControls.Button CreateTask;
-		
-		protected System.Web.UI.WebControls.GridView MyTasksView;
-		
-		protected System.Web.UI.WebControls.Button SelectTask;
+		protected System.Web.UI.WebControls.Button RejectTask;
 	}
 }

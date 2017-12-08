@@ -1757,10 +1757,10 @@ IF EXISTS(SELECT * FROM Managers
         where Managers.username = @manager)
 Begin
      SELECT *
-     FROM Tasks
-     WHERE mananger_username = @manager AND
-           project = @project AND
-           [status] = @status
+     FROM Tasks T
+     WHERE T.mananger_username = @manager AND
+           T.project = @project AND
+           T.status = @status
 End
 
 
