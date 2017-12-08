@@ -47,26 +47,46 @@ namespace iWork.Manager.Profile.templates
 
         protected void CreateNewProject(object sender, EventArgs e)
         {
-            
-            SqlCommand cmd = new SqlCommand("CreateNewProject", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            string[] ProjectName = new string[MyProjectsView.Rows.Count];
 
-            cmd.Parameters.Add(new SqlParameter("@manager", Session["Username"]));
+            for (int i = 0; i < MyProjectsView.Rows.Count; i++)
+                ProjectName[i] = MyProjectsView.Rows[i].Cells[0].Text;
+                
+            if(ProjectNametxt.Text == "")
+            {
+                string script = "alert('You Can't Create a Project without a Name!" + "');";
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
+            }
 
-            cmd.Parameters.Add(new SqlParameter("@name", ProjectNametxt.Text));
+            else if(ProjectName.Contains(ProjectNametxt.Text))
+            {
+                string script = "alert('You Can't Create a Project with the SAME name of another Project!" + "');";
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
+            }
 
-            cmd.Parameters.Add(new SqlParameter("@start_date", TextBox1.Text));
+            else
+            {
+                SqlCommand cmd = new SqlCommand("CreateNewProject", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            cmd.Parameters.Add(new SqlParameter("@end_date", TextBox2.Text));
+                cmd.Parameters.Add(new SqlParameter("@manager", Session["Username"]));
 
-            conn.Open();
+                cmd.Parameters.Add(new SqlParameter("@name", ProjectNametxt.Text));
 
-            cmd.ExecuteReader();
+                cmd.Parameters.Add(new SqlParameter("@start_date", TextBox1.Text));
 
-            conn.Close();
+                cmd.Parameters.Add(new SqlParameter("@end_date", TextBox2.Text));
 
-            string script = "alert('" + "Project " + ProjectNametxt.Text + " Created" +   "');";
-            ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
+                conn.Open();
+
+                cmd.ExecuteReader();
+
+                conn.Close();
+
+                string script = "alert('" + "Project (" + ProjectNametxt.Text + ") Created" + "');";
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
+            }
+
         }
     }
 }

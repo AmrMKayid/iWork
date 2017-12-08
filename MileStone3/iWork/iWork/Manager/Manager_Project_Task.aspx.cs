@@ -82,7 +82,12 @@ namespace iWork.Manager
         protected void SearchForTask_Clicked(object sender, EventArgs e)
         {
             string viewTasks = "SELECT project, name, regular_employee_username, status, deadline, description from Tasks where mananger_username =\'" +
-                Session["Username"] + "\' AND " + "project =\'" + projectNameforTaskTxt.Text + "\'" + "\' AND " + "status =\'" + statusTxt.Text + "\'";
+                Session["Username"] + "\' AND " + "project =\'" + projectNameforTaskTxt.Text + "\'" + " AND " + "status =\'" + statusTxt.Text + "\'";
+
+
+            string script = "alert('" + projectNameforTaskTxt.Text +  statusTxt.Text + "');";
+            ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
+
             SqlCommand viewTasksCmd = new SqlCommand(viewTasks, conn);
 
 
@@ -93,8 +98,8 @@ namespace iWork.Manager
             SqlDataAdapter objAdp3 = new SqlDataAdapter(viewTasksCmd);
             objAdp3.Fill(ds3);
 
-            SearchForTaskView.DataSource = ds3;
-            SearchForTaskView.DataBind();
+            SearchForTaskView2.DataSource = ds3;
+            SearchForTaskView2.DataBind();
 
             conn.Close();
 

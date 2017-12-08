@@ -150,4 +150,3 @@
 /Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/EntityFramework.xml
 /Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/EntityFramework.SqlServer.xml
 /Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/EntityFramework.SqlServerCompact.xml
-/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.csprojResolveAssemblyReference.cache

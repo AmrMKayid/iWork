@@ -97,6 +97,10 @@ namespace iWork.Manager.Profile.templates
                 index = (index < 0) ? 0 : (index >= DeleteRegEmpView.Rows.Count) ? index - 1 : index;
                 string username = DeleteRegEmpView.Rows[index].Cells[0].Text;
 
+                string countStr = "Select count(*) from Project_Assignments where project_name=\'" +
+                    Session["SelectedProject"] + "\' AND mananger_username=\'" + Session["Username"] + "\' AND regular_employee_username=\'" + username + "\'"; 
+                SqlCommand countCmd = new SqlCommand(countStr, conn);
+
                 SqlCommand cmd = new SqlCommand("RemoveEmployeeFromProject", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -105,8 +109,23 @@ namespace iWork.Manager.Profile.templates
                 cmd.Parameters.Add(new SqlParameter("@regular_employee", username));
 
                 conn.Open();
+                Int32 countBefore = Convert.ToInt32(countCmd.ExecuteScalar());
+                conn.Close();
+
+                conn.Open();
                 cmd.ExecuteReader();
                 conn.Close();
+
+                conn.Open();
+                Int32 countAfter = Convert.ToInt32(countCmd.ExecuteScalar());
+                conn.Close(); 
+
+
+                if(countAfter == countBefore)
+                {
+                    string script = "alert('" + username + " has Tasks in this project >> You CAN NOT Remove him');";
+                    ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
+                }
             }
             catch (ArgumentOutOfRangeException ee)
             {

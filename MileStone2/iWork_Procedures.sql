@@ -1562,7 +1562,7 @@ As
 Begin
      SELECT *
      FROM Applications A, Jobs J
-     WHERE A.job_title = J.title 
+     WHERE A.job_title = J.title AND A.job_title = @job_title
 		 AND EXISTS (SELECT * FROM Managers M, Staff_Members S1
 									where M.username = @manager AND S1.username = @manager
 									--AND A.manager_username = M.username 

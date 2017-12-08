@@ -17,6 +17,10 @@ namespace iWork.Manager {
 		
 		protected System.Web.UI.WebControls.Label usernameLbl;
 		
+		protected System.Web.UI.WebControls.TextBox SpecificJobAppTxt;
+		
+		protected System.Web.UI.WebControls.Button SearchForSpecificJobAppBtn;
+		
 		protected System.Web.UI.WebControls.GridView ApplicationGridView;
 		
 		protected System.Web.UI.WebControls.Button Accept;

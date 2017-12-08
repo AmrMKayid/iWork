@@ -36,18 +36,27 @@ namespace iWork.Manager
 
         protected void RejectRequest_Clicked(object sender, EventArgs e)
         {
-            SqlCommand cmd = new SqlCommand("ReviewRequest", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
+            if (Reasontxt.Text == "")
+            {
+                string script = "alert('You Should give a REASON for Rejection!');";
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
+            }
 
-            cmd.Parameters.Add(new SqlParameter("@manager", Session["Username"]));
-            cmd.Parameters.Add(new SqlParameter("@start_date", Session["SelectedRequest_start_date"]));
-            cmd.Parameters.Add(new SqlParameter("@username", Session["SelectedRequest_Username"]));
-            cmd.Parameters.Add(new SqlParameter("@isAccepted", 0));
-            cmd.Parameters.Add(new SqlParameter("@reason", Reasontxt.Text));
+            else
+            {
+                SqlCommand cmd = new SqlCommand("ReviewRequest", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
 
-            conn.Open();
-            cmd.ExecuteReader();
-            conn.Close();
+                cmd.Parameters.Add(new SqlParameter("@manager", Session["Username"]));
+                cmd.Parameters.Add(new SqlParameter("@start_date", Session["SelectedRequest_start_date"]));
+                cmd.Parameters.Add(new SqlParameter("@username", Session["SelectedRequest_Username"]));
+                cmd.Parameters.Add(new SqlParameter("@isAccepted", 0));
+                cmd.Parameters.Add(new SqlParameter("@reason", Reasontxt.Text));
+
+                conn.Open();
+                cmd.ExecuteReader();
+                conn.Close();
+            }
         }
     }
 }

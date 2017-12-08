@@ -34,6 +34,7 @@
     <link href="../Style/vendors/mjolnic-bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min.css" rel="stylesheet">
 
     <link href="../Style/vendors/cropper/dist/cropper.min.css" rel="stylesheet">
+ 
   </head>
 
   <body class="nav-md">
@@ -205,12 +206,20 @@
                   </div>
                   <div class="x_content">
 
+				  <p>Search for Specific Job Applications</p>
+                  <div class="input-group">
+					<asp:TextBox ID="SpecificJobAppTxt" runat="server" class="form-control"></asp:TextBox>                                       							
+                    <span class="input-group-btn">
+						<asp:Button runat="server" id="SearchForSpecificJobAppBtn" onclick="SearchForSpecificJobApp" Text="Search!" type="submit" class="btn btn-primary"></asp:Button>    						
+                    </span>
+                  </div>
+        											
                     <p>View & Review Applications</p>
 
                     <!-- start project list -->
 
                     <div>
-                        <asp:GridView ID="ApplicationGridView" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="There are no data records to display.">
+                        <asp:GridView ID="ApplicationGridView" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="You Do NOT have this Job in Your Department!">
 
                             <Columns>  
                                 <asp:BoundField DataField="id" HeaderText="id" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  
@@ -240,9 +249,7 @@
                             </Columns>
                         </asp:GridView>  
                     </div>   
-
-
-                  
+                 
                   </div>
                 </div>
               </div>

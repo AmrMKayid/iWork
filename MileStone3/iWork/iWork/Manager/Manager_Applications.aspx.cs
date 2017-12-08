@@ -13,31 +13,46 @@ namespace iWork.Manager
 
     public partial class Manager_Applications : System.Web.UI.Page
     {
-        protected void Page_Load(object sender, EventArgs e)
+        protected void SearchForSpecificJobApp(object sender, EventArgs e)
         {
-            SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
-
-
-            SqlCommand cmd = new SqlCommand("ViewApplication", conn);
-            cmd.CommandType = CommandType.StoredProcedure;
-
-            cmd.Parameters.Add(new SqlParameter("@manager", Session["Username"]));
-
-            // TODO: Get the job title
-            cmd.Parameters.Add(new SqlParameter("@job_title", "Manager-Junior Software Engineering Manager"));
-
-            conn.Open();
-
-            DataSet ds = new DataSet();
-            SqlDataAdapter objAdp = new SqlDataAdapter(cmd);
-
-            objAdp.Fill(ds);
-
-            ApplicationGridView.DataSource = ds;
-
+            
+            DataTable dsC = new DataTable();
+            dsC = null;
+            ApplicationGridView.DataSource = dsC;
             ApplicationGridView.DataBind();
 
-            conn.Close();
+
+            if (SpecificJobAppTxt.Text == "")
+            {
+                string script = "alert('You Should Type a Job to Search for!');";
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
+            }
+
+            else
+            {
+                SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
+
+
+                SqlCommand cmd = new SqlCommand("ViewApplication", conn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new SqlParameter("@manager", Session["Username"]));
+
+                cmd.Parameters.Add(new SqlParameter("@job_title", SpecificJobAppTxt.Text));
+
+                conn.Open();
+
+                DataSet ds = new DataSet();
+                SqlDataAdapter objAdp = new SqlDataAdapter(cmd);
+
+                objAdp.Fill(ds);
+
+                ApplicationGridView.DataSource = ds;
+
+                ApplicationGridView.DataBind();
+
+                conn.Close();
+            }
         }
 
 

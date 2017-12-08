@@ -23,11 +23,15 @@ namespace iWork.Manager
 
         protected System.Web.UI.WebControls.GridView SearchForTaskView;
 
+        protected System.Web.UI.WebControls.GridView SearchForTaskView2;
+
         protected System.Web.UI.WebControls.Button CreateTask;
 
         protected System.Web.UI.WebControls.Button SelectTask;
 
         protected System.Web.UI.WebControls.Button SearchForTask;
+
+        protected System.Web.UI.WebControls.Button SearchForSpecificJobAppBtn;
 
 
     }

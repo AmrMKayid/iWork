@@ -253,35 +253,37 @@
                         </div>
                         <div class="x_content">
                           <br>
+					
                           <form id="demo-form2" data-parsley-validate="" class="form-horizontal form-label-left" novalidate="">
       
                             <div class="form-group">
-                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Project Name <span class="required">*</span>
+                              <label class="control-label col-md-6 col-sm-12 col-xs-12 " for="first-name">Project Name <span class="required">*</span>
                               </label>
-                              <div class="col-md-6 col-sm-6 col-xs-12">
-                                <asp:TextBox ID="ProjectNametxt" runat="server" type="text" class="form-control col-md-7 col-xs-12" ></asp:TextBox>																		
+                              <div class="col-md-6 col-sm-12 col-xs-12 ">
+                                <asp:TextBox ID="ProjectNametxt" runat="server" type="text" class="form-control col-md-6 col-sm-12 col-xs-12 " ></asp:TextBox>																		
                               </div>
                             </div>
+								<br><br>
                             <div class="form-group">
-                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">Start Date <span class="required">*</span>
+                              <label class="control-label col-md-6 col-sm-12 col-xs-12 " for="last-name">Start Date <span class="required">*</span>
                               </label>
                               <div class="form-group">
-                                <div class="input-group date" id="datetimepicker6" style="width: 50%;">
-<!--                                    <input type="text" class="form-control">-->
-									<asp:TextBox ID="TextBox1" runat="server" class="form-control col-md-7 col-xs-12"></asp:TextBox>
+                                <div class="input-group date" id="datetimepicker6">
+									<asp:TextBox ID="TextBox1" runat="server" class="form-control col-md-6 col-sm-12 col-xs-12 "></asp:TextBox>
                                     <span class="input-group-addon">
                                        <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
                                 </div>
                               </div>
                             </div>
+									<br>
                             <div class="form-group">
-                              <label class="control-label col-md-3 col-sm-3 col-xs-12" for="last-name">End Date <span class="required">*</span>
+                              <label class="control-label col-md-6 col-sm-12 col-xs-12 " for="last-name">End Date <span class="required">*</span>
                               </label>
                               <div class="form-group">
-                                <div class="input-group date" id="datetimepicker7" style="width: 50%;">
+                                <div class="input-group date" id="datetimepicker7">
 <!--                                    <input type="text" class="form-control">-->
-                                     <asp:TextBox ID="TextBox2" runat="server" class="form-control col-md-7 col-xs-12"></asp:TextBox>                                       
+                                     <asp:TextBox ID="TextBox2" runat="server" class="form-control col-md-6 col-sm-12 col-xs-12 "></asp:TextBox>                                       
                                     <span class="input-group-addon">
                                        <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -294,7 +296,7 @@
                               <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
                                 <button class="btn btn-primary" type="button">Cancel</button>
                                 <button class="btn btn-primary" type="reset">Reset</button>
-                                <asp:Button runat="server" ID="CreateProject" Text="Create Project" onclick="CreateNewProject" type="submit" class="btn btn-info"></asp:Button>
+                                <asp:Button runat="server" ID="CreateProject" Text="Create Project" OnCommand="CreateNewProject" type="submit" class="btn btn-info"></asp:Button>
                               </div>
                             </div>
       
