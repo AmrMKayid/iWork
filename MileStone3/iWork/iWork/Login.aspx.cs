@@ -61,11 +61,11 @@ namespace iWork
                 Response.Redirect("Manager/Manager.aspx", true);
                 //Response.Redirect("Manager/Manager_Projects.aspx");
             }
-            else if (user_type.Value.Equals("HR Employee"))
+            else if (user_type.Value.Equals("H"))
             {
                 Session["Username"] = username;
                 Response.Write("Passed");
-                Response.Redirect("HR_Employee/HR_Employee.aspx", true);
+                Response.Redirect("Staff_Member/Dashboard/Index.aspx", true);
             }
             else
             {

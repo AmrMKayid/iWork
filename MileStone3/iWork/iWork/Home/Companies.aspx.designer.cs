@@ -8,11 +8,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace iWork {
+namespace iWork.Home {
 	
 	
-	public partial class HR_Employee {
+	public partial class Companies {
 		
 		protected System.Web.UI.HtmlControls.HtmlForm form1;
+		
+		protected System.Web.UI.WebControls.GridView CompanyGridView;
+		
+		protected System.Web.UI.WebControls.Button SelectCompany;
 	}
 }

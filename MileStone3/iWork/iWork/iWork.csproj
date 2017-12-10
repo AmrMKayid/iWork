@@ -173,7 +173,6 @@
     <Content Include="Login.aspx" />
     <Content Include="Job_Seeker\Job_Seeker.aspx" />
     <Content Include="Regular_Employee\Regular_Employee.aspx" />
-    <Content Include="HR_Employee\HR_Employee.aspx" />
     <Content Include="Manager\Manager.aspx" />
     <Content Include="Manager\Manager_Requests.aspx" />
     <Content Include="Manager\Manager_Applications.aspx" />
@@ -7577,6 +7576,18 @@
     <Content Include="Manager\Manager_Project_Task.aspx" />
     <Content Include="Manager\Manager_Review_Task.aspx" />
     <Content Include="Manager\Manager_Review_Task_Reject.aspx" />
+    <Content Include="Staff_Member\Dashboard\Index.aspx" />
+    <Content Include="Staff_Member\HR_Employee\Announcements\Post_Announcement.aspx" />
+    <Content Include="Staff_Member\HR_Employee\Attendance\EmployeeOfTheMonth.aspx" />
+    <Content Include="Staff_Member\HR_Employee\Attendance\ViewStaffAttendance.aspx" />
+    <Content Include="Staff_Member\HR_Employee\Jobs\EditJob.aspx" />
+    <Content Include="Staff_Member\HR_Employee\Jobs\QuestionsLibrary.aspx" />
+    <Content Include="Staff_Member\HR_Employee\Jobs\ViewJobApplication.aspx" />
+    <Content Include="Staff_Member\HR_Employee\Jobs\ViewJobs.aspx" />
+    <Content Include="Staff_Member\HR_Employee\Requests\Manage_Requests.aspx" />
+    <Content Include="Home\Companies.aspx" />
+    <Content Include="Home\Company_Departments.aspx" />
+    <Content Include="Home\Company_Department_Jobs.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -7605,12 +7616,6 @@
     </Compile>
     <Compile Include="Regular_Employee\Regular_Employee.aspx.designer.cs">
       <DependentUpon>Regular_Employee.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="HR_Employee\HR_Employee.aspx.cs">
-      <DependentUpon>HR_Employee.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="HR_Employee\HR_Employee.aspx.designer.cs">
-      <DependentUpon>HR_Employee.aspx</DependentUpon>
     </Compile>
     <Compile Include="Manager\Manager.aspx.cs">
       <DependentUpon>Manager.aspx</DependentUpon>
@@ -7672,12 +7677,100 @@
     <Compile Include="Manager\Manager_Review_Task_Reject.aspx.designer.cs">
       <DependentUpon>Manager_Review_Task_Reject.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Model\AttendanceRecord.cs" />
+    <Compile Include="Model\BusinessTripRequest.cs" />
+    <Compile Include="Model\Company.cs" />
+    <Compile Include="Model\DbHelper.cs" />
+    <Compile Include="Model\Department.cs" />
+    <Compile Include="Model\HrEmployee.cs" />
+    <Compile Include="Model\Job.cs" />
+    <Compile Include="Model\JobApplication.cs" />
+    <Compile Include="Model\JobInterviewQuestion.cs" />
+    <Compile Include="Model\LeaveRequest.cs" />
+    <Compile Include="Model\Manager.cs" />
+    <Compile Include="Model\MonthTopAchiever.cs" />
+    <Compile Include="Model\RegularEmployee.cs" />
+    <Compile Include="Model\Request.cs" />
+    <Compile Include="Model\ReviewStatusEnum.cs" />
+    <Compile Include="Model\StaffMember.cs" />
+    <Compile Include="Model\User.cs" />
+    <Compile Include="Staff_Member\Dashboard\Index.aspx.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\Dashboard\Index.aspx.designer.cs">
+      <DependentUpon>Index.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Announcements\Post_Announcement.aspx.cs">
+      <DependentUpon>Post_Announcement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Announcements\Post_Announcement.aspx.designer.cs">
+      <DependentUpon>Post_Announcement.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Attendance\EmployeeOfTheMonth.aspx.cs">
+      <DependentUpon>EmployeeOfTheMonth.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Attendance\EmployeeOfTheMonth.aspx.designer.cs">
+      <DependentUpon>EmployeeOfTheMonth.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Attendance\ViewStaffAttendance.aspx.cs">
+      <DependentUpon>ViewStaffAttendance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Attendance\ViewStaffAttendance.aspx.designer.cs">
+      <DependentUpon>ViewStaffAttendance.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Jobs\EditJob.aspx.cs">
+      <DependentUpon>EditJob.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Jobs\EditJob.aspx.designer.cs">
+      <DependentUpon>EditJob.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Jobs\QuestionsLibrary.aspx.cs">
+      <DependentUpon>QuestionsLibrary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Jobs\QuestionsLibrary.aspx.designer.cs">
+      <DependentUpon>QuestionsLibrary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Jobs\ViewJobApplication.aspx.cs">
+      <DependentUpon>ViewJobApplication.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Jobs\ViewJobApplication.aspx.designer.cs">
+      <DependentUpon>ViewJobApplication.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Jobs\ViewJobs.aspx.cs">
+      <DependentUpon>ViewJobs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Jobs\ViewJobs.aspx.designer.cs">
+      <DependentUpon>ViewJobs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Requests\Manage_Requests.aspx.cs">
+      <DependentUpon>Manage_Requests.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Staff_Member\HR_Employee\Requests\Manage_Requests.aspx.designer.cs">
+      <DependentUpon>Manage_Requests.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\Companies.aspx.cs">
+      <DependentUpon>Companies.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\Companies.aspx.designer.cs">
+      <DependentUpon>Companies.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\Company_Departments.aspx.cs">
+      <DependentUpon>Company_Departments.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\Company_Departments.aspx.designer.cs">
+      <DependentUpon>Company_Departments.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\Company_Department_Jobs.aspx.cs">
+      <DependentUpon>Company_Department_Jobs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\Company_Department_Jobs.aspx.designer.cs">
+      <DependentUpon>Company_Department_Jobs.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Manager\" />
     <Folder Include="Regular_Employee\" />
     <Folder Include="Job_Seeker\" />
-    <Folder Include="HR_Employee\" />
     <Folder Include="Manager\css\" />
     <Folder Include="Manager\images\" />
     <Folder Include="Manager\js\" />
@@ -7685,6 +7778,7 @@
     <Folder Include="Style\build\" />
     <Folder Include="Style\src\" />
     <Folder Include="Style\vendors\" />
+    <Folder Include="Home\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Manager\css\._maps" />
