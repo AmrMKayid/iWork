@@ -17,6 +17,21 @@ namespace iWork.Manager
         //SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
         SqlConnection conn = new SqlConnection(DbHelper.GetConnectionString());
 
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if(Session["SelectedRequest_Type"] != null) {
+                string script = "alert('" + "This is a Leave Request\n Type: " + Session["SelectedRequest_Type"] + "');";
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
+            }
+            else if(Session["SelectedRequest_Dest"] != null && Session["SelectedRequest_Purp"] != null) {
+                string script = "alert('" + "This is a Business Trip Request\n Destination: " + Session["SelectedRequest_Dest"] + " \n Purpose: " + Session["SelectedRequest_Purp"] + "');";
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
+            }
+
+        }
+
+
         protected void AcceptRequest_Clicked(object sender, EventArgs e)
         {
             

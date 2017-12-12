@@ -45,12 +45,39 @@ namespace iWork.Manager
             string username = RequestsGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[0].Text;
             string start_date = RequestsGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[2].Text;
 
+            SqlCommand cmd = new SqlCommand("Select type from Leave_Requests where start_date=\'" + start_date + "\' and username=\'" + username + "\'", conn);
+            conn.Open();
+            string requestType = (string) cmd.ExecuteScalar();
+            conn.Close();
+
+            SqlCommand cmd2 = new SqlCommand("Select destination from Business_Trips where start_date=\'" + start_date + "\' and username=\'" + username + "\'", conn);
+            conn.Open();
+            string requestDest = (string) cmd2.ExecuteScalar();
+            conn.Close();
+
+            SqlCommand cmd3 = new SqlCommand("Select purpose from Business_Trips where start_date=\'" + start_date + "\' and username=\'" + username + "\'", conn);
+            conn.Open();
+            string requestPurpose = (string)cmd3.ExecuteScalar();
+            conn.Close();
+
             Session["SelectedRequest_Username"] = username;
             Session["SelectedRequest_start_date"] = start_date;
 
-            Response.Redirect("Manager_Requests_Review.aspx");
+            //Response.Redirect("Manager_Requests_Review.aspx");
 
+            if (requestType != null || requestType != "")
+            {
+                Session["SelectedRequest_Type"] = requestType;
+                Response.Redirect("Manager_Requests_Review.aspx");
+            }
+            else
+            {
+                Session["SelectedRequest_Dest"] = requestDest;
+                Session["SelectedRequest_Purp"] = requestPurpose;
+                Response.Redirect("Manager_Requests_Review.aspx");
+            }
         }
 
+       
     }
 }

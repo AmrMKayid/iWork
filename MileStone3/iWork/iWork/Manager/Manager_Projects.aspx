@@ -215,7 +215,8 @@
                       <asp:GridView ID="MyProjectsView" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="There are no data records to display.">
                               <Columns>
                             <asp:BoundField DataField="name" HeaderText="Project" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
-                                      <asp:BoundField DataField="start_date" HeaderText="Start Date" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+							<asp:BoundField DataField="mananger_define_username" HeaderText="Manager" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                            <asp:BoundField DataField="start_date" HeaderText="Start Date" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
                             <asp:BoundField DataField="end_date" HeaderText="End Date" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
       
                           <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">

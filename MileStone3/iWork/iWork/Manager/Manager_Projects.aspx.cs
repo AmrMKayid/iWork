@@ -20,7 +20,7 @@ namespace iWork.Manager.Profile.templates
         protected void Page_Load(object sender, EventArgs e)
         {
 
-            SqlCommand cmd = new SqlCommand("SELECT name, start_date, end_date from Projects where mananger_define_username =\'" + Session["Username"] + "\'", conn);
+            SqlCommand cmd = new SqlCommand("SELECT P.* from Projects P, Staff_Members s1, Staff_Members s2 Where s1.username =P.mananger_define_username and s1.department = s2.department and s2.username=\'" + Session["Username"] + "\'", conn);
 
             conn.Open();
 
