@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
+using iWork.Model;
 
 namespace iWork
 {
@@ -20,7 +21,8 @@ namespace iWork
             //string connStr = ConfigurationManager.ConnectionStrings["MyDbConn"].ToString();
             //SqlConnection conn = new SqlConnection(connStr);
 
-            SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
+            //SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
+            SqlConnection conn = new SqlConnection(DbHelper.GetConnectionString());
 
 
             SqlCommand cmd = new SqlCommand("loginweb", conn);
@@ -42,13 +44,7 @@ namespace iWork
             cmd.ExecuteReader();
             conn.Close();
 
-            if (user_type.Value.Equals("Job Seeker"))
-            {
-                Session["Username"] = username;
-                Response.Write("Passed");
-                Response.Redirect("Job_Seeker/Job_Seeker.aspx", true);
-            }
-            else if (user_type.Value.Equals("Regular Employee"))
+           if (user_type.Value.Equals("R"))
             {
                 Session["Username"] = username;
                 Response.Write("Passed");
@@ -66,6 +62,12 @@ namespace iWork
                 Session["Username"] = username;
                 Response.Write("Passed");
                 Response.Redirect("Staff_Member/Dashboard/Index.aspx", true);
+            }
+            else if (user_type.Value.Equals("J"))
+            {
+                Session["Username"] = username;
+                Response.Write("Passed");
+                Response.Redirect("Job_Seeker/Job_Seeker.aspx", true);
             }
             else
             {

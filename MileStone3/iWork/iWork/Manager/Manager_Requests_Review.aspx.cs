@@ -7,13 +7,15 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
+using iWork.Model;
 
 namespace iWork.Manager
 {
 
     public partial class Manager_Requests_Review : System.Web.UI.Page
     {
-        SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
+        //SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
+        SqlConnection conn = new SqlConnection(DbHelper.GetConnectionString());
 
         protected void AcceptRequest_Clicked(object sender, EventArgs e)
         {

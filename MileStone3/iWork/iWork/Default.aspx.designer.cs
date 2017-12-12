@@ -9,12 +9,24 @@
 //------------------------------------------------------------------------------
 
 namespace iWork {
-	
-	
-	public partial class Default {
-		
-		protected System.Web.UI.HtmlControls.HtmlForm form1;
-		
-		protected System.Web.UI.WebControls.Button button1;
-	}
+    
+    
+    public partial class Default {
+        
+        protected System.Web.UI.HtmlControls.HtmlForm form1;
+        
+        protected System.Web.UI.WebControls.Button singupBtn;
+        
+        protected System.Web.UI.WebControls.Button loginBtn;
+        
+        protected System.Web.UI.WebControls.TextBox txt_password;
+        
+        protected System.Web.UI.WebControls.TextBox txt_username;
+        
+        protected System.Web.UI.WebControls.Button singupBtn1;
+        
+        protected System.Web.UI.WebControls.Button singupBtn2;
+        
+        protected System.Web.UI.WebControls.Button singupBtn3;
+    }
 }

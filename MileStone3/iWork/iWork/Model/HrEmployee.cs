@@ -519,7 +519,6 @@ namespace iWork.Model
                 sql.Dispose();
             }
 
-            return null;
         }
 
         public List<AttendanceRecord> GetAttendanceOfStaffMember(

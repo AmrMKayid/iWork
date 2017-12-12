@@ -8,11 +8,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace iWork {
+namespace iWork.Regular_Employee {
 	
 	
 	public partial class Regular_Employee {
 		
-		protected System.Web.UI.HtmlControls.HtmlForm form1;
+		protected System.Web.UI.HtmlControls.HtmlForm ProjectsForm;
+		
+		protected System.Web.UI.WebControls.Label usernameLbl;
+		
+		protected System.Web.UI.WebControls.LinkButton LinkButton2;
 	}
 }

@@ -171,8 +171,6 @@
     <Content Include="Default.aspx" />
     <Content Include="packages.config" />
     <Content Include="Login.aspx" />
-    <Content Include="Job_Seeker\Job_Seeker.aspx" />
-    <Content Include="Regular_Employee\Regular_Employee.aspx" />
     <Content Include="Manager\Manager.aspx" />
     <Content Include="Manager\Manager_Requests.aspx" />
     <Content Include="Manager\Manager_Applications.aspx" />
@@ -7588,6 +7586,150 @@
     <Content Include="Home\Companies.aspx" />
     <Content Include="Home\Company_Departments.aspx" />
     <Content Include="Home\Company_Department_Jobs.aspx" />
+    <Content Include="Home\Register.aspx" />
+    <Content Include="Job_Seeker\css\maps\._jquery-jvectormap-2.0.3.css" />
+    <Content Include="Job_Seeker\css\maps\jquery-jvectormap-2.0.3.css" />
+    <Content Include="Job_Seeker\images\._american-express.png" />
+    <Content Include="Job_Seeker\images\._cropper.jpg" />
+    <Content Include="Job_Seeker\images\._img.jpg" />
+    <Content Include="Job_Seeker\images\._inbox.png" />
+    <Content Include="Job_Seeker\images\._mastercard.png" />
+    <Content Include="Job_Seeker\images\._media.jpg" />
+    <Content Include="Job_Seeker\images\._paypal.png" />
+    <Content Include="Job_Seeker\images\._picture.jpg" />
+    <Content Include="Job_Seeker\images\._prod-1.jpg" />
+    <Content Include="Job_Seeker\images\._prod-2.jpg" />
+    <Content Include="Job_Seeker\images\._prod-3.jpg" />
+    <Content Include="Job_Seeker\images\._prod-4.jpg" />
+    <Content Include="Job_Seeker\images\._prod-5.jpg" />
+    <Content Include="Job_Seeker\images\._user.png" />
+    <Content Include="Job_Seeker\images\._visa.png" />
+    <Content Include="Job_Seeker\images\american-express.png" />
+    <Content Include="Job_Seeker\images\cropper.jpg" />
+    <Content Include="Job_Seeker\images\img.jpg" />
+    <Content Include="Job_Seeker\images\inbox.png" />
+    <Content Include="Job_Seeker\images\mastercard.png" />
+    <Content Include="Job_Seeker\images\media.jpg" />
+    <Content Include="Job_Seeker\images\paypal.png" />
+    <Content Include="Job_Seeker\images\picture.jpg" />
+    <Content Include="Job_Seeker\images\prod-1.jpg" />
+    <Content Include="Job_Seeker\images\prod-2.jpg" />
+    <Content Include="Job_Seeker\images\prod-3.jpg" />
+    <Content Include="Job_Seeker\images\prod-4.jpg" />
+    <Content Include="Job_Seeker\images\prod-5.jpg" />
+    <Content Include="Job_Seeker\images\user.png" />
+    <Content Include="Job_Seeker\images\visa.png" />
+    <Content Include="Job_Seeker\js\datepicker\._daterangepicker.js" />
+    <Content Include="Job_Seeker\js\datepicker\daterangepicker.js" />
+    <Content Include="Job_Seeker\js\moment\._moment.min.js" />
+    <Content Include="Job_Seeker\js\moment\moment.min.js" />
+    <Content Include="Job_Seeker\Application_Status.aspx" />
+    <Content Include="Job_Seeker\Job_seeker_interview.aspx" />
+    <Content Include="Job_Seeker\Job_Seeker.aspx" />
+    <Content Include="Job_Seeker\Score.aspx" />
+    <Content Include="Job_Seeker\searched_jobs.aspx" />
+    <Content Include="Regular_Employee\css\maps\._jquery-jvectormap-2.0.3.css" />
+    <Content Include="Regular_Employee\css\maps\jquery-jvectormap-2.0.3.css" />
+    <Content Include="Regular_Employee\images\._american-express.png" />
+    <Content Include="Regular_Employee\images\._cropper.jpg" />
+    <Content Include="Regular_Employee\images\._img.jpg" />
+    <Content Include="Regular_Employee\images\._inbox.png" />
+    <Content Include="Regular_Employee\images\._mastercard.png" />
+    <Content Include="Regular_Employee\images\._media.jpg" />
+    <Content Include="Regular_Employee\images\._paypal.png" />
+    <Content Include="Regular_Employee\images\._picture.jpg" />
+    <Content Include="Regular_Employee\images\._prod-1.jpg" />
+    <Content Include="Regular_Employee\images\._prod-2.jpg" />
+    <Content Include="Regular_Employee\images\._prod-3.jpg" />
+    <Content Include="Regular_Employee\images\._prod-4.jpg" />
+    <Content Include="Regular_Employee\images\._prod-5.jpg" />
+    <Content Include="Regular_Employee\images\._user.png" />
+    <Content Include="Regular_Employee\images\._visa.png" />
+    <Content Include="Regular_Employee\images\american-express.png" />
+    <Content Include="Regular_Employee\images\cropper.jpg" />
+    <Content Include="Regular_Employee\images\img.jpg" />
+    <Content Include="Regular_Employee\images\inbox.png" />
+    <Content Include="Regular_Employee\images\mastercard.png" />
+    <Content Include="Regular_Employee\images\media.jpg" />
+    <Content Include="Regular_Employee\images\paypal.png" />
+    <Content Include="Regular_Employee\images\picture.jpg" />
+    <Content Include="Regular_Employee\images\prod-1.jpg" />
+    <Content Include="Regular_Employee\images\prod-2.jpg" />
+    <Content Include="Regular_Employee\images\prod-3.jpg" />
+    <Content Include="Regular_Employee\images\prod-4.jpg" />
+    <Content Include="Regular_Employee\images\prod-5.jpg" />
+    <Content Include="Regular_Employee\images\user.png" />
+    <Content Include="Regular_Employee\images\visa.png" />
+    <Content Include="Regular_Employee\js\datepicker\._daterangepicker.js" />
+    <Content Include="Regular_Employee\js\datepicker\daterangepicker.js" />
+    <Content Include="Regular_Employee\js\moment\._moment.min.js" />
+    <Content Include="Regular_Employee\js\moment\moment.min.js" />
+    <Content Include="Regular_Employee\projects.aspx" />
+    <Content Include="Regular_Employee\Regular_Employee.aspx" />
+    <Content Include="Regular_Employee\Tasks.aspx" />
+    <Content Include="DefaultStyle\assets\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="DefaultStyle\assets\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="DefaultStyle\assets\bootstrap\css\bootstrap.min.css" />
+    <Content Include="DefaultStyle\assets\bootstrap\js\bootstrap.min.js" />
+    <Content Include="DefaultStyle\assets\data-tables\data-tables.bootstrap4.min.css" />
+    <Content Include="DefaultStyle\assets\data-tables\data-tables.bootstrap4.min.js" />
+    <Content Include="DefaultStyle\assets\data-tables\jquery.data-tables.min.js" />
+    <Content Include="DefaultStyle\assets\dropdown\css\style.css" />
+    <Content Include="DefaultStyle\assets\dropdown\js\script.min.js" />
+    <Content Include="DefaultStyle\assets\formoid\formoid.min.js" />
+    <Content Include="DefaultStyle\assets\images\02.jpg" />
+    <Content Include="DefaultStyle\assets\images\k-600x515.jpg" />
+    <Content Include="DefaultStyle\assets\images\logo2.png" />
+    <Content Include="DefaultStyle\assets\jarallax\jarallax.min.js" />
+    <Content Include="DefaultStyle\assets\mobirise\css\._mbr-additional.css" />
+    <Content Include="DefaultStyle\assets\mobirise\css\mbr-additional.css" />
+    <Content Include="DefaultStyle\assets\popper\popper.min.js" />
+    <Content Include="DefaultStyle\assets\smooth-scroll\smooth-scroll.js" />
+    <Content Include="DefaultStyle\assets\socicon\css\styles.css" />
+    <Content Include="DefaultStyle\assets\socicon\fonts\socicon.eot" />
+    <Content Include="DefaultStyle\assets\socicon\fonts\socicon.svg" />
+    <Content Include="DefaultStyle\assets\socicon\fonts\socicon.ttf" />
+    <Content Include="DefaultStyle\assets\socicon\fonts\socicon.woff" />
+    <Content Include="DefaultStyle\assets\tether\tether.min.css" />
+    <Content Include="DefaultStyle\assets\tether\tether.min.js" />
+    <Content Include="DefaultStyle\assets\theme\css\style.css" />
+    <Content Include="DefaultStyle\assets\theme\js\script.js" />
+    <Content Include="DefaultStyle\assets\touch-swipe\jquery.touch-swipe.min.js" />
+    <Content Include="DefaultStyle\assets\vimeo_player\vimeo_player.js" />
+    <Content Include="DefaultStyle\assets\web\assets\jquery\jquery.min.js" />
+    <Content Include="DefaultStyle\assets\web\assets\mobirise-icons\mobirise-icons.css" />
+    <Content Include="DefaultStyle\assets\web\assets\mobirise-icons\mobirise-icons.eot" />
+    <Content Include="DefaultStyle\assets\web\assets\mobirise-icons\mobirise-icons.svg" />
+    <Content Include="DefaultStyle\assets\web\assets\mobirise-icons\mobirise-icons.ttf" />
+    <Content Include="DefaultStyle\assets\web\assets\mobirise-icons\mobirise-icons.woff" />
+    <Content Include="DefaultStyle\css\._bootstrap-theme.css" />
+    <Content Include="DefaultStyle\css\._bootstrap-theme.min.css" />
+    <Content Include="DefaultStyle\css\._bootstrap.css" />
+    <Content Include="DefaultStyle\css\._bootstrap.min.css" />
+    <Content Include="DefaultStyle\css\bootstrap-theme.css" />
+    <Content Include="DefaultStyle\css\bootstrap-theme.min.css" />
+    <Content Include="DefaultStyle\css\bootstrap.css" />
+    <Content Include="DefaultStyle\css\bootstrap.min.css" />
+    <Content Include="DefaultStyle\fonts\._glyphicons-halflings-regular.eot" />
+    <Content Include="DefaultStyle\fonts\._glyphicons-halflings-regular.svg" />
+    <Content Include="DefaultStyle\fonts\._glyphicons-halflings-regular.ttf" />
+    <Content Include="DefaultStyle\fonts\._glyphicons-halflings-regular.woff" />
+    <Content Include="DefaultStyle\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="DefaultStyle\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="DefaultStyle\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="DefaultStyle\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="DefaultStyle\js\._bootstrap.js" />
+    <Content Include="DefaultStyle\js\._bootstrap.min.js" />
+    <Content Include="DefaultStyle\js\._npm.js" />
+    <Content Include="DefaultStyle\js\bootstrap.js" />
+    <Content Include="DefaultStyle\js\bootstrap.min.js" />
+    <Content Include="DefaultStyle\js\npm.js" />
+    <Content Include="DefaultStyle\resources\._appstore.png" />
+    <Content Include="DefaultStyle\resources\._background.png" />
+    <Content Include="DefaultStyle\resources\._playstore.png" />
+    <Content Include="DefaultStyle\resources\appstore.png" />
+    <Content Include="DefaultStyle\resources\background.png" />
+    <Content Include="DefaultStyle\resources\playstore.png" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -7604,18 +7746,6 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Job_Seeker\Job_Seeker.aspx.cs">
-      <DependentUpon>Job_Seeker.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Job_Seeker\Job_Seeker.aspx.designer.cs">
-      <DependentUpon>Job_Seeker.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Regular_Employee\Regular_Employee.aspx.cs">
-      <DependentUpon>Regular_Employee.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Regular_Employee\Regular_Employee.aspx.designer.cs">
-      <DependentUpon>Regular_Employee.aspx</DependentUpon>
     </Compile>
     <Compile Include="Manager\Manager.aspx.cs">
       <DependentUpon>Manager.aspx</DependentUpon>
@@ -7766,11 +7896,63 @@
     <Compile Include="Home\Company_Department_Jobs.aspx.designer.cs">
       <DependentUpon>Company_Department_Jobs.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Home\Register.aspx.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\Register.aspx.designer.cs">
+      <DependentUpon>Register.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Job_Seeker\Application_Status.aspx.cs">
+      <DependentUpon>Application_Status.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Job_Seeker\Application_Status.aspx.designer.cs">
+      <DependentUpon>Application_Status.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Job_Seeker\Job_seeker_interview.aspx.cs">
+      <DependentUpon>Job_seeker_interview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Job_Seeker\Job_seeker_interview.aspx.designer.cs">
+      <DependentUpon>Job_seeker_interview.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Job_Seeker\Job_Seeker.aspx.cs">
+      <DependentUpon>Job_Seeker.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Job_Seeker\Job_Seeker.aspx.designer.cs">
+      <DependentUpon>Job_Seeker.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Job_Seeker\Score.aspx.cs">
+      <DependentUpon>Score.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Job_Seeker\Score.aspx.designer.cs">
+      <DependentUpon>Score.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Job_Seeker\searched_jobs.aspx.cs">
+      <DependentUpon>searched_jobs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Job_Seeker\searched_jobs.aspx.designer.cs">
+      <DependentUpon>searched_jobs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Regular_Employee\projects.aspx.cs">
+      <DependentUpon>projects.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Regular_Employee\projects.aspx.designer.cs">
+      <DependentUpon>projects.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Regular_Employee\Regular_Employee.aspx.cs">
+      <DependentUpon>Regular_Employee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Regular_Employee\Regular_Employee.aspx.designer.cs">
+      <DependentUpon>Regular_Employee.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Regular_Employee\Tasks.aspx.cs">
+      <DependentUpon>Tasks.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Regular_Employee\Tasks.aspx.designer.cs">
+      <DependentUpon>Tasks.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Manager\" />
-    <Folder Include="Regular_Employee\" />
-    <Folder Include="Job_Seeker\" />
     <Folder Include="Manager\css\" />
     <Folder Include="Manager\images\" />
     <Folder Include="Manager\js\" />
@@ -7779,6 +7961,14 @@
     <Folder Include="Style\src\" />
     <Folder Include="Style\vendors\" />
     <Folder Include="Home\" />
+    <Folder Include="Job_Seeker\" />
+    <Folder Include="Job_Seeker\css\" />
+    <Folder Include="Job_Seeker\images\" />
+    <Folder Include="Job_Seeker\js\" />
+    <Folder Include="Regular_Employee\" />
+    <Folder Include="Regular_Employee\css\" />
+    <Folder Include="Regular_Employee\images\" />
+    <Folder Include="Regular_Employee\js\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Manager\css\._maps" />
@@ -9494,6 +9684,36 @@
     <None Include="Style\vendors\validator\.gitignore" />
     <None Include="Style\vendors\validator\README.md" />
     <None Include="Style\vendors\validator\validator.jquery.json" />
+    <None Include="Job_Seeker\css\._maps" />
+    <None Include="Job_Seeker\images\._.DS_Store" />
+    <None Include="Job_Seeker\images\.DS_Store" />
+    <None Include="Job_Seeker\js\._datepicker" />
+    <None Include="Job_Seeker\js\._moment" />
+    <None Include="Regular_Employee\css\._maps" />
+    <None Include="Regular_Employee\images\._.DS_Store" />
+    <None Include="Regular_Employee\images\.DS_Store" />
+    <None Include="Regular_Employee\js\._datepicker" />
+    <None Include="Regular_Employee\js\._moment" />
+    <None Include="DefaultStyle\._css" />
+    <None Include="DefaultStyle\._fonts" />
+    <None Include="DefaultStyle\._js" />
+    <None Include="DefaultStyle\assets\.DS_Store" />
+    <None Include="DefaultStyle\assets\._.DS_Store" />
+    <None Include="DefaultStyle\assets\images\hashes.json" />
+    <None Include="DefaultStyle\assets\mobirise\.DS_Store" />
+    <None Include="DefaultStyle\assets\mobirise\._.DS_Store" />
+    <None Include="DefaultStyle\css\._bootstrap-theme.css.map" />
+    <None Include="DefaultStyle\css\._bootstrap-theme.min.css.map" />
+    <None Include="DefaultStyle\css\._bootstrap.css.map" />
+    <None Include="DefaultStyle\css\._bootstrap.min.css.map" />
+    <None Include="DefaultStyle\css\bootstrap-theme.css.map" />
+    <None Include="DefaultStyle\css\bootstrap-theme.min.css.map" />
+    <None Include="DefaultStyle\css\bootstrap.css.map" />
+    <None Include="DefaultStyle\css\bootstrap.min.css.map" />
+    <None Include="DefaultStyle\fonts\._glyphicons-halflings-regular.woff2" />
+    <None Include="DefaultStyle\fonts\glyphicons-halflings-regular.woff2" />
+    <None Include="DefaultStyle\resources\.DS_Store" />
+    <None Include="DefaultStyle\resources\._.DS_Store" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ProjectExtensions>

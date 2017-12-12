@@ -7,12 +7,17 @@ using System.Web.UI.WebControls;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Data;
+using iWork.Model;
 
 namespace iWork.Manager
 {
 
     public partial class Manager_Applications : System.Web.UI.Page
     {
+
+        //SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
+        SqlConnection conn = new SqlConnection(DbHelper.GetConnectionString());
+
         protected void SearchForSpecificJobApp(object sender, EventArgs e)
         {
             
@@ -30,9 +35,7 @@ namespace iWork.Manager
 
             else
             {
-                SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
-
-
+                
                 SqlCommand cmd = new SqlCommand("ViewApplication", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -62,8 +65,6 @@ namespace iWork.Manager
 
             int id = Convert.ToInt32(ApplicationGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[0].Text);
 
-            SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
-
 
             SqlCommand cmd = new SqlCommand("ReviewApplication", conn);
             cmd.CommandType = CommandType.StoredProcedure;
@@ -84,8 +85,6 @@ namespace iWork.Manager
             // TODO
 
             int id = Convert.ToInt32(ApplicationGridView.Rows[Convert.ToInt32(e.CommandArgument)].Cells[0].Text);
-
-            SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
 
 
             SqlCommand cmd = new SqlCommand("ReviewApplication", conn);

@@ -1,14 +1,5 @@
 ﻿<Properties StartupConfiguration="{45BEC29E-B0A1-4668-B530-80EB7CF04061}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="iWork/Home/Company_Department_Jobs.aspx">
-    <Files>
-      <File FileName="iWork/Home/Companies.aspx" Line="156" Column="15" />
-      <File FileName="iWork/Home/Companies.aspx.cs" Line="1" Column="1" />
-      <File FileName="iWork/Home/Company_Departments.aspx" Line="151" Column="15" />
-      <File FileName="iWork/Home/Company_Departments.aspx.cs" Line="52" Column="55" />
-      <File FileName="iWork/Home/Company_Department_Jobs.aspx" Line="106" Column="75" />
-      <File FileName="iWork/Home/Company_Department_Jobs.aspx.cs" Line="1" Column="1" />
-    </Files>
-  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workbench />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

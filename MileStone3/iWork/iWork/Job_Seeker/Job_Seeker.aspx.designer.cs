@@ -8,11 +8,17 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace iWork {
+namespace iWork.Job_Seeker {
 	
 	
 	public partial class Job_Seeker {
 		
-		protected System.Web.UI.HtmlControls.HtmlForm form1;
+		protected System.Web.UI.HtmlControls.HtmlForm ProjectsForm;
+		
+		protected System.Web.UI.WebControls.Label usernameLbl;
+		
+		protected System.Web.UI.WebControls.LinkButton LinkButton2;
+		
+		protected System.Web.UI.HtmlControls.HtmlInputText Searched_job;
 	}
 }
