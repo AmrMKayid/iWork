@@ -19,6 +19,13 @@ namespace iWork.Manager
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (Session["Username"] == null)
+                Response.Redirect("~/Default.aspx");
+
+
+
+
             //// View Tasks
             string viewTasks = "SELECT project, name, regular_employee_username, status, deadline, description from Tasks where mananger_username =\'" + 
                                 Session["Username"] + "\' AND " + "project =\'" + Session["SelectedProject"] + "\'";

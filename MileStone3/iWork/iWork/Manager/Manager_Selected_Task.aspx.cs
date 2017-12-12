@@ -20,6 +20,10 @@ namespace iWork.Manager.Profile.templates
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            if (Session["Username"] == null)
+                Response.Redirect("~/Default.aspx");
+            
+
             // View Tasks
             string sqlSelect = "Select regular_employee_username from Project_Assignments where project_name=\'" +
                                     Session["SelectedProject"] + "\' AND mananger_username=\'" + Session["Username"] + "\'";

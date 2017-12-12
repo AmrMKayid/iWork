@@ -8,17 +8,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace iWork.Manager {
+namespace iWork.Home {
 	
 	
-	public partial class Manager_Requests_Review {
+	public partial class ViewAllJobs {
 		
-		protected System.Web.UI.HtmlControls.HtmlForm ProjectsForm;
+		protected System.Web.UI.HtmlControls.HtmlForm form1;
 		
-		protected System.Web.UI.WebControls.TextBox Reasontxt;
+		protected System.Web.UI.WebControls.GridView JobsGridView;
 		
-		protected System.Web.UI.WebControls.Button AcceptRequest;
-		
-		protected System.Web.UI.WebControls.Button RejectRequest;
+		protected System.Web.UI.WebControls.Button SelectJob;
 	}
 }

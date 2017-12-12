@@ -16,5 +16,19 @@ namespace iWork.Manager
     {
         SqlConnection conn = new SqlConnection(DbHelper.GetConnectionString());
 
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+            if (Session["Username"] == null) {
+
+                string script = "alert('You are NOT Signed In!!');";
+                ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);
+
+                Response.Redirect("~/Default.aspx");
+            }
+                
+
+        }
+
     }
 }

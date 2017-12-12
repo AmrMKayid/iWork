@@ -17,6 +17,17 @@ namespace iWork.Manager
         //SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
         SqlConnection conn = new SqlConnection(DbHelper.GetConnectionString());
 
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+            if (Session["Username"] == null)
+                Response.Redirect("~/Default.aspx");
+
+        }
+
+
+
         protected void SearchForTask_Clicked(object sender, EventArgs e)
         {
             string viewTasks = "SELECT project, name, regular_employee_username, status, deadline, description from Tasks where mananger_username =\'" +

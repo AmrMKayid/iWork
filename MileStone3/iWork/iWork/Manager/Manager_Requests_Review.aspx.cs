@@ -20,6 +20,11 @@ namespace iWork.Manager
 
         protected void Page_Load(object sender, EventArgs e)
         {
+
+            if (Session["Username"] == null)
+                Response.Redirect("~/Default.aspx");
+
+
             if(Session["SelectedRequest_Type"] != null) {
                 string script = "alert('" + "This is a Leave Request\n Type: " + Session["SelectedRequest_Type"] + "');";
                 ClientScript.RegisterClientScriptBlock(this.GetType(), "Alert", script, true);

@@ -7731,6 +7731,7 @@
     <Content Include="DefaultStyle\resources\background.png" />
     <Content Include="DefaultStyle\resources\playstore.png" />
     <Content Include="DefaultSigned.aspx" />
+    <Content Include="Home\ViewAllJobs.aspx" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">
@@ -7956,6 +7957,12 @@
     </Compile>
     <Compile Include="DefaultSigned.aspx.designer.cs">
       <DependentUpon>DefaultSigned.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\ViewAllJobs.aspx.cs">
+      <DependentUpon>ViewAllJobs.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Home\ViewAllJobs.aspx.designer.cs">
+      <DependentUpon>ViewAllJobs.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

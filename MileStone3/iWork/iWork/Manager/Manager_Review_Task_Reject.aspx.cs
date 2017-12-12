@@ -17,6 +17,16 @@ namespace iWork.Manager
         //SqlConnection conn = new SqlConnection(@"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017");
         SqlConnection conn = new SqlConnection(DbHelper.GetConnectionString());
 
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+
+            if (Session["Username"] == null)
+                Response.Redirect("~/Default.aspx");
+
+        }
+
+
         protected void RejectTask_Clicked(object sender, EventArgs e)
         {
 

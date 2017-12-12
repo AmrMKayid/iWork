@@ -56,7 +56,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2><asp:Label runat="server" id="usernameLbl"></asp:Label></h2> 
+                <h2><%:Session["Username"] %></h2> 
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -139,7 +139,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">Amr Kayid
+                    <img src="images/img.jpg" alt=""><%:Session["Username"] %>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">

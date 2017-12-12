@@ -15,8 +15,6 @@ namespace iWork.Manager {
 		
 		protected System.Web.UI.HtmlControls.HtmlForm TasksForm;
 		
-		protected System.Web.UI.WebControls.Label usernameLbl;
-		
 		protected System.Web.UI.WebControls.TextBox TaskNametxt;
 		
 		protected System.Web.UI.WebControls.TextBox descriptiontxt;

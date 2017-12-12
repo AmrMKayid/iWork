@@ -15,8 +15,6 @@ namespace iWork.Manager.Profile.templates {
 		
 		protected System.Web.UI.HtmlControls.HtmlForm ProjectsForm;
 		
-		protected System.Web.UI.WebControls.Label usernameLbl;
-		
 		protected System.Web.UI.WebControls.GridView MyProjectsView;
 		
 		protected System.Web.UI.WebControls.Button SelectProject;

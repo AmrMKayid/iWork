@@ -14,7 +14,5 @@ namespace iWork.Manager {
 	public partial class Manager {
 		
 		protected System.Web.UI.HtmlControls.HtmlForm ProjectsForm;
-		
-		protected System.Web.UI.WebControls.Label usernameLbl;
 	}
 }

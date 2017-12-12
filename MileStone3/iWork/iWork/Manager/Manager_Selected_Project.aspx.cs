@@ -21,6 +21,10 @@ namespace iWork.Manager.Profile.templates
         protected void Page_Load(object sender, EventArgs e)
         {
 
+            if (Session["Username"] == null)
+                Response.Redirect("~/Default.aspx");
+
+
 
             // View Regular Employees
             SqlCommand viewRegCmd = new SqlCommand("viewRegEmp2Projects", conn);
