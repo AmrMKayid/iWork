@@ -51,6 +51,9 @@ namespace iWork
                 cmd.ExecuteReader();
                 conn.Close();
 
+
+                Session["UsernameType"] = user_type.Value;
+
                 if (user_type.Value.Equals("R"))
                 {
                     Session["Username"] = username;

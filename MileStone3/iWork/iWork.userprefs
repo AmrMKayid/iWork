@@ -1,5 +1,11 @@
 ﻿<Properties StartupConfiguration="{45BEC29E-B0A1-4668-B530-80EB7CF04061}|">
-  <MonoDevelop.Ide.Workbench />
+  <MonoDevelop.Ide.Workbench ActiveDocument="iWork/DefaultSigned.aspx">
+    <Files>
+      <File FileName="iWork/DefaultSigned.aspx" Line="141" Column="107" />
+      <File FileName="iWork/DefaultSigned.aspx.cs" Line="36" Column="53" />
+      <File FileName="iWork/Default.aspx.cs" Line="55" Column="17" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
