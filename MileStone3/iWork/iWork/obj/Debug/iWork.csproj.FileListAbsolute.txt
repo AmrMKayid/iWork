@@ -1,0 +1,453 @@
+/Volumes/Life/GUC/3DataBase I/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.csprojResolveAssemblyReference.cache
+/Volumes/Life/GUC/3DataBase I/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.csproj.CoreCompileInputs.cache
+/Volumes/Life/GUC/3DataBase I/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.dll
+/Volumes/Life/GUC/3DataBase I/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.pdb
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.csprojResolveAssemblyReference.cache
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.csproj.CoreCompileInputs.cache
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/obj/Debug/iWork.pdb
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/iWork.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/iWork.pdb
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Win32.Primitives.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/netstandard.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.AppContext.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Collections.Concurrent.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Collections.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Collections.NonGeneric.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Collections.Specialized.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.ComponentModel.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.ComponentModel.EventBasedAsync.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.ComponentModel.Primitives.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.ComponentModel.TypeConverter.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Console.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Data.Common.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Diagnostics.Contracts.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Diagnostics.Debug.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Diagnostics.FileVersionInfo.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Diagnostics.Process.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Diagnostics.StackTrace.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Diagnostics.TextWriterTraceListener.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Diagnostics.Tools.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Diagnostics.TraceSource.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Diagnostics.Tracing.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Drawing.Primitives.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Dynamic.Runtime.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Globalization.Calendars.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Globalization.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Globalization.Extensions.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.IO.Compression.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.IO.Compression.ZipFile.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.IO.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.IO.FileSystem.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.IO.FileSystem.DriveInfo.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.IO.FileSystem.Primitives.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.IO.FileSystem.Watcher.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.IO.IsolatedStorage.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.IO.MemoryMappedFiles.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.IO.Pipes.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.IO.UnmanagedMemoryStream.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Linq.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Linq.Expressions.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Linq.Parallel.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Linq.Queryable.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Net.Http.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Net.NameResolution.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Net.NetworkInformation.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Net.Ping.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Net.Primitives.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Net.Requests.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Net.Security.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Net.Sockets.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Net.WebHeaderCollection.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Net.WebSockets.Client.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Net.WebSockets.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.ObjectModel.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Reflection.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Reflection.Extensions.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Reflection.Primitives.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Resources.Reader.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Resources.ResourceManager.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Resources.Writer.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Runtime.CompilerServices.VisualC.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Runtime.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Runtime.Extensions.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Runtime.Handles.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Runtime.InteropServices.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Runtime.InteropServices.RuntimeInformation.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Runtime.Numerics.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Runtime.Serialization.Formatters.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Runtime.Serialization.Json.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Runtime.Serialization.Primitives.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Runtime.Serialization.Xml.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Security.Claims.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Security.Cryptography.Algorithms.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Security.Cryptography.Csp.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Security.Cryptography.Encoding.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Security.Cryptography.Primitives.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Security.Cryptography.X509Certificates.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Security.Principal.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Security.SecureString.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Text.Encoding.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Text.Encoding.Extensions.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Text.RegularExpressions.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Threading.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Threading.Overlapped.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Threading.Tasks.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Threading.Tasks.Parallel.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Threading.Thread.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Threading.ThreadPool.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Threading.Timer.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.ValueTuple.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Xml.ReaderWriter.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Xml.XDocument.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Xml.XmlDocument.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Xml.XmlSerializer.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Xml.XPath.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Xml.XPath.XDocument.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/EntityFramework.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/EntityFramework.SqlServer.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/EntityFramework.SqlServerCompact.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.EntityFrameworkCore.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.EntityFrameworkCore.Relational.Design.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.EntityFrameworkCore.Relational.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.EntityFrameworkCore.SqlServer.Design.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.EntityFrameworkCore.SqlServer.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.Caching.Abstractions.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.Caching.Memory.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.Configuration.Abstractions.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.DependencyInjection.Abstractions.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.DependencyInjection.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.Logging.Abstractions.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.Logging.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.Options.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.Primitives.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Remotion.Linq.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Collections.Immutable.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.ComponentModel.Annotations.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Data.SqlClient.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Data.SqlServerCe.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Diagnostics.DiagnosticSource.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Interactive.Async.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Runtime.CompilerServices.Unsafe.dll
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.DependencyInjection.Abstractions.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.DependencyInjection.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.Logging.Abstractions.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Collections.Immutable.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Diagnostics.DiagnosticSource.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Interactive.Async.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/System.Runtime.CompilerServices.Unsafe.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.Primitives.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.Caching.Abstractions.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.Configuration.Abstractions.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.Options.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.Caching.Memory.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.Extensions.Logging.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Remotion.Linq.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.EntityFrameworkCore.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.EntityFrameworkCore.Relational.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.EntityFrameworkCore.SqlServer.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.EntityFrameworkCore.Relational.Design.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/Microsoft.EntityFrameworkCore.SqlServer.Design.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/EntityFramework.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/EntityFramework.SqlServer.xml
+/Volumes/Life/GUC/3DataBase/iWork/MileStone3/iWork/iWork/bin/EntityFramework.SqlServerCompact.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\iWork.dll.config
+C:\Users\yasme\Desktop\iWork\iWork\bin\iWork.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\iWork.pdb
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Win32.Primitives.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\netstandard.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.AppContext.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Collections.Concurrent.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Collections.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Collections.NonGeneric.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Collections.Specialized.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.ComponentModel.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.ComponentModel.EventBasedAsync.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.ComponentModel.Primitives.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.ComponentModel.TypeConverter.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Console.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Data.Common.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Diagnostics.Contracts.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Diagnostics.Debug.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Diagnostics.FileVersionInfo.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Diagnostics.Process.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Diagnostics.StackTrace.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Diagnostics.TextWriterTraceListener.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Diagnostics.Tools.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Diagnostics.TraceSource.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Diagnostics.Tracing.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Drawing.Primitives.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Dynamic.Runtime.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Globalization.Calendars.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Globalization.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Globalization.Extensions.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.IO.Compression.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.IO.Compression.ZipFile.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.IO.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.IO.FileSystem.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.IO.FileSystem.DriveInfo.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.IO.FileSystem.Primitives.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.IO.FileSystem.Watcher.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.IO.IsolatedStorage.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.IO.MemoryMappedFiles.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.IO.Pipes.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.IO.UnmanagedMemoryStream.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Linq.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Linq.Expressions.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Linq.Parallel.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Linq.Queryable.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Net.Http.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Net.NameResolution.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Net.NetworkInformation.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Net.Ping.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Net.Primitives.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Net.Requests.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Net.Security.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Net.Sockets.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Net.WebHeaderCollection.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Net.WebSockets.Client.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Net.WebSockets.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.ObjectModel.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Reflection.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Reflection.Extensions.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Reflection.Primitives.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Resources.Reader.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Resources.ResourceManager.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Resources.Writer.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Runtime.CompilerServices.VisualC.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Runtime.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Runtime.Extensions.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Runtime.Handles.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Runtime.InteropServices.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Runtime.Numerics.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Runtime.Serialization.Formatters.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Runtime.Serialization.Json.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Runtime.Serialization.Primitives.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Runtime.Serialization.Xml.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Security.Claims.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Security.Cryptography.Algorithms.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Security.Cryptography.Csp.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Security.Cryptography.Encoding.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Security.Cryptography.Primitives.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Security.Cryptography.X509Certificates.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Security.Principal.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Security.SecureString.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Text.Encoding.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Text.Encoding.Extensions.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Text.RegularExpressions.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Threading.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Threading.Overlapped.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Threading.Tasks.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Threading.Tasks.Parallel.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Threading.Thread.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Threading.ThreadPool.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Threading.Timer.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.ValueTuple.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Xml.ReaderWriter.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Xml.XDocument.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Xml.XmlDocument.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Xml.XmlSerializer.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Xml.XPath.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Xml.XPath.XDocument.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\EntityFramework.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\EntityFramework.SqlServer.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\EntityFramework.SqlServerCompact.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.EntityFrameworkCore.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.EntityFrameworkCore.Relational.Design.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.EntityFrameworkCore.SqlServer.Design.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.Logging.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.Options.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.Primitives.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Remotion.Linq.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Collections.Immutable.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.ComponentModel.Annotations.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Data.SqlClient.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Data.SqlServerCe.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Diagnostics.DiagnosticSource.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Interactive.Async.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.DependencyInjection.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.Logging.Abstractions.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Collections.Immutable.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Diagnostics.DiagnosticSource.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Interactive.Async.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.Primitives.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.Caching.Abstractions.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.Configuration.Abstractions.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.Options.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.Caching.Memory.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.Extensions.Logging.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\Remotion.Linq.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.EntityFrameworkCore.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.EntityFrameworkCore.Relational.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.EntityFrameworkCore.SqlServer.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.EntityFrameworkCore.Relational.Design.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\Microsoft.EntityFrameworkCore.SqlServer.Design.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\EntityFramework.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\EntityFramework.SqlServer.xml
+C:\Users\yasme\Desktop\iWork\iWork\bin\EntityFramework.SqlServerCompact.xml
+C:\Users\yasme\Desktop\iWork\iWork\obj\Debug\iWork.csprojResolveAssemblyReference.cache
+C:\Users\yasme\Desktop\iWork\iWork\obj\Debug\iWork.csproj.CoreCompileInputs.cache
+C:\Users\yasme\Desktop\iWork\iWork\obj\Debug\iWork.dll
+C:\Users\yasme\Desktop\iWork\iWork\obj\Debug\iWork.pdb
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\iWork.dll.config
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\iWork.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\iWork.pdb
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Win32.Primitives.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\netstandard.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.AppContext.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Collections.Concurrent.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Collections.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Collections.NonGeneric.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Collections.Specialized.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.ComponentModel.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.ComponentModel.EventBasedAsync.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.ComponentModel.Primitives.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.ComponentModel.TypeConverter.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Console.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Data.Common.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Diagnostics.Contracts.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Diagnostics.Debug.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Diagnostics.FileVersionInfo.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Diagnostics.Process.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Diagnostics.StackTrace.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Diagnostics.TextWriterTraceListener.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Diagnostics.Tools.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Diagnostics.TraceSource.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Diagnostics.Tracing.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Drawing.Primitives.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Dynamic.Runtime.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Globalization.Calendars.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Globalization.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Globalization.Extensions.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.IO.Compression.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.IO.Compression.ZipFile.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.IO.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.IO.FileSystem.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.IO.FileSystem.DriveInfo.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.IO.FileSystem.Primitives.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.IO.FileSystem.Watcher.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.IO.IsolatedStorage.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.IO.MemoryMappedFiles.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.IO.Pipes.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.IO.UnmanagedMemoryStream.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Linq.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Linq.Expressions.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Linq.Parallel.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Linq.Queryable.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Net.Http.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Net.NameResolution.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Net.NetworkInformation.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Net.Ping.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Net.Primitives.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Net.Requests.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Net.Security.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Net.Sockets.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Net.WebHeaderCollection.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Net.WebSockets.Client.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Net.WebSockets.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.ObjectModel.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Reflection.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Reflection.Extensions.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Reflection.Primitives.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Resources.Reader.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Resources.ResourceManager.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Resources.Writer.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Runtime.CompilerServices.VisualC.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Runtime.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Runtime.Extensions.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Runtime.Handles.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Runtime.InteropServices.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Runtime.InteropServices.RuntimeInformation.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Runtime.Numerics.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Runtime.Serialization.Formatters.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Runtime.Serialization.Json.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Runtime.Serialization.Primitives.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Runtime.Serialization.Xml.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Security.Claims.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Security.Cryptography.Algorithms.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Security.Cryptography.Csp.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Security.Cryptography.Encoding.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Security.Cryptography.Primitives.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Security.Cryptography.X509Certificates.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Security.Principal.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Security.SecureString.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Text.Encoding.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Text.Encoding.Extensions.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Text.RegularExpressions.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Threading.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Threading.Overlapped.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Threading.Tasks.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Threading.Tasks.Parallel.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Threading.Thread.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Threading.ThreadPool.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Threading.Timer.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.ValueTuple.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Xml.ReaderWriter.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Xml.XDocument.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Xml.XmlDocument.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Xml.XmlSerializer.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Xml.XPath.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Xml.XPath.XDocument.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\EntityFramework.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\EntityFramework.SqlServer.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\EntityFramework.SqlServerCompact.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.EntityFrameworkCore.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.EntityFrameworkCore.Relational.Design.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.EntityFrameworkCore.Relational.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.EntityFrameworkCore.SqlServer.Design.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.EntityFrameworkCore.SqlServer.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.Caching.Abstractions.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.Caching.Memory.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.Configuration.Abstractions.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.DependencyInjection.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.Logging.Abstractions.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.Logging.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.Options.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.Primitives.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Remotion.Linq.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Collections.Immutable.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.ComponentModel.Annotations.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Data.SqlClient.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Data.SqlServerCe.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Diagnostics.DiagnosticSource.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Interactive.Async.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.DependencyInjection.Abstractions.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.DependencyInjection.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.Logging.Abstractions.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Collections.Immutable.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Diagnostics.DiagnosticSource.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Interactive.Async.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.Primitives.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.Caching.Abstractions.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.Configuration.Abstractions.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.Options.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.Caching.Memory.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.Extensions.Logging.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Remotion.Linq.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.EntityFrameworkCore.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.EntityFrameworkCore.Relational.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.EntityFrameworkCore.SqlServer.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.EntityFrameworkCore.Relational.Design.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\Microsoft.EntityFrameworkCore.SqlServer.Design.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\EntityFramework.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\EntityFramework.SqlServer.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\bin\EntityFramework.SqlServerCompact.xml
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\obj\Debug\iWork.csprojResolveAssemblyReference.cache
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\obj\Debug\iWork.csproj.CoreCompileInputs.cache
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\obj\Debug\iWork.dll
+C:\Users\shadi\Documents\GUC\CSEN501\Project\Milestone 3\ToBeSubmitted\iWork\iWork\obj\Debug\iWork.pdb

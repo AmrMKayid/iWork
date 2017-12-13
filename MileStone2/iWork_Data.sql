@@ -60,9 +60,14 @@ INSERT INTO Jobs VALUES ('Hr-iOS HR', 'Mobile_Dev', 'facebook.com', ' ', ' ', 10
 INSERT INTO Jobs VALUES ('Manager-Junior Web Development Manager', 'Web_Dev', 'facebook.com', ' ', ' ', 8, 3, 150294, 3, '2017/11/20')
 INSERT INTO Jobs VALUES ('Hr-Web Development HR', 'Web_Dev', 'facebook.com', ' ', ' ', 7, 1, 54928, 3, '2017/11/20')
 
+--New yasmeen insertions
 INSERT INTO Questions VALUES ('Did you pass highschool?',1);
 INSERT INTO Job_has_Questions VALUES ('Hr-Web Development HR', 'Web_Dev', 'facebook.com', 1);
-
+INSERT INTO Questions VALUES ('Did you pass middleschool?',0);
+INSERT INTO Job_has_Questions VALUES ('Hr-Web Development HR', 'Web_Dev', 'facebook.com', 2);
+INSERT INTO Questions VALUES ('Are you good at Math?',1);
+INSERT INTO Job_has_Questions VALUES ('Hr-Web Development HR', 'Web_Dev', 'facebook.com', 3);
+INSERT INTO Job_has_Questions VALUES ('Hr-Software Engineering HR', 'FAIR', 'facebook.com', 1);
 -- Apple's Jobs
 INSERT INTO Jobs VALUES ('Manager-Junior iOS Manager', 'iOS', 'apple.com', ' ', ' ', 12, 3, 346792, 3, '2017/11/20')
 INSERT INTO Jobs VALUES ('Hr-iOS HR', 'iOS', 'apple.com', ' ', ' ', 12, 1, 135792, 3, '2017/11/20')
@@ -72,6 +77,51 @@ INSERT INTO Jobs VALUES ('Hr-macOS HR', 'macOS', 'apple.com', ' ', ' ', 10, 1, 5
 
 INSERT INTO Jobs VALUES ('Manager-Junior TV Development Manager', 'iTV', 'apple.com', ' ', ' ', 8, 3, 987123, 3, '2017/11/20')
 INSERT INTO Jobs VALUES ('Hr-TV Development HR', 'iTV', 'apple.com', ' ', ' ', 7, 1, 34682, 3, '2017/11/20')
+--New yasmeen
+
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior iOS Manager', 'iOS', 'apple.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Hr-iOS HR', 'iOS', 'apple.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior macOS Software Manager', 'macOS', 'apple.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior TV Development Manager', 'iTV', 'apple.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Hr-macOS HR', 'macOS', 'apple.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Hr-TV Development HR', 'iTV', 'apple.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior Software Engineering Manager', 'G_Research', 'google.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Hr-Software Engineering HR', 'G_Research', 'google.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Regular-Software Engineering', 'G_Research', 'google.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior Android Software Manager', 'Android_OS', 'google.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Hr-Android HR', 'Android_OS', 'google.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior Web Development Manager', 'Web_Dev', 'google.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Hr-Web Development HR', 'Web_Dev', 'google.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior Machine Learning Manager', 'FAIR', 'facebook.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior Artificial Intelligence Manager', 'FAIR', 'facebook.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior Android Software Manager', 'Mobile_Dev', 'facebook.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior iOS Software Manager', 'Mobile_Dev', 'facebook.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Hr-Android HR', 'Mobile_Dev', 'facebook.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Hr-iOS HR', 'Mobile_Dev', 'facebook.com', 1);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior Web Development Manager', 'Web_Dev', 'facebook.com', 1);
+
+
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior iOS Manager', 'iOS', 'apple.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Hr-iOS HR', 'iOS', 'apple.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior macOS Software Manager', 'macOS', 'apple.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior TV Development Manager', 'iTV', 'apple.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Hr-macOS HR', 'macOS', 'apple.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Hr-TV Development HR', 'iTV', 'apple.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior Software Engineering Manager', 'G_Research', 'google.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Hr-Software Engineering HR', 'G_Research', 'google.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Regular-Software Engineering', 'G_Research', 'google.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior Android Software Manager', 'Android_OS', 'google.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Hr-Android HR', 'Android_OS', 'google.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior Web Development Manager', 'Web_Dev', 'google.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Hr-Web Development HR', 'Web_Dev', 'google.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior Machine Learning Manager', 'FAIR', 'facebook.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior Artificial Intelligence Manager', 'FAIR', 'facebook.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior Android Software Manager', 'Mobile_Dev', 'facebook.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior iOS Software Manager', 'Mobile_Dev', 'facebook.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Hr-Android HR', 'Mobile_Dev', 'facebook.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Hr-iOS HR', 'Mobile_Dev', 'facebook.com', 2);
+INSERT INTO Job_has_Questions VALUES ('Manager-Junior Web Development Manager', 'Web_Dev', 'facebook.com', 2);
+
 
 ---- ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####  ##### ##### ##### ##### -----
 
@@ -265,6 +315,8 @@ Insert into Attendance_Records values('Adel','2017/10/21','03:49:00','05:49:00',
 Insert into Applications values(90,'Accepted','Pending','Hr-Android HR','Android_OS','google.com','Maza','Mohamed',null);
 
 Insert into Applications values(90,'Accepted','Accepted','Hr-Android HR','Android_OS','google.com','Maza2','Mohamed','ShadiBarghash');
+Insert into Applications values(90,'Accepted','Rejected','Hr-Android HR','Android_OS','google.com','Maza1','Mohamed','ShadiBarghash');
+
 Insert into Applications values(90,'Accepted','Accepted','Hr-Android HR','Mobile_Dev','facebook.com','Maza2','Mohsen2','Mahmoud2');
 Insert into Applications values(90,'Accepted','Accepted','Hr-iOS HR','iOS','apple.com','Maza2','Mohamed3','AmrMKayid3');
 
@@ -448,13 +500,14 @@ INSERT INTO Regular_Employees VALUES('Regular8')
 -- ###############################################################################################################
 
 -- Company "Runtastic"
-INSERT INTO Companies VALUES ('runtastic.com', 'Runtastic', 'info@runtastic.com', 'Linz, Austria', 'International', 'Healthy lifestyle', 'Fitness App');
+INSERT INTO Companies VALUES ('runtastic.com', 'Runtastic', 'info@runtastic.com', 'Linz, Austria', 'National', 'Healthy lifestyle', 'Fitness App');
 
 -- Department "App Development" in Runtastic
 INSERT INTO Departments VALUES ('AppDev', 'runtastic.com', 'App Development');
 
 -- Job "Windows App Programmer"
 INSERT INTO Jobs VALUES ('Regular Employee - Windows App Programmer', 'AppDev', 'runtastic.com', 'Programs Runtastic App for the Windows platform', 'Programs Runtastic App for the Windows platform bardo. Ah, Windows (Phone) 8.1, w Windows UWP (10 for all devices)', 5, 4, 2000, 2, '2018-12-12');
+INSERT INTO Job_has_Questions VALUES ('Regular Employee - Windows App Programmer', 'AppDev', 'runtastic.com', 2);
 
 -- RegE: Shadi Barghash
 INSERT INTO Users VALUES ('shadi.barghash', 'ayy7agaPassword:"D', 'shady.barghash@outlook.com', 'Shadi', 'Ayman', 'Barghash', '1997-06-17', 6);
