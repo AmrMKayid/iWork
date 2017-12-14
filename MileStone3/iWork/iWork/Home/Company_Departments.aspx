@@ -96,10 +96,18 @@
                 <asp:BoundField DataField="vision" HeaderText="vision" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
 				<asp:BoundField DataField="type" HeaderText="Type" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
                 <asp:BoundField DataField="salary" HeaderText="Avg. Salary" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                <%--<asp:BoundField DataField="phone" HeaderText="Phones" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>--%>
 
             </Columns>
         </asp:GridView>
 
+                <br />
+
+                <asp:GridView ID="CompanyPhones_GridView" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="No phone numbers registered for this company">
+                    <Columns>
+                        <asp:BoundField DataField="phone" HeaderText="Phone" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>
+                    </Columns>
+                </asp:GridView>
 
                   <br>
                                             

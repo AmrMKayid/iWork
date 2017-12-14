@@ -26,7 +26,11 @@ namespace iWork.Home
             CompanyGridView.DataSource = dsC2;
             CompanyGridView.DataBind();
 
-            string AllCompanies = "Select C.*, avg(salary) as salary from Companies C Inner join Staff_Members S on C.domain = S.company group by C.name, C.domain, C.email, C.address, C.type, C.specialization, C.vision having C.domain=\'" + Session["companyDomian"].ToString() + "\' order by avg(S.salary) desc";
+            //string AllCompanies = "Select C.*, avg(salary) as salary, CP.phone from Companies C  Inner join Company_Phones CP on C.domain = CP.company Inner join Staff_Members S on C.domain = S.company group by C.name, C.domain, C.email, C.address, C.type, C.specialization, C.vision, CP.Phone having C.domain=\'" + Session["companyDomian"].ToString() + "\'  order by avg(S.salary) desc";
+            string AllCompanies = "Select C.*, avg(salary) as salary from Companies C Inner join Staff_Members S on C.domain = S.company group by C.name, C.domain, C.email, C.address, C.type, C.specialization, C.vision having C.domain=\'" + Session["companyDomian"].ToString() + "\'  order by avg(S.salary) desc";
+
+            string phones = "Select CP.phone as phone from Companies C Inner join Company_Phones CP on C.domain = CP.company WHERE C.domain=\'" + Session["companyDomian"].ToString() + "\'";
+
 
             SqlCommand cmd2 = new SqlCommand(AllCompanies, conn);
 
@@ -40,6 +44,21 @@ namespace iWork.Home
             CompanyGridView.DataSource = ds2;
 
             CompanyGridView.DataBind();
+
+            conn.Close();
+
+            SqlCommand cmd3 = new SqlCommand(phones, conn);
+
+            conn.Open();
+
+            DataSet ds3 = new DataSet();
+            SqlDataAdapter objAdp3 = new SqlDataAdapter(cmd3);
+
+            objAdp3.Fill(ds3);
+
+            CompanyPhones_GridView.DataSource = ds3;
+
+            CompanyPhones_GridView.DataBind();
 
             conn.Close();
 
@@ -77,5 +96,6 @@ namespace iWork.Home
             Response.Redirect("Company_Department_Jobs.aspx");
 
         }
+
     }
 }

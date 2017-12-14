@@ -66,7 +66,7 @@ namespace iWork.Manager
 
                 conn.Open();
 
-                cmd.ExecuteReader();
+                cmd.ExecuteNonQuery();
 
                 conn.Close();
 

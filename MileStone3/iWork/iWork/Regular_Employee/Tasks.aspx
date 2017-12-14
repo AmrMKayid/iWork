@@ -196,7 +196,7 @@
                                   <asp:Button ID="Assgin" runat="server" Text="Resume Working" Enabled='<%# String.Equals((String)Eval("Status"),"Fixed",StringComparison.OrdinalIgnoreCase) && Convert.ToDateTime(Eval("deadline"))>= DateTime.Now  %>'  CommandArgument='<%# Eval("name")%>' OnClick="Assign" type="submit" Cssclass="btn btn-success"></asp:Button>    
 
                                     </ItemTemplate>
-                                </asp:TemplateField>
+                                </asp:TemplateField>test
 
                                 <asp:TemplateField HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg">
                                   <ItemTemplate>
@@ -210,7 +210,7 @@
 
                         <br />
                         
-                         <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="No Comments Availble!">
+                         <asp:GridView ID="GridView2" runat="server" AutoGenerateColumns="false" CssClass="table table-striped table-bordered table-hover" EmptyDataText="No Comments Available!">
   
                               <Columns>  
                                 <asp:BoundField  DataField="comment" HeaderText="comment" HeaderStyle-CssClass="visible-lg" ItemStyle-CssClass="visible-lg"/>  

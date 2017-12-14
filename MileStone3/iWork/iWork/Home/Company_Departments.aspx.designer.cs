@@ -17,6 +17,8 @@ namespace iWork.Home {
 		
 		protected System.Web.UI.WebControls.GridView CompanyDepartmentGridView;
 
+        protected System.Web.UI.WebControls.GridView CompanyPhones_GridView;
+
         protected System.Web.UI.WebControls.GridView CompanyGridView;
 
         protected System.Web.UI.WebControls.Button viewDepartmentJobs;

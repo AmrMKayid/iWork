@@ -157,7 +157,7 @@ namespace iWork.Staff_Member.HR_Employee.Jobs
 
             DateTime deadline = DateTime.MinValue;
 
-            if(DateTime.TryParse(Deadline_TextBox.Text, out deadline))
+            if(!DateTime.TryParse(Deadline_TextBox.Text, out deadline))
             {
                 SubmitJob_Status_Label.Text = "Please provide valid deadline date";
                 return;

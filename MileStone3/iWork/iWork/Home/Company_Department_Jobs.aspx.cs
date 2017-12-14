@@ -25,7 +25,7 @@ namespace iWork.Home
             CompanyDepartmentJobsGridView.DataSource = dsC;
             CompanyDepartmentJobsGridView.DataBind();
 
-            string CompanyDepartment = "Select * from Jobs where company=\'" + Session["companyDomian"] + "\' AND department=\'" + Session["companyDepartmentCode"] + "\'";
+            string CompanyDepartment = "Select * from Jobs where vacancy > 0 AND company=\'" + Session["companyDomian"] + "\' AND department=\'" + Session["companyDepartmentCode"] + "\'";
 
             SqlCommand cmd = new SqlCommand(CompanyDepartment, conn);
 

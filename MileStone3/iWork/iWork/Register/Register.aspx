@@ -37,19 +37,19 @@
         </div>
 
         <div class="form__group">
-            <input id="FirstName_TextBox" runat="server" type="text" placeholder="First Name: " class="form__input" />
+            <input id="FirstName_TextBox" runat="server" type="text" placeholder="First Name" class="form__input" />
         </div>
 
         <div class="form__group">
-            <input id="MiddleName_TextBox" runat="server" type="text" placeholder="Middle Name: " class="form__input" />
+            <input id="MiddleName_TextBox" runat="server" type="text" placeholder="Middle Name" class="form__input" />
         </div>
 
         <div class="form__group">
-            <input id="LastName_TextBox" runat="server" type="text" placeholder="Last Name: " class="form__input" />
+            <input id="LastName_TextBox" runat="server" type="text" placeholder="Last Name" class="form__input" />
         </div>
 
         <div class="form__group">
-            <input id="BirthDate_TextBox" runat="server" type="text" placeholder="Birth Date: " class="form__input" />
+            <input id="BirthDate_TextBox" runat="server" type="text" placeholder="Birth Date" class="form__input" />
         </div>
 
         <div class="form__group">

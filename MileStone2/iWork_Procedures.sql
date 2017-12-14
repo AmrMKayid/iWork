@@ -1747,11 +1747,11 @@ Create Procedure CreateNewTask
 @deadline DATETIME, @project varchar(50)
 )
 As
-IF EXISTS(SELECT * FROM Managers
+IF EXISTS(SELECT * FROM Managers 
         where Managers.username = @manager)
-IF EXISTS(SELECT * FROM Project_Assignments PA
-        where PA.mananger_username = @manager 
-              AND PA.project_name = @project)
+--IF EXISTS(SELECT * FROM Project_Assignments
+--        where PA.mananger_username = @manager 
+--              AND PA.project_name = @project)
 Begin
 	DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
 																			where M.username = @manager AND S1.username = @manager)

@@ -88,7 +88,8 @@ namespace iWork.Register
             {
                 ScriptManager.RegisterStartupScript(this, this.GetType(), "", "<script>alert('Welcome to iWork!');</script>", false);
                 //RegisterStatus_Label.Text = "";
-                Response.Redirect("../Default.aspx", true);
+                Session["Username"] = username;
+                Response.Redirect("../Job_Seeker/Job_Seeker.aspx", true);
             }
             else
             {
