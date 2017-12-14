@@ -8,7 +8,8 @@
     <title>Join iWork</title>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"/>
+    <%--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"/>--%>
+    <link rel="stylesheet" href="normalize.min.css"/>
 
 
       <link rel="stylesheet" href="css/style.css"/>
@@ -17,7 +18,8 @@
     <form id="form1" runat="server">
           <div class="user">
     <header class="user__header">
-        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt="" />
+        <%--<img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/3219/logo.svg" alt="" />--%>
+        <img src="logo.svg" alt="" />
         <h1 class="user__title">Welcome to iWork | Sign Up!</h1>
     </header>
 
