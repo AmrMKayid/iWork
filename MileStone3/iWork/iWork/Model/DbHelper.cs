@@ -13,9 +13,9 @@ namespace iWork.Model
         {
             string connStr = null;
 
-            //connStr = ConfigurationManager.ConnectionStrings["MyDbConn"].ToString();
+            connStr = ConfigurationManager.ConnectionStrings["MyDbConn"].ToString();
 
-            connStr = @"Server=SHADOLIO\SQLEXPRESS; Database=iWork; Trusted_Connection=Yes;";
+            //connStr = @"Server=SHADOLIO\SQLEXPRESS; Database=iWork; Trusted_Connection=Yes;";
 
             //connStr = @"Server=localhost;Database=iWork;User Id=sa;Password=KayidServer@2017";
 
