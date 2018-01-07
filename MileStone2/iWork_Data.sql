@@ -527,6 +527,10 @@ INSERT INTO Attendance_Records VALUES ('shadi.barghash', '2017/12/05', '8:00:00'
 INSERT INTO Attendance_Records VALUES ('shadi.barghash', '2017/12/06', '8:00:00', '17:00:00', 9, 0);
 INSERT INTO Attendance_Records VALUES ('shadi.barghash', '2017/12/07', '8:00:00', '17:00:00', 9, 0);
 
+INSERT INTO Attendance_Records VALUES ('shadi.barghash', '2018/01/04', '8:00:00', '17:00:00', 9, 0);
+INSERT INTO Attendance_Records VALUES ('shadi.barghash', '2018/01/06', '8:00:00', '17:00:00', 9, 0);
+INSERT INTO Attendance_Records VALUES ('shadi.barghash', '2018/01/08', '8:00:00', '17:00:00', 9, 0);
+
 -- Job "iOS Developer"
 INSERT INTO Jobs VALUES ('Regular Employee - iOS Developer', 'AppDev', 'runtastic.com', 'Programs Runtastic App for the iOS', 'Programs Runtastic App for iOS bardo.', 5, 4, 2000, 2, '2018-12-12');
 
@@ -534,6 +538,10 @@ INSERT INTO Jobs VALUES ('Regular Employee - iOS Developer', 'AppDev', 'runtasti
 INSERT INTO Users VALUES ('danial.ashraf', 'haHaha2Password_xD', 'danial.ashraf@outlook.com', 'Daniel', 'Achraf', 'Daniel''s Family', '1996-07-14', 6);
 INSERT INTO Staff_Members VALUES ('danial.ashraf', 2500, 'Sunday', 20, 'Regular Employee - iOS Developer', 'AppDev', 'runtastic.com');
 INSERT INTO Regular_Employees VALUES ('danial.ashraf');
+
+INSERT INTO Attendance_Records VALUES ('danial.ashraf', '2018/01/04', '8:00:00', '17:00:00', 9, 0);
+INSERT INTO Attendance_Records VALUES ('danial.ashraf', '2018/01/06', '9:00:00', '16:00:00', 7, 0);
+INSERT INTO Attendance_Records VALUES ('danial.ashraf', '2018/01/08', '8:00:00', '17:00:00', 9, 0);
 
 -- Job "AppDevHR"
 INSERT INTO Jobs VALUES ('HR Employee - App Dev', 'AppDev', 'runtastic.com', 'Manages HR for App Dev department.', 'Manages HR for App Dev department. bardo.', 5, 4, 2000, 2, '2018-12-12');
@@ -569,7 +577,7 @@ INSERT INTO Managers VALUES ('waelFakh', 'Projects');
 -- Requests
 INSERT INTO Requests (start_date, end_date, username, manager_status, mang_username)
 VALUES ('2018-01-01', '2018-01-10', 'danial.ashraf', 'ACCEPTED', 'nesrine.anwarr');
-INSERT INTO Leave_Requests VALUES ('2018-01-01', 'danial.a  shraf', 'annual');
+INSERT INTO Leave_Requests VALUES ('2018-01-01', 'danial.ashraf', 'annual');
 INSERT INTO Request_Regular_Employee_Replace VALUES ('2018-01-01', 'danial.ashraf', 'shadi.barghash');
 
 INSERT INTO Requests (start_date, end_date, username, manager_status, mang_username)
@@ -577,10 +585,41 @@ VALUES ('2018-01-20', '2018-01-22', 'shadi.barghash', 'ACCEPTED', 'nesrine.anwar
 INSERT INTO Leave_Requests VALUES ('2018-01-20', 'shadi.barghash', 'annual');
 INSERT INTO Request_Regular_Employee_Replace VALUES ('2018-01-20', 'shadi.barghash', 'danial.ashraf');
 
--- Emai  
+INSERT INTO Requests (start_date, end_date, username, manager_status)
+VALUES ('2018-01-11', '2018-01-16', 'shadi.barghash', 'PENDING');
+INSERT INTO Leave_Requests VALUES ('2018-01-11', 'shadi.barghash', 'annual');
+INSERT INTO Request_Regular_Employee_Replace VALUES ('2018-01-11', 'shadi.barghash', 'danial.ashraf');
+
+INSERT INTO Requests (start_date, end_date, username, manager_status)
+VALUES ('2018-01-28', '2018-01-30', 'shadi.barghash', 'PENDING');
+INSERT INTO Business_Trips VALUES ('2018-01-28', 'shadi.barghash', 'Seattle, WA', 'Visit Boeing factory');
+INSERT INTO Request_Regular_Employee_Replace VALUES ('2018-01-28', 'shadi.barghash', 'danial.ashraf');
+
+INSERT INTO Requests (start_date, end_date, username, manager_status, mang_username)
+VALUES ('2018-01-31', '2018-02-04', 'shadi.barghash', 'ACCEPTED', 'nesrine.anwarr');
+INSERT INTO Business_Trips VALUES ('2018-01-31', 'shadi.barghash', 'Ulm, Germany', 'Visit a horse riding farm');
+INSERT INTO Request_Regular_Employee_Replace VALUES ('2018-01-31', 'shadi.barghash', 'danial.ashraf');
+
+-- Emails
 INSERT INTO Emails VALUES ('Finished my part', 'I''ve just finished my part from Windows-iOS P2P comm.', NULL);
 INSERT INTO Staff_send_Email VALUES (1, 'nesrine.anwarr', 'shadi.barghash');
 INSERT INTO Staff_send_Email VALUES (1, 'danial.ashraf', 'shadi.barghash');
+
+-- Job Seeker 1: Lydia Soliman
+INSERT INTO Users VALUES ('lydiasoliman', 'mamdouh', 'lydiasoliman@outlook.com', 'Lydia', 'Mamdouh', 'Soliman', '1997-07-18', 3)
+INSERT INTO Applicants VALUES ('lydiasoliman');
+
+-- Job Applications for "Manager - Senior Projects Manager"
+INSERT INTO Applications (app_username, hr_status, hr_username, score, job_title, department, company, manager_status, manager_username)
+VALUES ('lydiasoliman', 'ACCEPTED', 'lizaCharles', 95, 'Manager - Senior Projects Manager', 'AppDev', 'runtastic.com', 'ACCEPTED', 'nesrine.anwarr');
+
+-- Job Seeker 2: Loai Alaa
+INSERT INTO Users VALUES ('loaiAlaa', 'ulmers<3', 'loaialaa@outlook.com', 'Loai', NULL, 'Alaa', '1997-07-18', 3)
+INSERT INTO Applicants VALUES ('loaiAlaa');
+
+-- Job Applications for "Manager - Senior Projects Manager"
+INSERT INTO Applications (app_username, hr_status, hr_username, score, job_title, department, company)
+VALUES ('loaiAlaa', 'ACCEPTED', 'nourAli', 95, 'Regular Employee - iOS Developer', 'AppDev', 'runtastic.com');
 
 -- ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -647,7 +686,6 @@ INSERT INTO Staff_Members VALUES ('yomna', 3500, 'Sunday', 20, 'Senior Marketing
 INSERT INTO Managers VALUES ('yomna', 'Marketing');
 
 INSERT INTO Jobs VALUES ('HR Employee - PR and Marketing HR', 'PR+Marketing', 'runtastic.com', 'Manages HR inside PR and Marketing department', 'Hmm yes that''s all', 3, 3, 2000, 2, '2018-01-18');
-
 
 -- HR 1: Ahmed Kassed
 INSERT INTO Users VALUES ('elkassed', 'aywaYaSa7by', 'elkassed@hotmail.com', 'Ahmed', '', 'El Kassed', '1995-05-17', 4);
