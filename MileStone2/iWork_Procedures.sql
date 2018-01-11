@@ -94,31 +94,27 @@ where j.company=@domain and  j.department=@code and j.vacancy>0
 --###################################################--
 -- [5] register
 GO
-create proc register
-@username varchar(50)  ,@password varchar(50) ,@email varchar(50)='N/A'  ,@firstname varchar(50) ,@middlename varchar(50)='N/A',@lastname varchar(50) ,@birthdate date ,@yearsofexp int =0 
-as
-if(exists(select *
-          from Users
-		  where Users.username=@username))
-print 'Username already in use'
-else
-if(@username is null)
- print 'please fill all starred parts'
-else
-if (@password is null)
- print 'please fill all starred parts'
-else
-if(@firstname is null)
- print 'please fill all starred parts'
-else if(@lastname is null)
- print 'please fill all starred parts'
- else if(@birthdate is null )
- print 'please fill all starred parts'
-else
-begin
-insert into Users values(@username,@password,@email,@firstname,@middlename,@lastname,@birthdate,@yearsofexp);
-insert into Applicants values(@username);
-end
+CREATE PROC register
+@username varchar(50), @password varchar(50), @email varchar(50)='N/A',
+@firstname varchar(50), @middlename varchar(50) = NULL, @lastname varchar(50),
+@birthdate date, @yearsofexp int = 0 
+AS
+	IF(EXISTS(SELECT * FROM Users WHERE Users.username = @username))
+		PRINT 'Username already in use'
+	ELSE IF @username is null
+		PRINT 'please fill all starred parts'
+	ELSE IF @password IS NULL
+		PRINT 'please fill all starred parts'
+	ELSE IF @firstname IS NULL
+		PRINT 'please fill all starred parts'
+	ELSE IF @lastname IS NULL
+		PRINT 'please fill all starred parts'
+	ELSE IF @birthdate is null
+		PRINT 'please fill all starred parts'
+	ELSE BEGIN
+		INSERT INTO Users VALUES (@username, @password, @email, @firstname, @middlename, @lastname, @birthdate, @yearsofexp);
+		INSERT INTO Applicants VALUES(@username);
+	END
 
 --after registering he will be able to enter his previous jobs or if he is an already registered and wants to add p-jobs
 GO
@@ -168,8 +164,8 @@ order by avg(s.salary) desc
 -- and whether i am job seeker, HR employee, Regular employee or Manager.
 
 GO
-create proc loginweb
-@username varchar(50),@password varchar(50)
+create  proc loginweb
+@username varchar(50),@password varchar(50),@user_type varchar(50) output,@error_message varchar(50) output
 as
 if(exists(select *
         from Users 
@@ -182,33 +178,38 @@ if(exists(select *
 					 ))
 					 begin
 					 if(exists(select *
-                     from Applicants 
-		             where Applicants.username=@username
-		             ))
-					 print 'Job Seeker'
-					 else if(exists(select *
                      from Regular_Employees 
 		             where Regular_Employees.username=@username
 		             )) 
-					 print 'Regular Employee'
+					 set @user_type='Regular Employee'
 					 else if(exists(select *
                      from Hr_Employees 
 		             where Hr_Employees.username=@username
 		             )) 
-					 print 'HR Employee'
+					 set @user_type= 'HR Employee'
 					  else if(exists(select *
                      from Managers 
 		             where Managers.username=@username
 		             ))
-					 print 'Manager'
+					 set @user_type= 'Manager'
+					  else if(exists(select *
+                     from Applicants 
+		             where Applicants.username=@username
+		             ))
+					 set @user_type='Job Seeker'
+					 
 					 end
 					 else
-					 print 'wrong password'
+					 set @error_message= 'wrong password'
 			end
-			else print 'wrong username'
+			else set @error_message= 'wrong username'
+
+
+		
 
 --#########################################################################--
 
+-- new yasmeen
 -- [2] view all user info
 GO
 create proc Viewuserinfo
@@ -221,13 +222,38 @@ if(exists(select *
 		  select *
 		  from Users
 		  where Users.username=@username
-		  
-		  select *
-		  from User_Previous_Job_Titles
-		  where username=@username
-		  end
+		 end
 else 
 print 'Register or log in'
+Go
+create proc Viewuserpj
+@username varchar(50)
+as
+ select  title
+		  from User_Previous_Job_Titles
+		  where username=@username
+
+Go 
+create  proc delete_previous
+@username varchar(50) ,@title varchar(50)
+as
+delete 
+from User_Previous_Job_Titles
+where @username=username and @title=title
+
+Go
+create   proc insert_previous
+@username varchar(50) , @title varchar(50) ,@error varchar(50) output
+as
+if(exists(select *
+          from  User_Previous_Job_Titles
+		  where @username=username and @title=title))
+		  set @error='You have inserted this job title before!'
+else
+begin
+Insert into User_Previous_Job_Titles values(@title,@username)
+set @error=''		 
+end
 
 --##########################################################################--
 -- [3] edit info
@@ -373,9 +399,11 @@ if(exists(select *
 
 /*senario questions will be viewed ,the applicant will answer them ,score will be calculated on website using calculate answer by calling it multiple times and will be saved on website and entered with variable entering in the Apply procedure*/
 -- [1] Apply for a job
-GO
-create proc Applyforjob
-@username varchar(50),@jobtitle varchar(50) ,@dep varchar(50),@comp varchar(50),@score int
+Go
+Go
+--New yasmeen
+create  proc Applyforjobcheck
+@username varchar(50),@jobtitle varchar(50) ,@dep varchar(50),@comp varchar(50),@error varchar(100) output
 as 
 declare @neededyears int
 declare @useryears int
@@ -395,30 +423,66 @@ if(exists(select *
 		 if(exists(select a.*
 		   from Applications a
 		   where @username=a.app_username and @jobtitle=a.job_title and @dep=a.department and @comp=a.company and ((a.hr_status='pending' or a.hr_status='accepted') and a.manager_status='pending')))
-		   print 'you already applied for this job and it is in the reviewing process'
+		   set @error= 'you already applied for this job and it is in the reviewing process'
 
 		else
 		if(exists(select a.*
 		   from Applications a
 		   where @username=a.app_username and @jobtitle=a.job_title and @dep=a.department and @comp=a.company and a.manager_status='accepted'))
-		   print 'you already got accepted int this job'
+		   set @error= 'you already got accepted int this job'
 		 else
 		 begin
-		 declare @scoreout int
-	
+		 set @error= ''
+		 end
+		 end
+        else set @error='You do not have enough Experience years'
+		 end
+		 else set @error='Register or login'
+GO
+create  proc Applyforjob
+@username varchar(50),@jobtitle varchar(50) ,@dep varchar(50),@comp varchar(50),@score int,@error varchar(100) output
+as 
+declare @neededyears int
+declare @useryears int
+if(exists(select *
+          from Applicants
+		  where Applicants.username=@username))	 
+		  begin
+		set @neededyears=  (select j.min_years_of_experience
+		  from Jobs j
+		  where j.title=@jobtitle and j.department=@dep and j.company=@comp)
+
+		  set @useryears =(select y.years_of_experience
+		                   from Users y
+						   where y.username=@username)
+		 if(@useryears>=@neededyears)
+		 begin 
+		 if(exists(select a.*
+		   from Applications a
+		   where @username=a.app_username and @jobtitle=a.job_title and @dep=a.department and @comp=a.company and ((a.hr_status='pending' or a.hr_status='accepted') and a.manager_status='pending')))
+		   set @error= 'you already applied for this job and it is in the reviewing process'
+
+		else
+		if(exists(select a.*
+		   from Applications a
+		   where @username=a.app_username and @jobtitle=a.job_title and @dep=a.department and @comp=a.company and a.manager_status='accepted'))
+		   set @error= 'you already got accepted int this job'
+		 else
+		 begin
 		
         insert into Applications (score,hr_status,manager_status,job_title,department,company,app_username)values(@score,'pending','pending',@jobtitle ,@dep ,@comp,@username);
-
+		 set @error= ''
 		 end
 		 end
+		else set @error='You do not have enough Experience years'
 		 end
-
+		 
 -- [2] view questions
 GO
 create  proc viewquestions
 @jobtitle varchar(50),@dep varchar(50),@comp varchar(50)
 as 
-select c.question
+select c.question,c.id
 from Job_has_Questions q
 inner join Questions c on c.id=q.question
 where q.title=@jobtitle and q.department=@dep and q.company=@comp
@@ -444,10 +508,10 @@ print @scoreout
 
 -- [4] view my job applications status
 GO
-create proc viewapplicationstatus
+create  proc viewapplicationstatus
 @username varchar(50)
 as
-select a.company,a.department,a.job_title,a.manager_status,a.score
+select a.id, a.company,a.department,a.job_title,a.manager_status,a.score
 from Applications a
 where a.app_username=@username
 
@@ -458,8 +522,8 @@ where a.app_username=@username
 
 -- [5] choose a job I got accepted in
 GO
-create proc chooseajob
-@appid int,@username varchar(50),@dayoff varchar(8) 
+create   proc chooseajob
+@appid int,@username varchar(50),@dayoff varchar(9) ,@success varchar(100) output
 as
 declare @jobtitle varchar(50), @dep varchar(50),@comp varchar(50)
 if(exists(select a.* 
@@ -526,26 +590,30 @@ if(exists(select a.*
 		  set vacancy=vacancy-1
 		  where title=@jobtitle and department=@dep and company=@comp
 
+		  set @success='Congratulations'
 end
 end
+else
+set @success='error'
+
 -- exex chooseajob 2,'Maza2','Android HR','Android_OS','google.com',sunday
 
 --#######################################################################--
 -- [6] delete job application
 GO
-create proc deletejobapp
-@id int ,@username varchar(50)
+create  proc deletejobapp
+@id int ,@username varchar(50),@error_message varchar(50) output
 as
 if(exists (select a.*
           from Applications a
-		  where a.id=@id and a.app_username=@username and a.hr_status='pending' or a.manager_status='pending'))
+		  where a.id=@id and a.app_username=@username and  a.manager_status='pending'))
 		  begin
 		  DELETE FROM Applications
 		  where id=@id
+		  set @error_message='';
 		  end
 else 
-print'you can not delete this application'
-
+set @error_message='you can not delete this application'
 -- exex deletejobapp 5,'Maza1' --will be deleted ie in pending at hr
 -- exex deletejobapp 6,'Maza1' --connot be deleted as it got accepted by hr
 
@@ -1071,7 +1139,7 @@ AS BEGIN
 		DECLARE @department VARCHAR(50)
 		DECLARE @company VARCHAR(50)
 
-		SELECT @department = department, @company = @company FROM Staff_Members WHERE username = @hr_username
+		SELECT @department = department, @company = company FROM Staff_Members WHERE username = @hr_username
 
 		UPDATE Jobs
 		SET short_description = @short_desc, detailed_description = @detail_desc,
@@ -1316,53 +1384,44 @@ AS
 GO
 
 -- [10] View the total number of hours for any staff member in my department in each month of a certain year.
-go
-create proc view_totalhours_of_staff
-@hr varchar(50) ,@staff varchar(50) ,@year int
-as
-if(exists(select *
-          from Hr_Employees 
-		  where username=@hr))
-		  begin
-		  if(exists(select *
-		  from Staff_Members  s
-		  inner join Staff_Members s1 on s1.company=s.company and s.department=s1.department
-		  where s.username=@hr and s1.username=@staff))
-		  begin
-		   select x.username,DATENAME(month,x.attendance_date) as month_name,DATEPART(month,x.attendance_date) as month_num,sum(x.duration) as total_hours
-		  from Attendance_Records x
-          where x.username=@staff and DATEPART ( year , x.attendance_date ) =@year
-		  group by x.username,DATENAME(month,x.attendance_date),DATEPART(month,x.attendance_date)
-		  order by month_num
-		  end
-		  end
+CREATE PROC view_totalhours_of_staff
+@hr VARCHAR(50), @staff VARCHAR(50), @year INT
+AS
+	IF EXISTS(SELECT * FROM Hr_Employees WHERE username = @hr) BEGIN
+		IF EXISTS(SELECT * FROM Staff_Members s INNER JOIN Staff_Members s1
+					ON s1.company = s.company AND s.department = s1.department
+					WHERE s.username = @hr and s1.username = @staff) BEGIN
+			SELECT DATENAME(month, a.attendance_date) AS month_name,
+					DATEPART(month, a.attendance_date) AS month_num,
+					SUM(a.duration) AS total_hours
+			FROM Attendance_Records a
+			WHERE a.username = @staff AND YEAR(a.attendance_date) = @year
+			GROUP BY a.username, DATENAME(month, a.attendance_date), DATEPART(month, a.attendance_date)
+			ORDER BY month_num
+		END
+	END
+GO
 
 
--- [11] View names of the top 3 high achievers in my department.
+-- [11] View names of the top 3 high achievers in company from my department.
 -- A high achiever is a regular employee who stayed the longest hours in the company for a certain month
 -- and all tasks assigned to him/her with deadline within this month are fixed.
-go
-create proc top_3_achievers
-@hr varchar(50),@month int,@year int
-as
-  select top 3 a.username, DATENAME(month,a.attendance_date) as month,sum(a.duration) as total_hours
-  from Attendance_Records a
-   where a.username in(
-           select t.regular_employee_username
-           from Tasks t
-           where t.regular_employee_username in(
-          select distinct s1.username
-		  from Staff_Members  s
-		  inner join Staff_Members s1 on s1.company=s.company and s.department=s1.department
-		  --inner join Attendance_Records a on s1.username=a.username
-		  where s.username=@hr and(exists(select *
-		                                      from Regular_Employees
-											  where username =s1.username))) and t.regular_employee_username not in(
-                                               select regular_employee_username
-                                               from Tasks
-                                               where status<>'fixed') and DATEPART(MONTH,a.attendance_date) >= @month and DATEPART(year,t.deadline)=@year )and DATepart(month,a.attendance_date)=@month and DATEPART(year,a.attendance_date)=@year
-  group by a.username, DATENAME(month,a.attendance_date)
-  order by sum(a.duration) desc
+CREATE PROC Top_3_RegEmp_for_Month
+@month INT, @year INT, @hr_username VARCHAR(50)
+AS
+	SELECT TOP 3 a.username, SUM(a.duration) as total_hours
+	FROM Attendance_Records a
+	WHERE a.username IN (SELECT RE.username FROM Regular_Employees RE) -- only Regular Employees
+	AND a.username IN (SELECT S2.username FROM Staff_Members HR INNER JOIN Staff_Members S2 -- only for my company
+						ON Hr.username = @hr_username AND S2.company = HR.company)
+	AND NOT EXISTS (SELECT * FROM Tasks T WHERE regular_employee_username = a.username
+					AND DATEPART(MONTH, T.deadline) = @month AND status <> 'fixed')
+	GROUP BY YEAR(a.attendance_date), MONTH(a.attendance_date), a.username
+	HAVING YEAR(a.attendance_date) = @year AND MONTH(a.attendance_date) = @month
+	AND a.username IN (SELECT S2.username FROM Staff_Members HR INNER JOIN Staff_Members S2
+						ON HR.username = @hr_username AND S2.department = HR.department)
+	ORDER BY SUM(a.duration) DESC
+GO
 
 ---- ##### ##### ##### ##### ##### ##### ##### #####  Shadi END  ##### ##### ##### #####  ##### ##### ##### ##### -----
 
@@ -1439,6 +1498,19 @@ Begin
           AND regular_employee_username = @username
           AND [status] <> 'Closed' AND [status] = 'Fixed' 
           AND project = @project
+End
+
+--new yasmeen
+Go
+Create Procedure Task_Comments
+(
+@username VARCHAR(50), @task varchar(50), @project varchar(50),@company varchar(50)
+)
+As
+Begin
+   SELECT c.*
+     FROM Comments c 
+    where c.company=@company and c.task=@task and c.project=@project
 End
 
 ---- ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### ##### #####  ##### ##### ##### ##### -----
@@ -1558,7 +1630,7 @@ As
 Begin
      SELECT *
      FROM Applications A, Jobs J
-     WHERE A.job_title = J.title 
+     WHERE A.job_title = J.title AND A.job_title = @job_title
 		 AND EXISTS (SELECT * FROM Managers M, Staff_Members S1
 									where M.username = @manager AND S1.username = @manager
 									--AND A.manager_username = M.username 
@@ -1660,6 +1732,7 @@ Begin
           AND @regular_employee NOT IN (
             SELECT regular_employee_username
             FROM Tasks
+						WHERE mananger_username = @manager AND regular_employee_username = @regular_employee
           )
 End
 
@@ -1674,11 +1747,11 @@ Create Procedure CreateNewTask
 @deadline DATETIME, @project varchar(50)
 )
 As
-IF EXISTS(SELECT * FROM Managers
+IF EXISTS(SELECT * FROM Managers 
         where Managers.username = @manager)
-IF EXISTS(SELECT * FROM Project_Assignments PA
-        where PA.mananger_username = @manager 
-              AND PA.project_name = @project)
+--IF EXISTS(SELECT * FROM Project_Assignments
+--        where PA.mananger_username = @manager 
+--              AND PA.project_name = @project)
 Begin
 	DECLARE @company varchar(50) = (SELECT S1.company FROM Managers M, Staff_Members S1 
 																			where M.username = @manager AND S1.username = @manager)
@@ -1788,5 +1861,25 @@ Begin
    END
 
 End
+
+
+
+GO
+CREATE PROCEDURE viewRegEmp2Projects
+(
+	@manager VARCHAR(50)
+)
+AS
+BEGIN
+	SELECT E.username, count(PA.regular_employee_username) AS Projects 
+	FROM Managers M, Regular_Employees E, Staff_Members S1, Staff_Members S2, Project_Assignments PA
+	WHERE M.username = @manager AND S1.username = @manager
+					AND S2.username = E.username
+					AND S2.department = S1.department 
+					AND S2.company = S1.company
+					AND PA.regular_employee_username = E.username
+	GROUP BY E.username
+	HAVING (count(PA.regular_employee_username) < 2)
+END
 
 ---- ##### ##### ##### ##### ##### ##### ##### #####  End of Amr's Procedures  ##### ##### ##### #####  ##### ##### ##### ##### -----
