@@ -7,3 +7,8 @@
 - [x] MileStone 1: EERD and Relational Schema
 - [x] MileStone 2: Database & SQL files
 - [x] MileStone 3: Users' Website
+
+# Authors
+* **Amr Kayid**
+* **Shadi Barghash**
+* **Yasmeen Khaled**
